@@ -89,6 +89,12 @@ td {
 a img {
   border: none;
 }
+@font-face {
+  font-family: 'fontawesome-webfont';
+  font-style: normal;
+  font-weight: normal;
+  src: url("font/fontawesome-webfont.ttf");
+}
 /* custom Font*/
 @font-face {
   font-family: "covered_by_your_graceregular";

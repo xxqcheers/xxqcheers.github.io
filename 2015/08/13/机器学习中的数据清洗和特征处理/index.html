@@ -1,0 +1,364 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>机器学习中的数据清洗和特征处理 | Backyard of XiaoQiangXu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="xxqcheers">
+    
+    <meta name="description" content="前言一个经典的机器学习问题的第一步：数据清洗和特征挖掘，即“数据清洗=&amp;gt;特征，标注数据生成=&amp;gt;模型学习=&amp;gt;模型应用”中的前两个步骤。（1）从原始数据，如文本、图像或者应用数据中清洗出特征数据和标注数据。（2）对清洗出的特征和标注数据进行处理，例如样本采样，样本调权，异常点去除，特征">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="Backyard of XiaoQiangXu" title="Backyard of XiaoQiangXu"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Backyard of XiaoQiangXu">Backyard of XiaoQiangXu</a></h1>
+				<h2 class="blog-motto">Walk steps step by step</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">存档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+						<li><a href="/todolist">ToDo</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/08/13/机器学习中的数据清洗和特征处理/" title="机器学习中的数据清洗和特征处理" itemprop="url">机器学习中的数据清洗和特征处理</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://yoursite.com" title="xxqcheers">xxqcheers</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2015-08-13T15:01:00.000Z" itemprop="datePublished">2015-08-13</time>
+    更新日期:<time datetime="2015-08-13T15:21:32.029Z" itemprop="dateModified">2015-08-13</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#特征使用方案"><span class="toc-number">2.</span> <span class="toc-text">特征使用方案</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何获取特征"><span class="toc-number">3.</span> <span class="toc-text">如何获取特征</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#离线特征获取方案"><span class="toc-number">3.1.</span> <span class="toc-text">离线特征获取方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在线特征获取方案"><span class="toc-number">3.2.</span> <span class="toc-text">在线特征获取方案</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#特征与标注数据清洗"><span class="toc-number">4.</span> <span class="toc-text">特征与标注数据清洗</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#特征分类"><span class="toc-number">5.</span> <span class="toc-text">特征分类</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#特征处理与分析"><span class="toc-number">6.</span> <span class="toc-text">特征处理与分析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#特征选择"><span class="toc-number">7.</span> <span class="toc-text">特征选择</span></a></li></ol>
+		</div>
+		
+		<h1 id="前言">前言</h1><p>一个经典的机器学习问题的第一步：数据清洗和特征挖掘，即“数据清洗=&gt;特征，标注数据生成=&gt;模型学习=&gt;模型应用”中的前两个步骤。<br>（1）从原始数据，如文本、图像或者应用数据中清洗出特征数据和标注数据。<br>（2）对清洗出的特征和标注数据进行处理，例如样本采样，样本调权，异常点去除，特征归一化处理，特征变化，特征组合等过程。<br>最终生成的数据主要是供模型训练使用。如阿里的推荐大赛中提供的数据就相当于清洗过的数据。</p>
+<p>数据离线处理，可以进行较多的实验和迭代，尝试不同的样本采样，样本权重，特征处理方法，特征组合方<br>法等，从而寻找一个最优的方法，在离线的环境得到很好的结果后，最终将确定的方案在生产环境中使用。<br>那么接下来的问题就是数据的存储和取出的问题了，一般来说在离线的环境下，数据的存储和获取可以建立<br>在hadoop平台上，批量地进行分析处理等操作，并且容忍一定的失败。而在线服务时，数据的存储和获取需<br>要稳定、延时小等，可以为数据创建索引，或者存储在KV存储系统中，比如内存数据库redis，以及支持海量数据的Hbase。</p>
+<p>此处以美团技术博客中的点击预测为例，再结合自己的理解，来分析数据挖掘的第一步骤的工作：</p>
+<h1 id="特征使用方案">特征使用方案</h1><p>需求功能确定以后，就需要明确利用那些数据来满足需求，那么针对用户点击下单的动作，有哪些特征能够促使用户点击这一动作呢，当然，<br>针对这一块，工业上有一套业务经验，另外需要结合一些特征选择，特征分析等方法来辅助选择，具体实施而言，有如下的因素可以考虑。</p>
+<ul>
+<li>距离，很显然这是一个很重要的特征。如果购买一个离用户距离较远的单子，用户去消费这个单子需要付出很多的代价。 当然，也并不是<br>没有买很远单子的用户，但是这个比例会比较小。</li>
+<li>用户历史行为，对于老用户，之前可能在美团有过购买、点击等行为。</li>
+<li>用户实时兴趣。</li>
+<li>单子质量，上面的特征都是比较好衡量的，单子质量可能是更复杂的一个特征。</li>
+<li>是否热门，用户评价人数，购买数等等。</li>
+</ul>
+<p>在确定好要使用哪些数据之后，我们需要对使用数据的可用性进行评估，包括数据的获取难度，数据的规模，数据的准确率，数据的覆盖率等。</p>
+<ul>
+<li>数据获取难度：例如获取用户id不难，但是获取用户年龄和性别较困难，因为用户注册或者购买时，这些并不是必填项。即使填了也不完全准确。<br>这些特征可能是通过额外的预测模型预测的，那就存在着模型精度的问题。</li>
+<li>数据覆盖率：数据覆盖率也是一个重要的考量因素，例如距离特征，并不是所有用户的距离我们都能获取到。PC端的就没有距离，<br>还有很多用户禁止使用它们的地理位置信息等。 用户历史行为，只有老用户才会有行为。用户实时行为，如果用户刚打开app，<br>还没有任何行为，同样面临着一个冷启动的问题。</li>
+<li>数据的准确率：单子质量，用户性别等，都会有准确率的问题。</li>
+</ul>
+<h1 id="如何获取特征">如何获取特征</h1><p>在选定特征之后，这些特征如何获取是个问题。具体的方案有：</p>
+<h2 id="离线特征获取方案">离线特征获取方案</h2><p>离线可以使用海量的数据，借助于分布式文件存储平台，例如HDFS等，使用例如MapReduce，Spark等处理工具来处理海量的数据等。</p>
+<h2 id="在线特征获取方案">在线特征获取方案</h2><p>线特征比较注重获取数据的延时，由于是在线服务，需要在非常短的时间内获取到相应的数据，对查找性能要求非常高，可以将数据存储在索引、<br>kv存储等。而查找性能与数据的数据量会有矛盾，需要折衷处理。</p>
+<h1 id="特征与标注数据清洗">特征与标注数据清洗</h1><p>在获得数据之后，接下来就是考虑如何处理特征和标注数据了。需要明确的一点就是特征数据只有在和标注数据合并之后，<br>才能用来做为模型的训练。清洗标注数据的主要工作是数据采集和样本过滤。</p>
+<p><strong>数据采集：</strong>数据挖掘领域比较常见的应用如分类问题和回归问题，对于分类问题，选取正例，负例。对于回归问题，需要采集数据。<br>对于采样得到的样本，根据需要，需要设定样本权重。还有一点要注意的是，有时候鉴于算法时间复杂度，当模型不能使用全部的数据来训练时，<br>需要对数据进行采样，设定一定的采样率。采样的方法包括随机采样，固定比例采样等方法。</p>
+<p><strong>样本过滤：</strong>除了采样外，经常对样本还需要进行过滤。结合业务情况进行数据的过滤，例如去除crawler抓取，spam，作弊等数据。异常点检测，<br>采用异常点检测算法对样本进行分析，常用的异常点检测算法包括：偏差检测，例如聚类，最近邻等；基于统计的异常点检测算法：例如极差，<br>四分位数间距，均差，标准差等，这种方法适合于挖掘单变量的数值型数据。全距(Range)，又称极差，是用来表示统计资料中的变异量数(measures of variation) ，<br>其最大值与最小值之间的差距；四分位距通常是用来构建箱形图，以及对概率分布的简要图表概述。基于距离的异常点检测算法，主要通过距离方法来检测异常点，<br>将数据集中与大多数点之间距离大于某个阈值的点视为异常点，主要使用的距离度量方法有绝对距离 ( 曼哈顿距离 ) 、欧氏距离和马氏距离等方<br>法；基于密度的异常点检测算法，考察当前点周围密度，可以发现局部异常点，例如LOF算法。</p>
+<h1 id="特征分类">特征分类</h1><p>在分析完特征和标注的清洗方法之后，下面来具体介绍下特征的处理方法，先对特征进行分类，因为对于不同的特征应该有不同的处理方法。根据不同的分类方法，可以将特征分为<br>(1)Low level特征和High level特征。(2)稳定特征与动态特征。(3)二值特征、连续特征、枚举特征。Low level特征是较低级别的特征，主要是原始特征，不需要或者需要非<br>常少的人工处理和干预，例如文本特征中的词向量特征，图像特征中的像素点，用户id，商品id等。Low level特征一般维度比较高，不能用过于复杂的模型。<br>High level特征是经过较复杂的处理，结合部分业务逻辑或者规则、模型得到的特征，例如人工打分，模型打分等特征，可以用于较复杂的非线性模型。<br>Low level 比较针对性，覆盖面小。长尾样本的预测值主要受high level特征影响。 高频样本的预测值主要受low level特征影响。稳定特征是变化频<br>率(更新频率)较少的特征，例如评价平均分，团购单价格等，在较长的时间段内都不会发生变化。动态特征是更新变化比较频繁的特征，<br>有些甚至是实时计算得到的特征，例如距离特征，2小时销量等特征。或者叫做实时特征和非实时特征。针对两类特征的不同可以针对性地设计特征<br>存储和更新方式，例如对于稳定特征，可以建入索引，较长时间更新一次，如果做缓存的话，缓存的时间可以较长。对于动态特征，需要实时计算或<br>者准实时地更新数据，如果做缓存的话，缓存过期时间需要设置的较短。二值特征主要是0/1特征，即特征只取两种值：0或者1，例如用户id特征：目<br>前的id是否是某个特定的id，词向量特征：某个特定的词是否在文章中出现等等。连续值特征是取值为有理数的特征，特征取值个数不定，例如距离特<br>征，特征取值为是0~正无穷。枚举值特征主要是特征有固定个数个可能值，例如今天周几，只有7个可能值：周1，周2，…，周日。在实际的使用中，我<br>们可能对不同类型的特征进行转换，例如将枚举特征或者连续特征处理为二值特征。枚举特征处理为二值特征技巧：将枚举特征映射为多个特征，每个特征对应一个特定枚举值，<br>例如今天周几，可以把它转换成7个二元特征：今天是否是周一，今天是否是周二，…，今天是否是周日。连续值处理为二值特征方法：先将连续值离散化（后面会介绍如何离散化)，<br>再将离散化后的特征切分为N个二元特征，每个特征代表是否在这个区间内。</p>
+<h1 id="特征处理与分析">特征处理与分析</h1><p>在对特征进行分类后，下面介绍下对特征常用的处理方法。包括1.特征归一化，离散化，缺省值处理。2.特征降维方法。<br>3.特征选择方法等。对于特征处理阶段比较重要的就是特征降维。</p>
+<p>在机器学习中，有一个VC维理论。根据VC维理论，VC维越高，打散能力越强，可容许的模型复杂度越高。在低维不可分的数据，<br>映射到高维是可分。可以想想，给你一堆物品，人脑是如何对这些物品进行分类，依然是找出这些物品的一些特征，例如：颜色，<br>形状，大小，触感等等，然后根据这些特征对物品做以归类，这其实就是一个先升维，后划分的过程。比如我们人脑识别香蕉。<br>可能首先我们发现香蕉是黄色的。这是在颜色这个维度的一个切分。但是很多东西都是黄色的啊，例如哈密瓜。那么怎么区分香蕉<br>和哈密瓜呢？我们发现香蕉形状是弯曲的。而哈密瓜是圆形的，那么我们就可以用形状来把香蕉和哈密瓜划分开了，即引入一个新<br>维度：形状，来区分。这就是一个从“颜色”一维特征升维到二维特征的例子。</p>
+<p>那问题来了，既然升维后模型能力能变强，那么是不是特征维度越高越好呢？为什么要进行特征降维&amp;特征选择？<br>主要是出于如下考虑：1. 特征维数越高，模型越容易过拟合，此时更复杂的模型就不好用。2. 相互独立的特征维数越高，<br>在模型不变的情况下，在测试集上达到相同的效果表现所需要的训练样本的数目就越大。 3. 特征数量增加带来的训练、<br>测试以及存储的开销都会增大。4.在某些模型中，例如基于距离计算的模型KMeans，KNN等模型，在进行距离计算时，维度<br>过高会影响精度和性能。5.可视化分析的需要。在低维的情况下，例如二维，三维，我们可以把数据绘制出来，可视化地看到<br>数据。当维度增高时，就难以绘制出来了。在机器学习中，有一个非常经典的维度灾难的概念。用来描述当空间维度增加时，<br>分析和组织高维空间，因体积指数增加而遇到各种问题场景。例如，100个平均分布的点能把一个单位区间以每个点距离不超<br>过0.01采样；而当维度增加到10后，如果以相邻点距离不超过0.01小方格采样单位超一单位超正方体，则需要10^20 个采样点。</p>
+<p>由于高维特征有如上描述的各种各样的问题，所以我们需要进行特征降维和特征选择等工作。特征降维常用的算法有<br>PCA，LDA等。特征降维的目标是将高维空间中的数据集映射到低维空间数据，同时尽可能少地丢失信息，或者降维后的<br>数据点尽可能地容易被区分。</p>
+<h1 id="特征选择">特征选择</h1><p>特征选择的目标是寻找最优特征子集。特征选择能剔除不相关(irrelevant)或冗余(redundant )的特征，从而达到减少<br>特征个数，提高模型精确度，减少运行时间的目的。另一方面，选取出真正相关的特征简化模型，协助理解数据产生的过程。</p>
+<p>特征选择-产生过程和生成特征子集方法：完全搜索；启发式搜索；随机搜索；</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/特征处理-预处理/">特征处理 预处理</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/机器学习/">机器学习</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://yoursite.com/2015/08/13/机器学习中的数据清洗和特征处理/" data-title="机器学习中的数据清洗和特征处理 | Backyard of XiaoQiangXu" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2015/08/10/hello-world/"  title="Hello World">
+ <strong>NEXT:</strong><br/> 
+ <span>Hello World
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#特征使用方案"><span class="toc-number">2.</span> <span class="toc-text">特征使用方案</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何获取特征"><span class="toc-number">3.</span> <span class="toc-text">如何获取特征</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#离线特征获取方案"><span class="toc-number">3.1.</span> <span class="toc-text">离线特征获取方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在线特征获取方案"><span class="toc-number">3.2.</span> <span class="toc-text">在线特征获取方案</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#特征与标注数据清洗"><span class="toc-number">4.</span> <span class="toc-text">特征与标注数据清洗</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#特征分类"><span class="toc-number">5.</span> <span class="toc-text">特征分类</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#特征处理与分析"><span class="toc-number">6.</span> <span class="toc-text">特征处理与分析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#特征选择"><span class="toc-number">7.</span> <span class="toc-text">特征选择</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/Hadoop/" title="Hadoop">Hadoop<sup>1</sup></a></li>
+		
+			<li><a href="/categories/机器学习/" title="机器学习">机器学习<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/分布式计算/" title="分布式计算">分布式计算<sup>1</sup></a></li>
+		
+			<li><a href="/tags/大数据/" title="大数据">大数据<sup>1</sup></a></li>
+		
+			<li><a href="/tags/特征处理-预处理/" title="特征处理 预处理">特征处理 预处理<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://tech.meituan.com/" target="_blank" title="YangJian">MeiTuan Technology</a></li>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+    </ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/分布式计算/" style="font-size: 10px;">分布式计算</a> <a href="/tags/大数据/" style="font-size: 10px;">大数据</a> <a href="/tags/特征处理-预处理/" style="font-size: 10px;">特征处理 预处理</a>
+    </div>
+  </div>
+
+
+  <div class="rsspart">
+	<a href="null" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font clearfix">
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2015 
+		
+		<a href="http://yoursite.com" target="_blank" title="xxqcheers">xxqcheers</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+  </body>
+</html>
