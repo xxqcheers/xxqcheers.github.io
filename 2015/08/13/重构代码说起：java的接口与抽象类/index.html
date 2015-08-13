@@ -1,0 +1,429 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>重构代码说起：java的接口与抽象类 | Backyard of XiaoQiangXu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="xxqcheers">
+    
+    <meta name="description" content="最近在看代码重构这本书的时候，碰到过接口和抽象类的概念，再加上看hadoop权威指南这本书的时候，也提到了新版的hadoop API与旧的API的区别，也提到了这一点。无聊时候看到笔记中有这个点没有总结，在网上找点这方面的东西看了下，在此总结下，以便以后需要的时候再看。
+Java接口和java抽象类">
+    
+    
+    
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="Backyard of XiaoQiangXu" title="Backyard of XiaoQiangXu"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Backyard of XiaoQiangXu">Backyard of XiaoQiangXu</a></h1>
+				<h2 class="blog-motto">Walk steps step by step</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">存档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+						<li><a href="/todolist">ToDo</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/08/13/重构代码说起：java的接口与抽象类/" title="重构代码说起：java的接口与抽象类" itemprop="url">重构代码说起：java的接口与抽象类</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://yoursite.com" title="xxqcheers">xxqcheers</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2015-08-13T15:27:17.000Z" itemprop="datePublished">2015-08-13</time>
+    更新日期:<time datetime="2015-08-13T15:35:52.168Z" itemprop="dateModified">2015-08-13</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+		</div>
+		
+		<p>最近在看代码重构这本书的时候，碰到过接口和抽象类的概念，再加上看hadoop权威指南这本书的时候，也提到了新版的hadoop API与旧的API的区别，也提到了这一点。无聊时候看到笔记中有这个点没有总结，在网上找点这方面的东西看了下，在此总结下，以便以后需要的时候再看。</p>
+<p><strong>Java接口和java抽象类：</strong></p>
+<p>既然面向对象设计的重点在于抽象，那Java接口和Java抽象类就有它存在的必然性了。Java接口和java抽象类代表的都是抽象类型，就是所要提出的抽象层的具体表现。如果要想提高程序的复用率，增加程序的可维护性，可扩展性，就必须是抽象的编程，面向抽象的编程，正确地使用接口，抽象类这些用用的抽象类型可以作为结构层次上的顶层。</p>
+<p>1、最大的一个区别，就在于java抽象类可以提供某些方法的部分实现，而java接口不可以（就是interface中只能定义方法，而不能有方法的实现，而在abstract class中则可以既有方法的具体实现，又有没有具体实现的抽象方法）当然这也体现了java抽象类的优点。如果向一个抽象类里加入一个新的具体方法时，那么它所有的子类都一下子得到了这个新方法，而java接口无法做到这一点，而如果向一个java接口里加入一个新方法，所有实现这个接口的类就无法成功通过编译了，因为你必须让每一个类都再实现这个方法才行，java接口的缺点。</p>
+<p>2、一个抽象类的实现只能由这个抽象类的子类给出，也就是说，这个实现处在抽象类所定义出的继承的等级结构中，而由于java语言的单继承性，所以抽象类作为类型定义工具的效能大打折扣，这一点上java接口可以支持多继承。也就是说，使用抽象类，那么继承这个抽象类的子类类型就比较单一，因为子类只能单继承抽象类；而子类能够同时实现多个接口，因为类型就比较多。</p>
+<p>3、设计模式中的“缺省适配模式”就发挥了这两种语法特性的优点，比如：声明类型的工作仍然由Java接口承担，但是同时给出一个Java抽象类，而且实现了这个接口，而其他同属于这个抽象类型的具体类可以选择实现这个java接口，也可以选择实现这个抽象类。直观的感觉就是，在层次结构中，Java接口在最上面，然后紧跟着抽象类。在Java语言API中用了这种模式，而且全都遵循一定的命名规范：A extends Abstract B implements interface C</p>
+<p>那么A即可以选择实现(@Override)接口interface C中的方法，也可以选择不实现；A即可以选择实现(@Override)抽象类Abstract B中的方法，也可以选择不实现</p>
+<p><strong>具体实例</strong><br>下面给出一个具体的接口Action，代码如下所示：</p>
+<p>`<br>package org.springframework.webflow.execution;<br>public interface Action {<br>    public Event execute(RequestContext context) throws Exception;<br>}<br>·</p>
+<p>在这个接口中，定义了一个没有具体实现的方法，方法名叫做execute()，返回类型是Event。如前面第一条所述，接口中的方法都是没有实现的。这些方法的具体实现是在实现(implements)这个接口的类中给出的。</p>
+<p>再来看一个实现Action接口的抽象类AbstractAction，代码如下。</p>
+<p><code>package org.springframework.webflow.action;  
+import org.apache.commons.logging.Log;  
+import org.apache.commons.logging.LogFactory;  
+import org.springframework.beans.factory.BeanInitializationException;  
+import org.springframework.beans.factory.InitializingBean;  
+import org.springframework.util.ClassUtils;  
+import org.springframework.webflow.core.collection.AttributeMap;  
+import org.springframework.webflow.execution.Action;  
+import org.springframework.webflow.execution.Event;  
+import org.springframework.webflow.execution.RequestContext;  
+public abstract class AbstractAction implements Action, InitializingBean {  
+    protected final Log logger = LogFactory.getLog(getClass());  
+    public EventFactorySupport getEventFactorySupport() {  
+        return new EventFactorySupport();  
+    }
+    public void afterPropertiesSet() throws Exception {  
+        try {  
+            initAction();
+        } catch (Exception ex) {  
+            throw new BeanInitializationException(“Initialization of this Action failed: ” + ex.getMessage(), ex);  
+        }
+    }
+    protected void initAction() throws Exception {  
+    }
+    protected Event success() {  
+        return getEventFactorySupport().success(this);  
+    }
+    protected Event success(Object result) {  
+        return getEventFactorySupport().success(this, result);  
+    }
+    protected Event error() {  
+        return getEventFactorySupport().error(this);  
+    }
+    protected Event error(Exception e) {  
+        return getEventFactorySupport().error(this, e);  
+    }
+    protected Event yes() {  
+        return getEventFactorySupport().yes(this);  
+    }
+    protected Event no() {  
+        return getEventFactorySupport().no(this);  
+    }
+    protected Event result(boolean booleanResult) {  
+        return getEventFactorySupport().event(this, booleanResult);  
+    }
+    protected Event result(String eventId) {  
+        return getEventFactorySupport().event(this, eventId);  
+    }
+    protected Event result(String eventId, AttributeMap resultAttributes) {  
+        return getEventFactorySupport().event(this, eventId, resultAttributes);  
+    }
+    protected Event result(String eventId, String resultAttributeName, Object resultAttributeValue) {  
+        return getEventFactorySupport().event(this, eventId, resultAttributeName, resultAttributeValue);  
+    }
+    public final Event execute(RequestContext context) throws Exception {  
+        Event result = doPreExecute(context);
+        if (result == null) {  
+            result = doExecute(context);
+            doPostExecute(context);
+        } else {  
+            if (logger.isInfoEnabled()) {  
+                logger.info(“Action execution disallowed; pre-execution result is ‘” + result.getId() + “‘”);  
+            }
+        }
+        return result;  
+    }
+    protected String getActionNameForLogging() {  
+        return ClassUtils.getShortName(getClass());  
+    }
+    protected Event doPreExecute(RequestContext context) throws Exception {  
+        return null;  
+    }
+    //抽象方法  
+    protected abstract Event doExecute(RequestContext context) throws Exception;  
+    protected void doPostExecute(RequestContext context) throws Exception {  
+    }
+}</code><br>在抽象类AbstractAction中，既有具体实现的方法，又有没有具体实现的抽象方法</p>
+<p>//抽象方法<br>protected abstract Event doExecute(RequestContext context) throws Exception;  </p>
+<p><strong>需要注意的是在抽象类中，如果方法没有具体实现（就是方法后面没有{}），那么必须加上abstract来声明这个方法，而接口中不需要使用abstract来声明（抽象类之所以被称为抽象类，就是因为它包含有抽象方法。含有抽象方法的类叫做抽象类）</strong></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/编程基础/">编程基础</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/java语言/">java语言</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://yoursite.com/2015/08/13/重构代码说起：java的接口与抽象类/" data-title="重构代码说起：java的接口与抽象类 | Backyard of XiaoQiangXu" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2015/08/13/机器学习中的数据清洗和特征处理/"  title="机器学习中的数据清洗和特征处理">
+ <strong>NEXT:</strong><br/> 
+ <span>机器学习中的数据清洗和特征处理
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/Hadoop/" title="Hadoop">Hadoop<sup>1</sup></a></li>
+		
+			<li><a href="/categories/java语言/" title="java语言">java语言<sup>1</sup></a></li>
+		
+			<li><a href="/categories/机器学习/" title="机器学习">机器学习<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/分布式计算/" title="分布式计算">分布式计算<sup>1</sup></a></li>
+		
+			<li><a href="/tags/大数据/" title="大数据">大数据<sup>1</sup></a></li>
+		
+			<li><a href="/tags/特征处理-预处理/" title="特征处理 预处理">特征处理 预处理<sup>1</sup></a></li>
+		
+			<li><a href="/tags/编程基础/" title="编程基础">编程基础<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://tech.meituan.com/" target="_blank" title="YangJian">MeiTuan Technology</a></li>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+    </ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/分布式计算/" style="font-size: 10px;">分布式计算</a> <a href="/tags/大数据/" style="font-size: 10px;">大数据</a> <a href="/tags/特征处理-预处理/" style="font-size: 10px;">特征处理 预处理</a> <a href="/tags/编程基础/" style="font-size: 10px;">编程基础</a>
+    </div>
+  </div>
+
+
+  <div class="rsspart">
+	<a href="null" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font clearfix">
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2015 
+		
+		<a href="http://yoursite.com" target="_blank" title="xxqcheers">xxqcheers</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+  </body>
+</html>
