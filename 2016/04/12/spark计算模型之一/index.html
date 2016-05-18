@@ -9,9 +9,9 @@
     
     <meta name="author" content="xxqcheers">
     
-    <meta name="description" content="#引子Spark将应用程序整体翻译为一个有向无环图进行调度和执行，相比MapReduce，Spark提供了更加优化和复杂的执行流。这篇博客在读书和google的基础上对spark计算模型进行宏观的把握。
-#spark程序模型spark的实例程序：
- (1) SparkContext中的textFil">
+    <meta name="description" content="引子Spark将应用程序整体翻译为一个有向无环图进行调度和执行，相比MapReduce，Spark提供了更加优化和复杂的执行流。这篇博客在读书和google的基础上对spark计算模型进行宏观的把握。
+spark程序模型spark的实例程序：
+ (1) SparkContext中的textFile函">
     
     
     
@@ -79,7 +79,7 @@
     </p>
   <p class="article-time">
     <time datetime="2016-04-12T09:24:30.000Z" itemprop="datePublished">2016-04-12</time>
-    更新日期:<time datetime="2016-05-18T09:32:12.650Z" itemprop="dateModified">2016-05-18</time>
+    更新日期:<time datetime="2016-05-18T09:37:18.803Z" itemprop="dateModified">2016-05-18</time>
     
   </p>
 </header>
@@ -88,17 +88,16 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#RDD简介"><span class="toc-number">1.</span> <span class="toc-text">RDD简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spark的数据存储:_RDD"><span class="toc-number">2.</span> <span class="toc-text">Spark的数据存储: RDD</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spark算子分类及功能"><span class="toc-number">3.</span> <span class="toc-text">Spark算子分类及功能</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#引子"><span class="toc-number">1.</span> <span class="toc-text">引子</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#spark程序模型"><span class="toc-number">2.</span> <span class="toc-text">spark程序模型</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#弹性分布式数据集:RDD"><span class="toc-number">3.</span> <span class="toc-text">弹性分布式数据集:RDD</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#RDD简介"><span class="toc-number">3.1.</span> <span class="toc-text">RDD简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spark的数据存储:_RDD"><span class="toc-number">3.2.</span> <span class="toc-text">Spark的数据存储: RDD</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spark算子分类及功能"><span class="toc-number">3.3.</span> <span class="toc-text">Spark算子分类及功能</span></a></li></ol></li></ol>
 		</div>
 		
-		<p>#引子<br>Spark将应用程序整体翻译为一个有向无环图进行调度和执行，相比MapReduce，Spark提供了更加优化和复杂的执行流。这篇博客在读书和google的基础上对spark计算模型进行宏观的把握。</p>
-<p>#spark程序模型<br>spark的实例程序：</p>
+		<h1 id="引子">引子</h1><p>Spark将应用程序整体翻译为一个有向无环图进行调度和执行，相比MapReduce，Spark提供了更加优化和复杂的执行流。这篇博客在读书和google的基础上对spark计算模型进行宏观的把握。</p>
+<h1 id="spark程序模型">spark程序模型</h1><p>spark的实例程序：</p>
 <p> (1) SparkContext中的textFile函数从HDFS中读取日志文件，赋值给变量file: var file = sc.textFile(“hdfs://xxx.log”)</p>
 <p> (2) RDD中的filter函数过滤带 “ Error ” 的行，输出errors（这里errors也看做一个RDD)：val errors = file.filter(line=&gt;line.contains(“errors”));</p>
 <p> (3) RDD的count函数返回 “ ERROR ”的行数：errors.count();</p>
 <p>用户程序对RDD通过多个函数进行操作，将RDD进行转换。这里先抛出一个概念：spark是如何管理RDD的物理分析的？ 在spark内部有一个BlockManger管理RDD的物理分区，每个Block就是节点上对应的一个物理块，可以存储在内存中，也可以存储在磁盘中。而RDD中的partition是一个逻辑数据块，对应相应的物理块Block。本质上一个RDD在代码层级中相当于一个元数据结构，存储着数据分区及其逻辑结构映射关系、RDD之间的依赖转换关系。</p>
-<p>#弹性分布式数据集:RDD</p>
-<p>本节学习Spark中重要的概念RDD。</p>
+<h1 id="弹性分布式数据集:RDD">弹性分布式数据集:RDD</h1><p>本节学习Spark中重要的概念RDD。</p>
 <h2 id="RDD简介">RDD简介</h2><p>在集群背后，有一个非常重要的分布式数据结构：弹性分布式数据集（Resilient Distributed Dataset），它是逻辑集中的实体，在集群中的多台机器之间进行了数据分区。通过对多台机器上不同RDD分区的控制，就能够减少机器之间的数据重排（data shuffing）。<strong>RDD是spark的核心数据结构，通过RDD的依赖关系形成spark的调度顺序，通过对RDD的操作形成整个Spark程序。</strong></p>
 <p>spark内部源码对RDD的概述：</p>
 <pre><code>Internally, <span class="keyword">each</span> RDD is characterized <span class="keyword">by</span> <span class="constant">five</span> main properties:
@@ -185,7 +184,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#RDD简介"><span class="toc-number">1.</span> <span class="toc-text">RDD简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spark的数据存储:_RDD"><span class="toc-number">2.</span> <span class="toc-text">Spark的数据存储: RDD</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spark算子分类及功能"><span class="toc-number">3.</span> <span class="toc-text">Spark算子分类及功能</span></a></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#引子"><span class="toc-number">1.</span> <span class="toc-text">引子</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#spark程序模型"><span class="toc-number">2.</span> <span class="toc-text">spark程序模型</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#弹性分布式数据集:RDD"><span class="toc-number">3.</span> <span class="toc-text">弹性分布式数据集:RDD</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#RDD简介"><span class="toc-number">3.1.</span> <span class="toc-text">RDD简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spark的数据存储:_RDD"><span class="toc-number">3.2.</span> <span class="toc-text">Spark的数据存储: RDD</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spark算子分类及功能"><span class="toc-number">3.3.</span> <span class="toc-text">Spark算子分类及功能</span></a></li></ol></li></ol>
   </div>
 
 <div id="asidepart">
