@@ -1,95 +1,343 @@
+<!doctype html>
 
- <!DOCTYPE HTML>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
+
+
   
-    <title>隐语义模型在推荐系统中的应用 | Backyard of XiaoQiangXu</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
     
-    <meta name="author" content="xxqcheers">
     
-    <meta name="description" content="前言推荐系统中一个重要的分支，隐语义建模。隐语义模型LFM：Latent Factor Model，其核心思想就是通过隐含特征联系用户兴趣和物品。过程分为三个部分，将物品映射到隐含分类，确定用户对隐含分类的兴趣，然后选择用户感兴趣的分类中的物品推荐给用户。它是基于用户行为统计的自动聚类。，隐语义模型">
+  
+
+  
+
+  
+
+  
+
+  
+
+  
     
     
-    
-    
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/pacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="推荐系统, 隐语义模型, 文本分类, 矩阵分解," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="前言推荐系统中一个重要的分支，隐语义建模。隐语义模型LFM：Latent Factor Model，其核心思想就是通过隐含特征联系用户兴趣和物品。过程分为三个部分，将物品映射到隐含分类，确定用户对隐含分类的兴趣，然后选择用户感兴趣的分类中的物品推荐给用户。它是基于用户行为统计的自动聚类。，隐语义模型在Top-N推荐中的应用十分广泛。常用的隐语义模型，LSA(Latent Semantic Anal">
+<meta property="og:type" content="article">
+<meta property="og:title" content="隐语义模型在推荐系统中的应用">
+<meta property="og:url" content="http://yoursite.com/2015/08/14/隐语义模型在推荐系统中的应用/index.html">
+<meta property="og:site_name" content="Backyard of XiaoQiangXu">
+<meta property="og:description" content="前言推荐系统中一个重要的分支，隐语义建模。隐语义模型LFM：Latent Factor Model，其核心思想就是通过隐含特征联系用户兴趣和物品。过程分为三个部分，将物品映射到隐含分类，确定用户对隐含分类的兴趣，然后选择用户感兴趣的分类中的物品推荐给用户。它是基于用户行为统计的自动聚类。，隐语义模型在Top-N推荐中的应用十分广泛。常用的隐语义模型，LSA(Latent Semantic Anal">
+<meta property="og:updated_time" content="2016-05-18T15:19:11.294Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="隐语义模型在推荐系统中的应用">
+<meta name="twitter:description" content="前言推荐系统中一个重要的分支，隐语义建模。隐语义模型LFM：Latent Factor Model，其核心思想就是通过隐含特征联系用户兴趣和物品。过程分为三个部分，将物品映射到隐含分类，确定用户对隐含分类的兴趣，然后选择用户感兴趣的分类中的物品推荐给用户。它是基于用户行为统计的自动聚类。，隐语义模型在Top-N推荐中的应用十分广泛。常用的隐语义模型，LSA(Latent Semantic Anal">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 隐语义模型在推荐系统中的应用 | Backyard of XiaoQiangXu </title>
 </head>
 
-  <body>
-    <header>
-      <div>
-		
-			<div id="imglogo">
-				<a href="/"><img src="/img/logo.svg" alt="Backyard of XiaoQiangXu" title="Backyard of XiaoQiangXu"/></a>
-			</div>
-			
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="Backyard of XiaoQiangXu">Backyard of XiaoQiangXu</a></h1>
-				<h2 class="blog-motto">Walk steps step by step</h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					
-						<li><a href="/">首页</a></li>
-					
-						<li><a href="/archives">存档</a></li>
-					
-						<li><a href="/about">关于</a></li>
-					
-						<li><a href="/todolist">ToDo</a></li>
-					
-					<li>
-					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
-						<input type="hidden" name="q" value="site:yoursite.com">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?15961b4c2abc52c07b678d5f349777de";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Backyard of XiaoQiangXu</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Walk steps step by step</p>
 </div>
 
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
     </header>
-    <div id="container">
-      <div id="main" class="post" itemscope itemprop="blogPost">
-	<article itemprop="articleBody"> 
-		<header class="article-info clearfix">
-  <h1 itemprop="name">
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
     
-      <a href="/2015/08/14/隐语义模型在推荐系统中的应用/" title="隐语义模型在推荐系统中的应用" itemprop="url">隐语义模型在推荐系统中的应用</a>
-  </h1>
-  <p class="article-author">By
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
     
-      <a href="http://yoursite.com" title="xxqcheers">xxqcheers</a>
-    </p>
-  <p class="article-time">
-    <time datetime="2015-08-14T10:10:49.000Z" itemprop="datePublished">2015-08-14</time>
-    更新日期:<time datetime="2015-08-16T10:23:44.209Z" itemprop="dateModified">2015-08-16</time>
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                隐语义模型在推荐系统中的应用
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-08-14T18:10:49+08:00" content="2015-08-14">
+              2015-08-14
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/08/14/隐语义模型在推荐系统中的应用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/14/隐语义模型在推荐系统中的应用/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
     
-  </p>
-</header>
-	<div class="article-content">
-		
-		
-		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目录</strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#基本算法"><span class="toc-number">2.</span> <span class="toc-text">基本算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#与UserCF和ItemCF对比"><span class="toc-number">2.1.</span> <span class="toc-text">与UserCF和ItemCF对比</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#隐语义模型的应用"><span class="toc-number">3.</span> <span class="toc-text">隐语义模型的应用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#向用户推荐物品"><span class="toc-number">3.1.</span> <span class="toc-text">向用户推荐物品</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文本分类"><span class="toc-number">3.2.</span> <span class="toc-text">文本分类</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#采用矩阵分解技术发现两种实体见潜在的特征"><span class="toc-number">4.</span> <span class="toc-text">采用矩阵分解技术发现两种实体见潜在的特征</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#pureSVD"><span class="toc-number">4.1.</span> <span class="toc-text">pureSVD</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Latent_Factor_Model"><span class="toc-number">4.2.</span> <span class="toc-text">Latent Factor Model</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#非负矩阵分解"><span class="toc-number">4.3.</span> <span class="toc-text">非负矩阵分解</span></a></li></ol></li></ol>
-		</div>
-		
-		<h1 id="前言">前言</h1><p>推荐系统中一个重要的分支，隐语义建模。隐语义模型LFM：Latent Factor Model，其<strong>核心思想就是通过隐含特征联系用户兴趣和物品。过程分为三个部分，将物品映射到隐含分类，确定用户对隐含分类的兴趣，然后选择用户感兴趣的分类中的物品推荐给用户。它是基于用户行为统计的自动聚类。</strong>，<strong>隐语义模型</strong>在Top-N推荐中的应用十分广泛。常用的隐语义模型，LSA(Latent Semantic Analysis)，LDA(Latent Dirichlet Allocation)，主题模型(Topic Model)，矩阵分解(Matrix Factorization)等等。</p>
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言">前言</h1><p>推荐系统中一个重要的分支，隐语义建模。隐语义模型LFM：Latent Factor Model，其<strong>核心思想就是通过隐含特征联系用户兴趣和物品。过程分为三个部分，将物品映射到隐含分类，确定用户对隐含分类的兴趣，然后选择用户感兴趣的分类中的物品推荐给用户。它是基于用户行为统计的自动聚类。</strong>，<strong>隐语义模型</strong>在Top-N推荐中的应用十分广泛。常用的隐语义模型，LSA(Latent Semantic Analysis)，LDA(Latent Dirichlet Allocation)，主题模型(Topic Model)，矩阵分解(Matrix Factorization)等等。</p>
 <p>这些模型是本质上是想通的，目的就是找出<strong>潜在的主题或分类</strong>。这些技术一开始实在文本挖掘中提出来的。从netflix推荐大赛之后，这些技术被用在推荐领域，并且得到明显的效果。比如，在推荐系统中，能够用这些模型将<strong>用户的行为（用户的偏好）对item进行自动聚类，</strong>也就是把item划分到不同类别/主题，这些主题/类别可以理解为用户的兴趣。</p>
 <p>凭借这种思想，著名的推荐领域大神Yehuda Koren更是凭借矩阵分解模型勇夺Netflix Prize推荐比赛冠军，以矩阵分解为基础，Yehuda Koren在数据挖掘和机器学习相关的国际顶级会议(SIGIR,SIGKDD,RecSys等)发表了很多文章，将矩阵分解模型的优势发挥得淋漓尽致。实验结果表明，在个性化推荐中使用矩阵分解模型要明显优于传统的基于邻域的协同过滤(又称基于记忆的协同过滤)方法，如UserCF、ItemCF等，这也使得矩阵分解成为了目前个性化推荐研究领域中的主流模型。</p>
 <h1 id="基本算法">基本算法</h1><h2 id="与UserCF和ItemCF对比">与UserCF和ItemCF对比</h2><p>首先通过一个例子来理解一下这个模型，比如说有两个用户A和B，目前有用户的阅读列表，用户A的兴趣涉及侦探小说，科普图书以及一些计算机技术书，而用户B的兴趣比较集中在数学和机器学习方面。<br>那么如何给A和B推荐图书呢？</p>
@@ -142,260 +390,218 @@
 </ul>
 <p>这种方法的思路<strong>和上面的两种还是不同相同的，主要是在计算目标用户的最近邻集合</strong>，主要思想还是knn,只是在中间用了矩阵分解的方法降低了计算的时间复杂度。</p>
 <p>参考：<a href="blog.csdn.net/zyvscc/article/details/7551842">blog.csdn.net/zyvscc/article/details/7551842</a><br>           <a herf="www.cnblogs.com/LeftNotEasy/archive/2011/01/19/svd-and-applications.html">www.cnblogs.com/LeftNotEasy/archive/2011/01/19/svd-and-applications.html</a></p>
-  
-	</div>
-		<footer class="article-footer clearfix">
 
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/推荐系统-隐语义模型-文本分类-矩阵分解/">推荐系统,隐语义模型,文本分类,矩阵分解</a>
-  </div>
-
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/机器学习/">机器学习</a>
-</div>
-
-
-
-<div class="article-share" id="share">
-
-  <div data-url="http://yoursite.com/2015/08/14/隐语义模型在推荐系统中的应用/" data-title="隐语义模型在推荐系统中的应用 | Backyard of XiaoQiangXu" data-tsina="null" class="share clearfix">
-  </div>
-
-</div>
-</footer>   	       
-	</article>
-	
-<nav class="article-nav clearfix">
- 
- <div class="prev" >
- <a href="/2015/08/15/maven工具笔记/" title="maven工具笔记">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  maven工具笔记</span>
-</a>
-</div>
-
-
-<div class="next">
-<a href="/2015/08/13/重构代码说起：java的接口与抽象类/"  title="重构代码说起：java的接口与抽象类">
- <strong>NEXT:</strong><br/> 
- <span>重构代码说起：java的接口与抽象类
-</span>
-</a>
-</div>
-
-</nav>
-
-	
-</div>  
-      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
-
-  <div id="toc" class="toc-aside">
-  <strong class="toc-title">文章目录</strong>
-  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#基本算法"><span class="toc-number">2.</span> <span class="toc-text">基本算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#与UserCF和ItemCF对比"><span class="toc-number">2.1.</span> <span class="toc-text">与UserCF和ItemCF对比</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#隐语义模型的应用"><span class="toc-number">3.</span> <span class="toc-text">隐语义模型的应用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#向用户推荐物品"><span class="toc-number">3.1.</span> <span class="toc-text">向用户推荐物品</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文本分类"><span class="toc-number">3.2.</span> <span class="toc-text">文本分类</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#采用矩阵分解技术发现两种实体见潜在的特征"><span class="toc-number">4.</span> <span class="toc-text">采用矩阵分解技术发现两种实体见潜在的特征</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#pureSVD"><span class="toc-number">4.1.</span> <span class="toc-text">pureSVD</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Latent_Factor_Model"><span class="toc-number">4.2.</span> <span class="toc-text">Latent Factor Model</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#非负矩阵分解"><span class="toc-number">4.3.</span> <span class="toc-text">非负矩阵分解</span></a></li></ol></li></ol>
-  </div>
-
-<div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
-<aside class="clearfix">
-
-  
-<div class="categorieslist">
-	<p class="asidetitle">分类</p>
-		<ul>
-		
-			<li><a href="/categories/Hadoop/" title="Hadoop">Hadoop<sup>1</sup></a></li>
-		
-			<li><a href="/categories/Spark/" title="Spark">Spark<sup>1</sup></a></li>
-		
-			<li><a href="/categories/java语言/" title="java语言">java语言<sup>1</sup></a></li>
-		
-			<li><a href="/categories/工具/" title="工具">工具<sup>1</sup></a></li>
-		
-			<li><a href="/categories/机器学习/" title="机器学习">机器学习<sup>2</sup></a></li>
-		
-		</ul>
-</div>
-
-
-  
-<div class="tagslist">
-	<p class="asidetitle">标签</p>
-		<ul class="clearfix">
-		
-			<li><a href="/tags/分布式计算/" title="分布式计算">分布式计算<sup>2</sup></a></li>
-		
-			<li><a href="/tags/大数据/" title="大数据">大数据<sup>2</sup></a></li>
-		
-			<li><a href="/tags/开发工具/" title="开发工具">开发工具<sup>1</sup></a></li>
-		
-			<li><a href="/tags/推荐系统-隐语义模型-文本分类-矩阵分解/" title="推荐系统,隐语义模型,文本分类,矩阵分解">推荐系统,隐语义模型,文本分类,矩阵分解<sup>1</sup></a></li>
-		
-			<li><a href="/tags/特征处理-预处理/" title="特征处理 预处理">特征处理 预处理<sup>1</sup></a></li>
-		
-			<li><a href="/tags/编程基础/" title="编程基础">编程基础<sup>1</sup></a></li>
-		
-		</ul>
-</div>
-
-
-  <div class="linkslist">
-  <p class="asidetitle">友情链接</p>
-    <ul>
-      <li><a href="http://tech.meituan.com/" target="_blank" title="YangJian">MeiTuan Technology</a></li>
-      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
-    </ul>
-</div>
-
-
-  
-  <div class="tagcloudlist">
-    <p class="asidetitle">标签云</p>
-    <div class="tagcloudlist clearfix">
-       <a href="/tags/分布式计算/" style="font-size: 20px;">分布式计算</a> <a href="/tags/大数据/" style="font-size: 20px;">大数据</a> <a href="/tags/开发工具/" style="font-size: 10px;">开发工具</a> <a href="/tags/推荐系统-隐语义模型-文本分类-矩阵分解/" style="font-size: 10px;">推荐系统,隐语义模型,文本分类,矩阵分解</a> <a href="/tags/特征处理-预处理/" style="font-size: 10px;">特征处理 预处理</a> <a href="/tags/编程基础/" style="font-size: 10px;">编程基础</a>
-    </div>
-  </div>
-
-
-  <div class="rsspart">
-	<a href="null" target="_blank" title="rss">RSS 订阅</a>
-</div>
-
-</aside>
-</div>
-    </div>
-    <footer><div id="footer" >
-	
-	<div class="line">
-		<span></span>
-		<div class="author"></div>
-	</div>
-	
-	
-	<div class="social-font clearfix">
-		
-		
-		
-		
-		
-	</div>
-		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2016 
-		
-		<a href="http://yoursite.com" target="_blank" title="xxqcheers">xxqcheers</a>
-		
-		</p>
-</div>
-</footer>
-    <script src="/js/jquery-2.1.0.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else
-    {
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
       
-      $('#toc.toc-aside').css('display', 'none');
+    </div>
+
+    <div>
+      
         
-    }
-  });
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-});
-</script>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/推荐系统-隐语义模型-文本分类-矩阵分解/" rel="tag">#推荐系统, 隐语义模型, 文本分类, 矩阵分解</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/08/13/重构代码说起：java的接口与抽象类/" rel="next" title="重构代码说起：java的接口与抽象类">
+                <i class="fa fa-chevron-left"></i> 重构代码说起：java的接口与抽象类
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/08/15/maven工具笔记/" rel="prev" title="maven工具笔记">
+                maven工具笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/08/14/隐语义模型在推荐系统中的应用/"
+           data-title="隐语义模型在推荐系统中的应用" data-url="http://yoursite.com/2015/08/14/隐语义模型在推荐系统中的应用/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="xxqcheers" />
+          <p class="site-author-name" itemprop="name">xxqcheers</p>
+          <p class="site-description motion-element" itemprop="description">Walk steps step by step. 知道，理解，用得好。说出来，写出来，让别人懂。是不同的层次！</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基本算法"><span class="nav-number">2.</span> <span class="nav-text">基本算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#与UserCF和ItemCF对比"><span class="nav-number">2.1.</span> <span class="nav-text">与UserCF和ItemCF对比</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#隐语义模型的应用"><span class="nav-number">3.</span> <span class="nav-text">隐语义模型的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#向用户推荐物品"><span class="nav-number">3.1.</span> <span class="nav-text">向用户推荐物品</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文本分类"><span class="nav-number">3.2.</span> <span class="nav-text">文本分类</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#采用矩阵分解技术发现两种实体见潜在的特征"><span class="nav-number">4.</span> <span class="nav-text">采用矩阵分解技术发现两种实体见潜在的特征</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pureSVD"><span class="nav-number">4.1.</span> <span class="nav-text">pureSVD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Latent_Factor_Model"><span class="nav-number">4.2.</span> <span class="nav-text">Latent Factor Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非负矩阵分解"><span class="nav-number">4.3.</span> <span class="nav-text">非负矩阵分解</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xxqcheers</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
 
 <script type="text/javascript">
-$(document).ready(function(){ 
-  var ai = $('.article-content>iframe'),
-      ae = $('.article-content>embed'),
-      t  = $('#toc'),
-      h  = $('article h2')
-      ah = $('article h2'),
-      ta = $('#toc.toc-aside'),
-      o  = $('.openaside'),
-      c  = $('.closeaside');
-  if(ai.length>0){
-    ai.wrap('<div class="video-container" />');
-  };
-  if(ae.length>0){
-   ae.wrap('<div class="video-container" />');
-  };
-  if(ah.length==0){
-    t.css('display','none');
-  }else{
-    c.click(function(){
-      ta.css('display', 'block').addClass('fadeIn');
-    });
-    o.click(function(){
-      ta.css('display', 'none');
-    });
-    $(window).scroll(function(){
-      ta.css("top",Math.max(140,320-$(this).scrollTop()));
-    });
-  };
-});
-</script>
-
-
-<script type="text/javascript">
-$(document).ready(function(){ 
-  var $this = $('.share'),
-      url = $this.attr('data-url'),
-      encodedUrl = encodeURIComponent(url),
-      title = $this.attr('data-title'),
-      tsina = $this.attr('data-tsina');
-  var html = [
-  '<a href="#" class="overlay" id="qrcode"></a>',
-  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
-  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
-  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
-  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
-  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
-  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
-  '<span title="Share to"></span>'
-  ].join('');
-  $this.append(html);
-  $('.article-share-qrcode').click(function(){
-    var imgSrc = $('#qrcode-pic').attr('data-src');
-    $('#qrcode-pic').attr('src', imgSrc);
-    $('#qrcode-pic').load(function(){
-        $('.qrcode strong').text(' ');
-    });
-  });
-});     
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
 </script>
 
 
@@ -403,5 +609,118 @@ $(document).ready(function(){
 
 
 
-  </body>
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"xxqcheers"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+
+</body>
 </html>
