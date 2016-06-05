@@ -84,16 +84,16 @@
 
 
 
-<meta name="description" content="一、引言最近在看代码重构这本书的时候，碰到过接口和抽象类的概念，再加上看hadoop权威指南这本书的时候，也提到了新版的hadoop API与旧的API的区别，也提到了这一点。无聊时候看到笔记中有这个点没有总结，在网上找点这方面的东西看了下，在此总结下，以便以后需要的时候再看。抽象类与接口是Java语言中对抽象概念进行定义的两种机制，正是由于他们的存在才赋予java强大的面向对象的能力。他们两者之">
+<meta name="description" content="&amp;#x4E00;&amp;#x3001;&amp;#x5F15;&amp;#x8A00;&amp;#x6700;&amp;#x8FD1;&amp;#x5728;&amp;#x770B;&amp;#x4EE3;&amp;#x7801;&amp;#x91CD;&amp;#x6784;&amp;#x8FD9;&amp;#x672C;&amp;#x4E66;&amp;#x7684;&amp;#x65F6;&amp;#x5019;&amp;#xFF0C;&amp;#x78B0;&amp;#x5230;&amp;#x8FC7;&amp;#x63A5;&amp;#x53E3;&amp;#x548C;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="重构代码说起：java的接口与抽象类">
 <meta property="og:url" content="http://yoursite.com/2015/08/13/重构代码说起：java的接口与抽象类/index.html">
 <meta property="og:site_name" content="Backyard of XiaoQiangXu">
-<meta property="og:description" content="一、引言最近在看代码重构这本书的时候，碰到过接口和抽象类的概念，再加上看hadoop权威指南这本书的时候，也提到了新版的hadoop API与旧的API的区别，也提到了这一点。无聊时候看到笔记中有这个点没有总结，在网上找点这方面的东西看了下，在此总结下，以便以后需要的时候再看。抽象类与接口是Java语言中对抽象概念进行定义的两种机制，正是由于他们的存在才赋予java强大的面向对象的能力。他们两者之">
+<meta property="og:description" content="&amp;#x4E00;&amp;#x3001;&amp;#x5F15;&amp;#x8A00;&amp;#x6700;&amp;#x8FD1;&amp;#x5728;&amp;#x770B;&amp;#x4EE3;&amp;#x7801;&amp;#x91CD;&amp;#x6784;&amp;#x8FD9;&amp;#x672C;&amp;#x4E66;&amp;#x7684;&amp;#x65F6;&amp;#x5019;&amp;#xFF0C;&amp;#x78B0;&amp;#x5230;&amp;#x8FC7;&amp;#x63A5;&amp;#x53E3;&amp;#x548C;">
 <meta property="og:updated_time" content="2016-05-18T14:53:27.416Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="重构代码说起：java的接口与抽象类">
-<meta name="twitter:description" content="一、引言最近在看代码重构这本书的时候，碰到过接口和抽象类的概念，再加上看hadoop权威指南这本书的时候，也提到了新版的hadoop API与旧的API的区别，也提到了这一点。无聊时候看到笔记中有这个点没有总结，在网上找点这方面的东西看了下，在此总结下，以便以后需要的时候再看。抽象类与接口是Java语言中对抽象概念进行定义的两种机制，正是由于他们的存在才赋予java强大的面向对象的能力。他们两者之">
+<meta name="twitter:description" content="&amp;#x4E00;&amp;#x3001;&amp;#x5F15;&amp;#x8A00;&amp;#x6700;&amp;#x8FD1;&amp;#x5728;&amp;#x770B;&amp;#x4EE3;&amp;#x7801;&amp;#x91CD;&amp;#x6784;&amp;#x8FD9;&amp;#x672C;&amp;#x4E66;&amp;#x7684;&amp;#x65F6;&amp;#x5019;&amp;#xFF0C;&amp;#x78B0;&amp;#x5230;&amp;#x8FC7;&amp;#x63A5;&amp;#x53E3;&amp;#x548C;">
 
 
 
@@ -337,8 +337,8 @@
       
 
       
-        <h1 id="一、引言">一、引言</h1><p>最近在看代码重构这本书的时候，碰到过接口和抽象类的概念，再加上看hadoop权威指南这本书的时候，也提到了新版的hadoop API与旧的API的区别，也提到了这一点。无聊时候看到笔记中有这个点没有总结，在网上找点这方面的东西看了下，在此总结下，以便以后需要的时候再看。抽象类与接口是Java语言中对抽象概念进行定义的两种机制，正是由于他们的存在才赋予java强大的面向对象的能力。他们两者之间对抽象概念的支持有很大的相似，甚至可以互换，但是也有区别。</p>
-<h1 id="二、抽象类">二、抽象类</h1><p>抽象类是用来捕捉子类的通用特性的。它不能被实例化，只能被用作子类的超类。抽象类是被用来创建继承层级里子类的模板。我们都知道在面向对象的领域一切都是对象，同时所有的对象都是通过类来描述的，但是并不是所有的类都是来描述对象的。如果一个类没有足够的信息来描述一个具体的对象，而需要其他具体的类来支撑它，那么这样的类我们称它为抽象类。比如new Animal()，我们都知道这个是产生一个动物Animal对象，但是这个Animal具体长成什么样子我们并不知道，它没有一个具体动物的概念，所以他就是一个抽象类，需要一个具体的动物，如狗、猫来对它进行特定的描述，我们才知道它长成啥样。</p>
+        <h1 id="&#x4E00;&#x3001;&#x5F15;&#x8A00;">&#x4E00;&#x3001;&#x5F15;&#x8A00;</h1><p>&#x6700;&#x8FD1;&#x5728;&#x770B;&#x4EE3;&#x7801;&#x91CD;&#x6784;&#x8FD9;&#x672C;&#x4E66;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x78B0;&#x5230;&#x8FC7;&#x63A5;&#x53E3;&#x548C;&#x62BD;&#x8C61;&#x7C7B;&#x7684;&#x6982;&#x5FF5;&#xFF0C;&#x518D;&#x52A0;&#x4E0A;&#x770B;hadoop&#x6743;&#x5A01;&#x6307;&#x5357;&#x8FD9;&#x672C;&#x4E66;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x4E5F;&#x63D0;&#x5230;&#x4E86;&#x65B0;&#x7248;&#x7684;hadoop API&#x4E0E;&#x65E7;&#x7684;API&#x7684;&#x533A;&#x522B;&#xFF0C;&#x4E5F;&#x63D0;&#x5230;&#x4E86;&#x8FD9;&#x4E00;&#x70B9;&#x3002;&#x65E0;&#x804A;&#x65F6;&#x5019;&#x770B;&#x5230;&#x7B14;&#x8BB0;&#x4E2D;&#x6709;&#x8FD9;&#x4E2A;&#x70B9;&#x6CA1;&#x6709;&#x603B;&#x7ED3;&#xFF0C;&#x5728;&#x7F51;&#x4E0A;&#x627E;&#x70B9;&#x8FD9;&#x65B9;&#x9762;&#x7684;&#x4E1C;&#x897F;&#x770B;&#x4E86;&#x4E0B;&#xFF0C;&#x5728;&#x6B64;&#x603B;&#x7ED3;&#x4E0B;&#xFF0C;&#x4EE5;&#x4FBF;&#x4EE5;&#x540E;&#x9700;&#x8981;&#x7684;&#x65F6;&#x5019;&#x518D;&#x770B;&#x3002;&#x62BD;&#x8C61;&#x7C7B;&#x4E0E;&#x63A5;&#x53E3;&#x662F;Java&#x8BED;&#x8A00;&#x4E2D;&#x5BF9;&#x62BD;&#x8C61;&#x6982;&#x5FF5;&#x8FDB;&#x884C;&#x5B9A;&#x4E49;&#x7684;&#x4E24;&#x79CD;&#x673A;&#x5236;&#xFF0C;&#x6B63;&#x662F;&#x7531;&#x4E8E;&#x4ED6;&#x4EEC;&#x7684;&#x5B58;&#x5728;&#x624D;&#x8D4B;&#x4E88;java&#x5F3A;&#x5927;&#x7684;&#x9762;&#x5411;&#x5BF9;&#x8C61;&#x7684;&#x80FD;&#x529B;&#x3002;&#x4ED6;&#x4EEC;&#x4E24;&#x8005;&#x4E4B;&#x95F4;&#x5BF9;&#x62BD;&#x8C61;&#x6982;&#x5FF5;&#x7684;&#x652F;&#x6301;&#x6709;&#x5F88;&#x5927;&#x7684;&#x76F8;&#x4F3C;&#xFF0C;&#x751A;&#x81F3;&#x53EF;&#x4EE5;&#x4E92;&#x6362;&#xFF0C;&#x4F46;&#x662F;&#x4E5F;&#x6709;&#x533A;&#x522B;&#x3002;</p>
+<h1 id="&#x4E8C;&#x3001;&#x62BD;&#x8C61;&#x7C7B;">&#x4E8C;&#x3001;&#x62BD;&#x8C61;&#x7C7B;</h1><p>&#x62BD;&#x8C61;&#x7C7B;&#x662F;&#x7528;&#x6765;&#x6355;&#x6349;&#x5B50;&#x7C7B;&#x7684;&#x901A;&#x7528;&#x7279;&#x6027;&#x7684;&#x3002;&#x5B83;&#x4E0D;&#x80FD;&#x88AB;&#x5B9E;&#x4F8B;&#x5316;&#xFF0C;&#x53EA;&#x80FD;&#x88AB;&#x7528;&#x4F5C;&#x5B50;&#x7C7B;&#x7684;&#x8D85;&#x7C7B;&#x3002;&#x62BD;&#x8C61;&#x7C7B;&#x662F;&#x88AB;&#x7528;&#x6765;&#x521B;&#x5EFA;&#x7EE7;&#x627F;&#x5C42;&#x7EA7;&#x91CC;&#x5B50;&#x7C7B;&#x7684;&#x6A21;&#x677F;&#x3002;&#x6211;&#x4EEC;&#x90FD;&#x77E5;&#x9053;&#x5728;&#x9762;&#x5411;&#x5BF9;&#x8C61;&#x7684;&#x9886;&#x57DF;&#x4E00;&#x5207;&#x90FD;&#x662F;&#x5BF9;&#x8C61;&#xFF0C;&#x540C;&#x65F6;&#x6240;&#x6709;&#x7684;&#x5BF9;&#x8C61;&#x90FD;&#x662F;&#x901A;&#x8FC7;&#x7C7B;&#x6765;&#x63CF;&#x8FF0;&#x7684;&#xFF0C;&#x4F46;&#x662F;&#x5E76;&#x4E0D;&#x662F;&#x6240;&#x6709;&#x7684;&#x7C7B;&#x90FD;&#x662F;&#x6765;&#x63CF;&#x8FF0;&#x5BF9;&#x8C61;&#x7684;&#x3002;&#x5982;&#x679C;&#x4E00;&#x4E2A;&#x7C7B;&#x6CA1;&#x6709;&#x8DB3;&#x591F;&#x7684;&#x4FE1;&#x606F;&#x6765;&#x63CF;&#x8FF0;&#x4E00;&#x4E2A;&#x5177;&#x4F53;&#x7684;&#x5BF9;&#x8C61;&#xFF0C;&#x800C;&#x9700;&#x8981;&#x5176;&#x4ED6;&#x5177;&#x4F53;&#x7684;&#x7C7B;&#x6765;&#x652F;&#x6491;&#x5B83;&#xFF0C;&#x90A3;&#x4E48;&#x8FD9;&#x6837;&#x7684;&#x7C7B;&#x6211;&#x4EEC;&#x79F0;&#x5B83;&#x4E3A;&#x62BD;&#x8C61;&#x7C7B;&#x3002;&#x6BD4;&#x5982;new Animal()&#xFF0C;&#x6211;&#x4EEC;&#x90FD;&#x77E5;&#x9053;&#x8FD9;&#x4E2A;&#x662F;&#x4EA7;&#x751F;&#x4E00;&#x4E2A;&#x52A8;&#x7269;Animal&#x5BF9;&#x8C61;&#xFF0C;&#x4F46;&#x662F;&#x8FD9;&#x4E2A;Animal&#x5177;&#x4F53;&#x957F;&#x6210;&#x4EC0;&#x4E48;&#x6837;&#x5B50;&#x6211;&#x4EEC;&#x5E76;&#x4E0D;&#x77E5;&#x9053;&#xFF0C;&#x5B83;&#x6CA1;&#x6709;&#x4E00;&#x4E2A;&#x5177;&#x4F53;&#x52A8;&#x7269;&#x7684;&#x6982;&#x5FF5;&#xFF0C;&#x6240;&#x4EE5;&#x4ED6;&#x5C31;&#x662F;&#x4E00;&#x4E2A;&#x62BD;&#x8C61;&#x7C7B;&#xFF0C;&#x9700;&#x8981;&#x4E00;&#x4E2A;&#x5177;&#x4F53;&#x7684;&#x52A8;&#x7269;&#xFF0C;&#x5982;&#x72D7;&#x3001;&#x732B;&#x6765;&#x5BF9;&#x5B83;&#x8FDB;&#x884C;&#x7279;&#x5B9A;&#x7684;&#x63CF;&#x8FF0;&#xFF0C;&#x6211;&#x4EEC;&#x624D;&#x77E5;&#x9053;&#x5B83;&#x957F;&#x6210;&#x5565;&#x6837;&#x3002;</p>
 <pre><code>public abstract class <span class="keyword">Animal</span> {
     public abstract void cry();
 }
@@ -347,14 +347,14 @@ public class Cat extends <span class="keyword">Animal</span>{
 
 @Override
 public void cry() {
-           System.out.println(<span class="string">"猫叫：喵喵..."</span>);
+           System.out.println(<span class="string">&quot;&#x732B;&#x53EB;&#xFF1A;&#x55B5;&#x55B5;...&quot;</span>);
     }
 }
 
 public class Dog extends <span class="keyword">Animal</span>{
     @Override
     public void cry() {
-        System.out.println(<span class="string">"狗叫:汪汪..."</span>);
+        System.out.println(<span class="string">&quot;&#x72D7;&#x53EB;:&#x6C6A;&#x6C6A;...&quot;</span>);
     }
 
 }
@@ -370,15 +370,15 @@ public class Test {
     }
 }
 Output:
-猫叫：喵喵...
-狗叫:汪汪...
-</code></pre><h1 id="三、接口">三、接口</h1><p>&#8194;&#8194; 接口是一种比抽象类更加抽象的“类”。这里给“类”加引号是我找不到更好的词来表示，但是我们要明确一点就是，接口本身就不是类，从我们不能实例化一个接口就可以看出。如new Runnable();肯定是错误的，我们只能new它的实现类。接口是用来建立类与类之间的协议，它所提供的只是一种形式，而没有具体的实现。同时实现该接口的实现类必须要实现该接口的所有方法，通过使用implements关键字，他表示该类在遵循某个或某组特定的接口，同时也表示着“interface只是它的外貌，但是现在需要声明它是如何工作的”。</p>
-<p>以Externalizable接口为例：</p>
+&#x732B;&#x53EB;&#xFF1A;&#x55B5;&#x55B5;...
+&#x72D7;&#x53EB;:&#x6C6A;&#x6C6A;...
+</code></pre><h1 id="&#x4E09;&#x3001;&#x63A5;&#x53E3;">&#x4E09;&#x3001;&#x63A5;&#x53E3;</h1><p>&#x2002;&#x2002; &#x63A5;&#x53E3;&#x662F;&#x4E00;&#x79CD;&#x6BD4;&#x62BD;&#x8C61;&#x7C7B;&#x66F4;&#x52A0;&#x62BD;&#x8C61;&#x7684;&#x201C;&#x7C7B;&#x201D;&#x3002;&#x8FD9;&#x91CC;&#x7ED9;&#x201C;&#x7C7B;&#x201D;&#x52A0;&#x5F15;&#x53F7;&#x662F;&#x6211;&#x627E;&#x4E0D;&#x5230;&#x66F4;&#x597D;&#x7684;&#x8BCD;&#x6765;&#x8868;&#x793A;&#xFF0C;&#x4F46;&#x662F;&#x6211;&#x4EEC;&#x8981;&#x660E;&#x786E;&#x4E00;&#x70B9;&#x5C31;&#x662F;&#xFF0C;&#x63A5;&#x53E3;&#x672C;&#x8EAB;&#x5C31;&#x4E0D;&#x662F;&#x7C7B;&#xFF0C;&#x4ECE;&#x6211;&#x4EEC;&#x4E0D;&#x80FD;&#x5B9E;&#x4F8B;&#x5316;&#x4E00;&#x4E2A;&#x63A5;&#x53E3;&#x5C31;&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#x3002;&#x5982;new Runnable();&#x80AF;&#x5B9A;&#x662F;&#x9519;&#x8BEF;&#x7684;&#xFF0C;&#x6211;&#x4EEC;&#x53EA;&#x80FD;new&#x5B83;&#x7684;&#x5B9E;&#x73B0;&#x7C7B;&#x3002;&#x63A5;&#x53E3;&#x662F;&#x7528;&#x6765;&#x5EFA;&#x7ACB;&#x7C7B;&#x4E0E;&#x7C7B;&#x4E4B;&#x95F4;&#x7684;&#x534F;&#x8BAE;&#xFF0C;&#x5B83;&#x6240;&#x63D0;&#x4F9B;&#x7684;&#x53EA;&#x662F;&#x4E00;&#x79CD;&#x5F62;&#x5F0F;&#xFF0C;&#x800C;&#x6CA1;&#x6709;&#x5177;&#x4F53;&#x7684;&#x5B9E;&#x73B0;&#x3002;&#x540C;&#x65F6;&#x5B9E;&#x73B0;&#x8BE5;&#x63A5;&#x53E3;&#x7684;&#x5B9E;&#x73B0;&#x7C7B;&#x5FC5;&#x987B;&#x8981;&#x5B9E;&#x73B0;&#x8BE5;&#x63A5;&#x53E3;&#x7684;&#x6240;&#x6709;&#x65B9;&#x6CD5;&#xFF0C;&#x901A;&#x8FC7;&#x4F7F;&#x7528;implements&#x5173;&#x952E;&#x5B57;&#xFF0C;&#x4ED6;&#x8868;&#x793A;&#x8BE5;&#x7C7B;&#x5728;&#x9075;&#x5FAA;&#x67D0;&#x4E2A;&#x6216;&#x67D0;&#x7EC4;&#x7279;&#x5B9A;&#x7684;&#x63A5;&#x53E3;&#xFF0C;&#x540C;&#x65F6;&#x4E5F;&#x8868;&#x793A;&#x7740;&#x201C;interface&#x53EA;&#x662F;&#x5B83;&#x7684;&#x5916;&#x8C8C;&#xFF0C;&#x4F46;&#x662F;&#x73B0;&#x5728;&#x9700;&#x8981;&#x58F0;&#x660E;&#x5B83;&#x662F;&#x5982;&#x4F55;&#x5DE5;&#x4F5C;&#x7684;&#x201D;&#x3002;</p>
+<p>&#x4EE5;Externalizable&#x63A5;&#x53E3;&#x4E3A;&#x4F8B;&#xFF1A;</p>
 <pre><code><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Externalizable</span> <span class="keyword">extends</span> <span class="title">Serializable</span> {</span> 
     <span class="typename">void</span> writeExternal(ObjectOutput out) <span class="keyword">throws</span> IOException; 
     <span class="typename">void</span> readExternal(ObjectInput <span class="keyword">in</span>) <span class="keyword">throws</span> IOException, ClassNotFoundException;
 }
-当你实现这个接口时，你就需要实现上面的两个方法：
+&#x5F53;&#x4F60;&#x5B9E;&#x73B0;&#x8FD9;&#x4E2A;&#x63A5;&#x53E3;&#x65F6;&#xFF0C;&#x4F60;&#x5C31;&#x9700;&#x8981;&#x5B9E;&#x73B0;&#x4E0A;&#x9762;&#x7684;&#x4E24;&#x4E2A;&#x65B9;&#x6CD5;&#xFF1A;
 <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Employee</span> <span class="keyword">implements</span> <span class="title">Externalizable</span> {</span> 
     <span class="typename">int</span> employeeId; 
     String employeeName;
@@ -396,24 +396,24 @@ Output:
     }
 }
 </code></pre><ol>
-<li>个Interface的方所有法访问权限自动被声明为public。确切的说只能为public，当然你可以显示的声明为protected、private，但是编译会出错！</li>
-<li>接口中可以定义“成员变量”，或者说是不可变的常量，因为接口中的“成员变量”会自动变为为public static final。可以通过类命名直接访问：ImplementClass.name</li>
-<li>实现接口的非抽象类必须要实现该接口的所有方法。抽象类可以不用实现。</li>
-<li>不能使用new操作符实例化一个接口，但可以声明一个接口变量，该变量必须引用（refer to)一个实现该接口的类的对象。可以使用 instanceof 检查一个对象是否实现了某个特定的接口。例如：if(anObject instanceof Comparable){}。</li>
+<li>&#x4E2A;Interface&#x7684;&#x65B9;&#x6240;&#x6709;&#x6CD5;&#x8BBF;&#x95EE;&#x6743;&#x9650;&#x81EA;&#x52A8;&#x88AB;&#x58F0;&#x660E;&#x4E3A;public&#x3002;&#x786E;&#x5207;&#x7684;&#x8BF4;&#x53EA;&#x80FD;&#x4E3A;public&#xFF0C;&#x5F53;&#x7136;&#x4F60;&#x53EF;&#x4EE5;&#x663E;&#x793A;&#x7684;&#x58F0;&#x660E;&#x4E3A;protected&#x3001;private&#xFF0C;&#x4F46;&#x662F;&#x7F16;&#x8BD1;&#x4F1A;&#x51FA;&#x9519;&#xFF01;</li>
+<li>&#x63A5;&#x53E3;&#x4E2D;&#x53EF;&#x4EE5;&#x5B9A;&#x4E49;&#x201C;&#x6210;&#x5458;&#x53D8;&#x91CF;&#x201D;&#xFF0C;&#x6216;&#x8005;&#x8BF4;&#x662F;&#x4E0D;&#x53EF;&#x53D8;&#x7684;&#x5E38;&#x91CF;&#xFF0C;&#x56E0;&#x4E3A;&#x63A5;&#x53E3;&#x4E2D;&#x7684;&#x201C;&#x6210;&#x5458;&#x53D8;&#x91CF;&#x201D;&#x4F1A;&#x81EA;&#x52A8;&#x53D8;&#x4E3A;&#x4E3A;public static final&#x3002;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x7C7B;&#x547D;&#x540D;&#x76F4;&#x63A5;&#x8BBF;&#x95EE;&#xFF1A;ImplementClass.name</li>
+<li>&#x5B9E;&#x73B0;&#x63A5;&#x53E3;&#x7684;&#x975E;&#x62BD;&#x8C61;&#x7C7B;&#x5FC5;&#x987B;&#x8981;&#x5B9E;&#x73B0;&#x8BE5;&#x63A5;&#x53E3;&#x7684;&#x6240;&#x6709;&#x65B9;&#x6CD5;&#x3002;&#x62BD;&#x8C61;&#x7C7B;&#x53EF;&#x4EE5;&#x4E0D;&#x7528;&#x5B9E;&#x73B0;&#x3002;</li>
+<li>&#x4E0D;&#x80FD;&#x4F7F;&#x7528;new&#x64CD;&#x4F5C;&#x7B26;&#x5B9E;&#x4F8B;&#x5316;&#x4E00;&#x4E2A;&#x63A5;&#x53E3;&#xFF0C;&#x4F46;&#x53EF;&#x4EE5;&#x58F0;&#x660E;&#x4E00;&#x4E2A;&#x63A5;&#x53E3;&#x53D8;&#x91CF;&#xFF0C;&#x8BE5;&#x53D8;&#x91CF;&#x5FC5;&#x987B;&#x5F15;&#x7528;&#xFF08;refer to)&#x4E00;&#x4E2A;&#x5B9E;&#x73B0;&#x8BE5;&#x63A5;&#x53E3;&#x7684;&#x7C7B;&#x7684;&#x5BF9;&#x8C61;&#x3002;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; instanceof &#x68C0;&#x67E5;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x662F;&#x5426;&#x5B9E;&#x73B0;&#x4E86;&#x67D0;&#x4E2A;&#x7279;&#x5B9A;&#x7684;&#x63A5;&#x53E3;&#x3002;&#x4F8B;&#x5982;&#xFF1A;if(anObject instanceof Comparable){}&#x3002;</li>
 </ol>
-<h1 id="四、抽象类和接口的对比">四、抽象类和接口的对比</h1><p>&#8194;&#8194; 抽象类在java语言中所表示的是一种继承关系，一个子类只能存在一个父类，但是可以存在多个接口。在抽象类中可以拥有自己的成员变量和非抽象类方法，但是接口中只能存在静态的不可变的成员数据（不过一般都不在接口中定义成员数据），而且它的所有方法都是抽象的。抽象类和接口所反映的设计理念是不同的，抽象类所代表的是”is-a”的关系，而接口所代表的是”like-a”的关系。抽象类和接口是java语言中两种不同的抽象概念，他们的存在对多态提供了非常好的支持，虽然他们之间存在很大的相似性。但是对于他们的选择往往反应了您对问题域的理解。只有对问题域的本质有良好的理解，才能做出正确、合理的设计。</p>
-<p><strong>什么时候使用抽象类和接口</strong></p>
+<h1 id="&#x56DB;&#x3001;&#x62BD;&#x8C61;&#x7C7B;&#x548C;&#x63A5;&#x53E3;&#x7684;&#x5BF9;&#x6BD4;">&#x56DB;&#x3001;&#x62BD;&#x8C61;&#x7C7B;&#x548C;&#x63A5;&#x53E3;&#x7684;&#x5BF9;&#x6BD4;</h1><p>&#x2002;&#x2002; &#x62BD;&#x8C61;&#x7C7B;&#x5728;java&#x8BED;&#x8A00;&#x4E2D;&#x6240;&#x8868;&#x793A;&#x7684;&#x662F;&#x4E00;&#x79CD;&#x7EE7;&#x627F;&#x5173;&#x7CFB;&#xFF0C;&#x4E00;&#x4E2A;&#x5B50;&#x7C7B;&#x53EA;&#x80FD;&#x5B58;&#x5728;&#x4E00;&#x4E2A;&#x7236;&#x7C7B;&#xFF0C;&#x4F46;&#x662F;&#x53EF;&#x4EE5;&#x5B58;&#x5728;&#x591A;&#x4E2A;&#x63A5;&#x53E3;&#x3002;&#x5728;&#x62BD;&#x8C61;&#x7C7B;&#x4E2D;&#x53EF;&#x4EE5;&#x62E5;&#x6709;&#x81EA;&#x5DF1;&#x7684;&#x6210;&#x5458;&#x53D8;&#x91CF;&#x548C;&#x975E;&#x62BD;&#x8C61;&#x7C7B;&#x65B9;&#x6CD5;&#xFF0C;&#x4F46;&#x662F;&#x63A5;&#x53E3;&#x4E2D;&#x53EA;&#x80FD;&#x5B58;&#x5728;&#x9759;&#x6001;&#x7684;&#x4E0D;&#x53EF;&#x53D8;&#x7684;&#x6210;&#x5458;&#x6570;&#x636E;&#xFF08;&#x4E0D;&#x8FC7;&#x4E00;&#x822C;&#x90FD;&#x4E0D;&#x5728;&#x63A5;&#x53E3;&#x4E2D;&#x5B9A;&#x4E49;&#x6210;&#x5458;&#x6570;&#x636E;&#xFF09;&#xFF0C;&#x800C;&#x4E14;&#x5B83;&#x7684;&#x6240;&#x6709;&#x65B9;&#x6CD5;&#x90FD;&#x662F;&#x62BD;&#x8C61;&#x7684;&#x3002;&#x62BD;&#x8C61;&#x7C7B;&#x548C;&#x63A5;&#x53E3;&#x6240;&#x53CD;&#x6620;&#x7684;&#x8BBE;&#x8BA1;&#x7406;&#x5FF5;&#x662F;&#x4E0D;&#x540C;&#x7684;&#xFF0C;&#x62BD;&#x8C61;&#x7C7B;&#x6240;&#x4EE3;&#x8868;&#x7684;&#x662F;&#x201D;is-a&#x201D;&#x7684;&#x5173;&#x7CFB;&#xFF0C;&#x800C;&#x63A5;&#x53E3;&#x6240;&#x4EE3;&#x8868;&#x7684;&#x662F;&#x201D;like-a&#x201D;&#x7684;&#x5173;&#x7CFB;&#x3002;&#x62BD;&#x8C61;&#x7C7B;&#x548C;&#x63A5;&#x53E3;&#x662F;java&#x8BED;&#x8A00;&#x4E2D;&#x4E24;&#x79CD;&#x4E0D;&#x540C;&#x7684;&#x62BD;&#x8C61;&#x6982;&#x5FF5;&#xFF0C;&#x4ED6;&#x4EEC;&#x7684;&#x5B58;&#x5728;&#x5BF9;&#x591A;&#x6001;&#x63D0;&#x4F9B;&#x4E86;&#x975E;&#x5E38;&#x597D;&#x7684;&#x652F;&#x6301;&#xFF0C;&#x867D;&#x7136;&#x4ED6;&#x4EEC;&#x4E4B;&#x95F4;&#x5B58;&#x5728;&#x5F88;&#x5927;&#x7684;&#x76F8;&#x4F3C;&#x6027;&#x3002;&#x4F46;&#x662F;&#x5BF9;&#x4E8E;&#x4ED6;&#x4EEC;&#x7684;&#x9009;&#x62E9;&#x5F80;&#x5F80;&#x53CD;&#x5E94;&#x4E86;&#x60A8;&#x5BF9;&#x95EE;&#x9898;&#x57DF;&#x7684;&#x7406;&#x89E3;&#x3002;&#x53EA;&#x6709;&#x5BF9;&#x95EE;&#x9898;&#x57DF;&#x7684;&#x672C;&#x8D28;&#x6709;&#x826F;&#x597D;&#x7684;&#x7406;&#x89E3;&#xFF0C;&#x624D;&#x80FD;&#x505A;&#x51FA;&#x6B63;&#x786E;&#x3001;&#x5408;&#x7406;&#x7684;&#x8BBE;&#x8BA1;&#x3002;</p>
+<p><strong>&#x4EC0;&#x4E48;&#x65F6;&#x5019;&#x4F7F;&#x7528;&#x62BD;&#x8C61;&#x7C7B;&#x548C;&#x63A5;&#x53E3;</strong></p>
 <ul>
-<li>如果你拥有一些方法并且想让它们中的一些有默认实现，那么使用抽象类吧。</li>
+<li>&#x5982;&#x679C;&#x4F60;&#x62E5;&#x6709;&#x4E00;&#x4E9B;&#x65B9;&#x6CD5;&#x5E76;&#x4E14;&#x60F3;&#x8BA9;&#x5B83;&#x4EEC;&#x4E2D;&#x7684;&#x4E00;&#x4E9B;&#x6709;&#x9ED8;&#x8BA4;&#x5B9E;&#x73B0;&#xFF0C;&#x90A3;&#x4E48;&#x4F7F;&#x7528;&#x62BD;&#x8C61;&#x7C7B;&#x5427;&#x3002;</li>
 </ul>
 <ul>
-<li>如果你想实现多重继承，那么你必须使用接口。由于Java不支持多继承，子类不能够继承多个类，但可以实现多个接口。因此你就可以使用接口来解决它。</li>
+<li>&#x5982;&#x679C;&#x4F60;&#x60F3;&#x5B9E;&#x73B0;&#x591A;&#x91CD;&#x7EE7;&#x627F;&#xFF0C;&#x90A3;&#x4E48;&#x4F60;&#x5FC5;&#x987B;&#x4F7F;&#x7528;&#x63A5;&#x53E3;&#x3002;&#x7531;&#x4E8E;Java&#x4E0D;&#x652F;&#x6301;&#x591A;&#x7EE7;&#x627F;&#xFF0C;&#x5B50;&#x7C7B;&#x4E0D;&#x80FD;&#x591F;&#x7EE7;&#x627F;&#x591A;&#x4E2A;&#x7C7B;&#xFF0C;&#x4F46;&#x53EF;&#x4EE5;&#x5B9E;&#x73B0;&#x591A;&#x4E2A;&#x63A5;&#x53E3;&#x3002;&#x56E0;&#x6B64;&#x4F60;&#x5C31;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x63A5;&#x53E3;&#x6765;&#x89E3;&#x51B3;&#x5B83;&#x3002;</li>
 </ul>
 <ul>
-<li>如果基本功能在不断改变，那么就需要使用抽象类。如果不断改变基本功能且使用接口，那么就需要改变所有实现了该接口的类。</li>
+<li>&#x5982;&#x679C;&#x57FA;&#x672C;&#x529F;&#x80FD;&#x5728;&#x4E0D;&#x65AD;&#x6539;&#x53D8;&#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x9700;&#x8981;&#x4F7F;&#x7528;&#x62BD;&#x8C61;&#x7C7B;&#x3002;&#x5982;&#x679C;&#x4E0D;&#x65AD;&#x6539;&#x53D8;&#x57FA;&#x672C;&#x529F;&#x80FD;&#x4E14;&#x4F7F;&#x7528;&#x63A5;&#x53E3;&#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x9700;&#x8981;&#x6539;&#x53D8;&#x6240;&#x6709;&#x5B9E;&#x73B0;&#x4E86;&#x8BE5;&#x63A5;&#x53E3;&#x7684;&#x7C7B;&#x3002;</li>
 </ul>
 <ul>
-<li>Java8中的默认方法和静态方法<br>Oracle已经开始尝试向接口中引入默认方法和静态方法，以此来减少抽象类和接口之间的差异。现在，我们可以为接口提供默认实现的方法了并且不用强制子类来实现它。</li>
+<li>Java8&#x4E2D;&#x7684;&#x9ED8;&#x8BA4;&#x65B9;&#x6CD5;&#x548C;&#x9759;&#x6001;&#x65B9;&#x6CD5;<br>Oracle&#x5DF2;&#x7ECF;&#x5F00;&#x59CB;&#x5C1D;&#x8BD5;&#x5411;&#x63A5;&#x53E3;&#x4E2D;&#x5F15;&#x5165;&#x9ED8;&#x8BA4;&#x65B9;&#x6CD5;&#x548C;&#x9759;&#x6001;&#x65B9;&#x6CD5;&#xFF0C;&#x4EE5;&#x6B64;&#x6765;&#x51CF;&#x5C11;&#x62BD;&#x8C61;&#x7C7B;&#x548C;&#x63A5;&#x53E3;&#x4E4B;&#x95F4;&#x7684;&#x5DEE;&#x5F02;&#x3002;&#x73B0;&#x5728;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x4E3A;&#x63A5;&#x53E3;&#x63D0;&#x4F9B;&#x9ED8;&#x8BA4;&#x5B9E;&#x73B0;&#x7684;&#x65B9;&#x6CD5;&#x4E86;&#x5E76;&#x4E14;&#x4E0D;&#x7528;&#x5F3A;&#x5236;&#x5B50;&#x7C7B;&#x6765;&#x5B9E;&#x73B0;&#x5B83;&#x3002;</li>
 </ul>
 
       

@@ -343,18 +343,7 @@
       
         
           
-          Lucene介绍需要明确的，Lucene不是一个完整的全文索引应用，而是是一个Java写的用于全文索引和搜索工具包，它可以方便的嵌入到各种应用中实现针对应用的全文索引/检索功能。
-Lucene突出的优点：索引文件格式独立于应用平台，使得不同的平台能够共享索引文件；默认实现了一套强大的查询引擎，包括模糊查询、分组查询等，使得应用比较方便。
-既然Lucene这么牛叉，Lucene主要用于哪些方面呢？
-
-
-首先是文本的检索，这一用途是最基础和最简单的了。
-其次是网站信息的检索，用Lucene可以将站内新闻或网站信息做成资料库。
-最后是数据库的搜索，如果数据量少，那么只需要简单的SQL语句就能够查询到想要的结果，但是数据量很大的时候，比如上百万条数据查询，采用lucene可以为数据库的某些字段建立索引。然后写个我们所需要的搜索条件。
-
-
-搜索引擎的索引和数据库的索引
-&gt;数据库的存储底层采用的是B树结构来维护索引的，索引的更新会导致大量的IO操作，而Lucene是怎样做的呢？lucene不是仅仅维护一个索引文件，而是在扩展索引的时候不断创建新的索引文件，然后定期的把这些新的小的索引文件合并
+          Lucene&#x4ECB;&#x7ECD;&#x9700;&#x8981;&#x660E;&#x786E;&#x7684;&#xFF0C;Lucene&#x4E0D;&#x662F;&#x4E00;&#x4E2A;&#x5B8C;&#x6574;&#x7684;&#x5168;&#x6587;&#x7D22;&#x5F15;&#x5E94;&#x7528;&#xFF0C;&#x800C;&#x662F;&#x662F;&#x4E00;&#x4E2A;Java&#x5199;&#x7684;&#x7528;&#x4E8E;&#x5168;&#x6587;&#x7D22;&#x5F15;&#x548C;&#x641C;&#x7D22;&#x5DE5;&#x5177;&#x5305;&#xFF0C;&#x5B83;&#x53EF;&#x4EE5;&#x65B9;&#x4FBF;&#x7684;&#x5D4C;&#x5165;&#x5230;&#x5404;&#x79CD;&#x5E94;&#x7528;&#x4E2D;&#x5B9E;&#x73B0;&#x9488;&#x5BF9;&#x5
           ...
 
           <div class="post-more-link text-center">
@@ -479,12 +468,7 @@ Lucene突出的优点：索引文件格式独立于应用平台，使得不同�
       
         
           
-          引子Spark将应用程序整体翻译为一个有向无环图进行调度和执行，相比MapReduce，Spark提供了更加优化和复杂的执行流。这篇博客在读书和google的基础上对spark计算模型进行宏观的把握。
-spark程序模型spark的实例程序：
- (1) SparkContext中的textFile函数从HDFS中读取日志文件，赋值给变量file: var file = sc.textFile(“hdfs://xxx.log”)
- (2) RDD中的filter函数过滤带 “ Error ” 的行，输出errors（这里errors也看做一个RDD)：val errors = file.filter(line=&gt;line.contains(“errors”));
- (3) RDD的count函数返回 “ ERROR ”的行数：errors.count();
-用户程序对RDD通过多个函数进行操作，将RDD进行转换。这里先抛出一个概念：spark是如何管理RDD的物理分析的？ 在spark内部有一个BlockManger管理RDD的物理分区，每个Block就是节点上对应的一个物理块，可
+          &#x5F15;&#x5B50;Spark&#x5C06;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x6574;&#x4F53;&#x7FFB;&#x8BD1;&#x4E3A;&#x4E00;&#x4E2A;&#x6709;&#x5411;&#x65E0;&#x73AF;&#x56FE;&#x8FDB;&#x884C;&#x8C03;&#x5EA6;&#x548C;&#x6267;&#x884C;&#xFF0C;&#x76F8;&#x6BD4;MapReduce&#xFF0C;Spark&#x63D0;&#x4F9B;&#x4E86;&#x66F4;&#x52A0;&#x4F18;&#x5316;&#x548C;&#x590D;&#x6742;&#x7684;&#x6267;&#x884C;&#x6D41;&#x3002;&#x8FD9;&#x7BC7;&#x535A;&#x5BA2;&#x5728;&#x8BFB;&#x4E66;&#x548C;google&#x7684;&#x57FA;&#x7840;&#x4E0A;&#x5BF9;spark&#x8BA
           ...
 
           <div class="post-more-link text-center">
@@ -609,18 +593,8 @@ spark程序模型spark的实例程序：
       
         
           
-          前言在学习mahout开源库时，下载的文件不带源码，如果不知道maven支持这个功能的话，如果通过下载source文件在attachment上去，显得比较low。对maven这个工具还是需要看书积累。做个笔记方便后面查询使用。
-Maven命令下载源码和javadocs当在IDE中使用maven时如果想要看引用的jar包中类的源码和javadoc需要通过maven命令下载这些源码，通过maven命令能够容易的达到这个目的：
-
-mvn dependency:sources
-mvn dependency:resolve -Dclassifier=javadoc
-
-
-命令使用方法：首先进入到相应的pom.xml目录中，然后执行以上命令：第一条命令是尝试下载在pom.xml中依赖的文件的源代码。第二条命令是尝试下载对应的javadocs
-通过配置文件添加
-打开maven配置文件.setting.xml文件（…./.m2/settings.xml）增加如下配置：通过配置文件添加
-
-          
+          &#x524D;&#x8A00;&#x5728;&#x5B66;&#x4E60;mahout&#x5F00;&#x6E90;&#x5E93;&#x65F6;&#xFF0C;&#x4E0B;&#x8F7D;&#x7684;&#x6587;&#x4EF6;&#x4E0D;&#x5E26;&#x6E90;&#x7801;&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x77E5;&#x9053;maven&#x652F;&#x6301;&#x8FD9;&#x4E2A;&#x529F;&#x80FD;&#x7684;&#x8BDD;&#xFF0C;&#x5982;&#x679C;&#x901A;&#x8FC7;&#x4E0B;&#x8F7D;source&#x6587;&#x4EF6;&#x5728;attachment&#x4E0A;&#x53BB;&#xFF0C;&#x663E;&#x5F97;&#x6BD4;&#x8F83;low&#x3002;&#x5BF9;maven&#x8FD9;&#x4E2A;&#x5DE5;&#x5177;&#x8FD8;&#x662F;&
+          ...
 
           <div class="post-more-link text-center">
             <a class="btn" href="/2015/08/15/maven工具笔记/#more" rel="contents">
@@ -744,9 +718,7 @@ mvn dependency:resolve -Dclassifier=javadoc
       
         
           
-          前言推荐系统中一个重要的分支，隐语义建模。隐语义模型LFM：Latent Factor Model，其核心思想就是通过隐含特征联系用户兴趣和物品。过程分为三个部分，将物品映射到隐含分类，确定用户对隐含分类的兴趣，然后选择用户感兴趣的分类中的物品推荐给用户。它是基于用户行为统计的自动聚类。，隐语义模型在Top-N推荐中的应用十分广泛。常用的隐语义模型，LSA(Latent Semantic Analysis)，LDA(Latent Dirichlet Allocation)，主题模型(Topic Model)，矩阵分解(Matrix Factorization)等等。
-这些模型是本质上是想通的，目的就是找出潜在的主题或分类。这些技术一开始实在文本挖掘中提出来的。从netflix推荐大赛之后，这些技术被用在推荐领域，并且得到明显的效果。比如，在推荐系统中，能够用这些模型将用户的行为（用户的偏好）对item进行自动聚类，也就是把item划分到不同类别/主题，这些主题/类别可以理解为用户的兴趣。
-凭借这种思想，著名的推荐领域大神Yehuda Koren更是凭借矩阵分解模型勇夺Netflix P
+          &#x524D;&#x8A00;&#x63A8;&#x8350;&#x7CFB;&#x7EDF;&#x4E2D;&#x4E00;&#x4E2A;&#x91CD;&#x8981;&#x7684;&#x5206;&#x652F;&#xFF0C;&#x9690;&#x8BED;&#x4E49;&#x5EFA;&#x6A21;&#x3002;&#x9690;&#x8BED;&#x4E49;&#x6A21;&#x578B;LFM&#xFF1A;Latent Factor Model&#xFF0C;&#x5176;&#x6838;&#x5FC3;&#x601D;&#x60F3;&#x5C31;&#x662F;&#x901A;&#x8FC7;&#x9690;&#x542B;&#x7279;&#x5F81;&#x8054;&#x7CFB;&#x7528;&#x6237;&#x5174;&#x8DA3;&#x548C;&#x7269;&#x54C1;&#x3002;&#x8FC7;&#x7A0B;&#x5206;&#x4E3A;&#x4E09;&#x4E2A;&#x90E8;&#x5206;&#xFF0
           ...
 
           <div class="post-more-link text-center">
@@ -871,8 +843,7 @@ mvn dependency:resolve -Dclassifier=javadoc
       
         
           
-          一、引言最近在看代码重构这本书的时候，碰到过接口和抽象类的概念，再加上看hadoop权威指南这本书的时候，也提到了新版的hadoop API与旧的API的区别，也提到了这一点。无聊时候看到笔记中有这个点没有总结，在网上找点这方面的东西看了下，在此总结下，以便以后需要的时候再看。抽象类与接口是Java语言中对抽象概念进行定义的两种机制，正是由于他们的存在才赋予java强大的面向对象的能力。他们两者之间对抽象概念的支持有很大的相似，甚至可以互换，但是也有区别。
-二、抽象类抽象类是用来捕捉子类的通用特性的。它不能被实例化，只能被用作子类的超类。抽象类是被用来创建继承层级里子类的模板。我们都知道在面向对象的领域一切都是对象，同时所有的对象都是通过类来描述的，但是并不是所有的类都是来描述对象的。如果一个类没有足够的信息来描述一个具体的对象，而需要其他具体的类来支撑它，那么这样的类我们称它为抽象类。比如new Animal()，我们都知道这个是产生一个动物Animal对象，但是这个Animal具体长成什么样子我们并不知道，它没有一个具体动物的概念，所以他就是一个抽象类，需要一个具体的动物，如狗、猫
+          &#x4E00;&#x3001;&#x5F15;&#x8A00;&#x6700;&#x8FD1;&#x5728;&#x770B;&#x4EE3;&#x7801;&#x91CD;&#x6784;&#x8FD9;&#x672C;&#x4E66;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x78B0;&#x5230;&#x8FC7;&#x63A5;&#x53E3;&#x548C;&#x62BD;&#x8C61;&#x7C7B;&#x7684;&#x6982;&#x5FF5;&#xFF0C;&#x518D;&#x52A0;&#x4E0A;&#x770B;hadoop&#x6743;&#x5A01;&#x6307;&#x5357;&#x8FD9;&#x672C;&#x4E66;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x4E5F;&#x63D0;&#x5230;&#x4E86;&#x65B0;&#x7248;&#x7684;hadoop API&#x4E0E;&#x65E7;&#x7684;API&#x7684;&#x533A;&#x522B;&
           ...
 
           <div class="post-more-link text-center">
@@ -997,9 +968,7 @@ mvn dependency:resolve -Dclassifier=javadoc
       
         
           
-          前言一个经典的机器学习问题的第一步：数据清洗和特征挖掘，即“数据清洗=&gt;特征，标注数据生成=&gt;模型学习=&gt;模型应用”中的前两个步骤。（1）从原始数据，如文本、图像或者应用数据中清洗出特征数据和标注数据。（2）对清洗出的特征和标注数据进行处理，例如样本采样，样本调权，异常点去除，特征归一化处理，特征变化，特征组合等过程。最终生成的数据主要是供模型训练使用。如阿里的推荐大赛中提供的数据就相当于清洗过的数据。
-数据离线处理，可以进行较多的实验和迭代，尝试不同的样本采样，样本权重，特征处理方法，特征组合方法等，从而寻找一个最优的方法，在离线的环境得到很好的结果后，最终将确定的方案在生产环境中使用。那么接下来的问题就是数据的存储和取出的问题了，一般来说在离线的环境下，数据的存储和获取可以建立在hadoop平台上，批量地进行分析处理等操作，并且容忍一定的失败。而在线服务时，数据的存储和获取需要稳定、延时小等，可以为数据创建索引，或者存储在KV存储系统中，比如内存数据库redis，以及支持海量数据的Hbase。
-此处以美团技术博客中的点击预测为例，再结合自己的理解，来分析数据挖掘的
+          &#x524D;&#x8A00;&#x4E00;&#x4E2A;&#x7ECF;&#x5178;&#x7684;&#x673A;&#x5668;&#x5B66;&#x4E60;&#x95EE;&#x9898;&#x7684;&#x7B2C;&#x4E00;&#x6B65;&#xFF1A;&#x6570;&#x636E;&#x6E05;&#x6D17;&#x548C;&#x7279;&#x5F81;&#x6316;&#x6398;&#xFF0C;&#x5373;&#x201C;&#x6570;&#x636E;&#x6E05;&#x6D17;=&gt;&#x7279;&#x5F81;&#xFF0C;&#x6807;&#x6CE8;&#x6570;&#x636E;&#x751F;&#x6210;=&gt;&#x6A21;&#x578B;&#x5B66;&#x4E60;=&gt;&#x6A21;&#x578B;&#x5E94;&#x7528;&#x201D;&#x4E2D;&#x7684;&#x524D;&#x4E24;&#x4E2A;&#x6B65;&#x9AA4;&#x3002;&#xFF
           ...
 
           <div class="post-more-link text-center">
@@ -1124,15 +1093,10 @@ mvn dependency:resolve -Dclassifier=javadoc
       
         
           
-          Hadoop基础知识笔记Hadoop博大精深，很多关键问题需要记录。这边博客争取持续更新遇到的Hadoop的知识点和问题。
-一个Map_Reduce的运行流程
-Join问题 引用自：http://dongxicheng.org/mapreduce/hadoop-join-two-tables/
-Reduce side join 
-Reduce side join 是一种简单的join方式，其主要思想如下：
-在Map阶段，map函数同时读取两个文件file1和file2,为了区分两种来源的Key/value数据对，对每条数据打一个标签（tag）,比如：tag=o表示来自文件file1,tag=2表示来自文件file2。即：map阶段的主要任务是对不同文件中的数据打标签。
-在reduce阶段，reduce函数获取key相同的来自File1和file2文件的value list，然后对于同一个key，对File1和File2中的数据进行join(笛卡尔乘积)。即：reduce阶段进行实际的连接操作。 
-
-          
+          Hadoop&#x57FA;&#x7840;&#x77E5;&#x8BC6;&#x7B14;&#x8BB0;Hadoop&#x535A;&#x5927;&#x7CBE;&#x6DF1;&#xFF0C;&#x5F88;&#x591A;&#x5173;&#x952E;&#x95EE;&#x9898;&#x9700;&#x8981;&#x8BB0;&#x5F55;&#x3002;&#x8FD9;&#x8FB9;&#x535A;&#x5BA2;&#x4E89;&#x53D6;&#x6301;&#x7EED;&#x66F4;&#x65B0;&#x9047;&#x5230;&#x7684;Hadoop&#x7684;&#x77E5;&#x8BC6;&#x70B9;&#x548C;&#x95EE;&#x9898;&#x3002;
+&#x4E00;&#x4E2A;Map_Reduce&#x7684;&#x8FD0;&#x884C;&#x6D41;&#x7A0B;
+Join&#x95EE;&#x9898; &#x5F15;&#x7528;&#x81EA;&#xFF1A;http://dongxichen
+          ...
 
           <div class="post-more-link text-center">
             <a class="btn" href="/2015/08/05/Hadoop基础知识/#more" rel="contents">

@@ -84,22 +84,17 @@
 
 
 
-<meta name="description" content="Lucene介绍需要明确的，Lucene不是一个完整的全文索引应用，而是是一个Java写的用于全文索引和搜索工具包，它可以方便的嵌入到各种应用中实现针对应用的全文索引/检索功能。
-Lucene突出的优点：索引文件格式独立于应用平台，使得不同的平台能够共享索引文件；默认实现了一套强大的查询引擎，包括模糊查询、分组查询等，使得应用比较方便。
-既然Lucene这么牛叉，Lucene主要用于哪些方面呢？">
+<meta name="description" content="Lucene&amp;#x4ECB;&amp;#x7ECD;&amp;#x9700;&amp;#x8981;&amp;#x660E;&amp;#x786E;&amp;#x7684;&amp;#xFF0C;Lucene&amp;#x4E0D;&amp;#x662F;&amp;#x4E00;&amp;#x4E2A;&amp;#x5B8C;&amp;#x6574;&amp;#x7684;&amp;#x5168;&amp;#x6587;&amp;#x7D22;&amp;#x5F15;&amp;#x5E94;&amp;#x7528;&amp;#xFF0C;&amp;#x800C;&amp;#x6">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Lucene总结">
 <meta property="og:url" content="http://yoursite.com/2016/04/15/Lucene总结/index.html">
 <meta property="og:site_name" content="Backyard of XiaoQiangXu">
-<meta property="og:description" content="Lucene介绍需要明确的，Lucene不是一个完整的全文索引应用，而是是一个Java写的用于全文索引和搜索工具包，它可以方便的嵌入到各种应用中实现针对应用的全文索引/检索功能。
-Lucene突出的优点：索引文件格式独立于应用平台，使得不同的平台能够共享索引文件；默认实现了一套强大的查询引擎，包括模糊查询、分组查询等，使得应用比较方便。
-既然Lucene这么牛叉，Lucene主要用于哪些方面呢？">
-<meta property="og:updated_time" content="2016-06-05T01:12:57.939Z">
+<meta property="og:description" content="Lucene&amp;#x4ECB;&amp;#x7ECD;&amp;#x9700;&amp;#x8981;&amp;#x660E;&amp;#x786E;&amp;#x7684;&amp;#xFF0C;Lucene&amp;#x4E0D;&amp;#x662F;&amp;#x4E00;&amp;#x4E2A;&amp;#x5B8C;&amp;#x6574;&amp;#x7684;&amp;#x5168;&amp;#x6587;&amp;#x7D22;&amp;#x5F15;&amp;#x5E94;&amp;#x7528;&amp;#xFF0C;&amp;#x800C;&amp;#x6">
+<meta property="og:image" content="http://yoursite.com/2016/04/15/Lucene总结/images/image.jpg">
+<meta property="og:updated_time" content="2016-06-05T01:41:52.751Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Lucene总结">
-<meta name="twitter:description" content="Lucene介绍需要明确的，Lucene不是一个完整的全文索引应用，而是是一个Java写的用于全文索引和搜索工具包，它可以方便的嵌入到各种应用中实现针对应用的全文索引/检索功能。
-Lucene突出的优点：索引文件格式独立于应用平台，使得不同的平台能够共享索引文件；默认实现了一套强大的查询引擎，包括模糊查询、分组查询等，使得应用比较方便。
-既然Lucene这么牛叉，Lucene主要用于哪些方面呢？">
+<meta name="twitter:description" content="Lucene&amp;#x4ECB;&amp;#x7ECD;&amp;#x9700;&amp;#x8981;&amp;#x660E;&amp;#x786E;&amp;#x7684;&amp;#xFF0C;Lucene&amp;#x4E0D;&amp;#x662F;&amp;#x4E00;&amp;#x4E2A;&amp;#x5B8C;&amp;#x6574;&amp;#x7684;&amp;#x5168;&amp;#x6587;&amp;#x7D22;&amp;#x5F15;&amp;#x5E94;&amp;#x7528;&amp;#xFF0C;&amp;#x800C;&amp;#x6">
 
 
 
@@ -343,54 +338,57 @@ Lucene突出的优点：索引文件格式独立于应用平台，使得不同�
       
 
       
-        <h1 id="Lucene介绍">Lucene介绍</h1><p>需要明确的，Lucene不是一个完整的全文索引应用，而是是一个Java写的用于全文索引和搜索工具包，它可以方便的嵌入到各种应用中实现针对应用的全文索引/检索功能。</p>
-<p>Lucene突出的优点：索引文件格式独立于应用平台，使得不同的平台能够共享索引文件；默认实现了一套强大的查询引擎，包括模糊查询、分组查询等，使得应用比较方便。</p>
-<p>既然Lucene这么牛叉，Lucene主要用于哪些方面呢？</p>
+        <h1 id="Lucene&#x4ECB;&#x7ECD;">Lucene&#x4ECB;&#x7ECD;</h1><p>&#x9700;&#x8981;&#x660E;&#x786E;&#x7684;&#xFF0C;Lucene&#x4E0D;&#x662F;&#x4E00;&#x4E2A;&#x5B8C;&#x6574;&#x7684;&#x5168;&#x6587;&#x7D22;&#x5F15;&#x5E94;&#x7528;&#xFF0C;&#x800C;&#x662F;&#x662F;&#x4E00;&#x4E2A;Java&#x5199;&#x7684;&#x7528;&#x4E8E;&#x5168;&#x6587;&#x7D22;&#x5F15;&#x548C;&#x641C;&#x7D22;&#x5DE5;&#x5177;&#x5305;&#xFF0C;&#x5B83;&#x53EF;&#x4EE5;&#x65B9;&#x4FBF;&#x7684;&#x5D4C;&#x5165;&#x5230;&#x5404;&#x79CD;&#x5E94;&#x7528;&#x4E2D;&#x5B9E;&#x73B0;&#x9488;&#x5BF9;&#x5E94;&#x7528;&#x7684;&#x5168;&#x6587;&#x7D22;&#x5F15;/&#x68C0;&#x7D22;&#x529F;&#x80FD;&#x3002;</p>
+<p><strong>Lucene&#x7A81;&#x51FA;&#x7684;&#x4F18;&#x70B9;</strong>&#xFF1A;&#x7D22;&#x5F15;&#x6587;&#x4EF6;&#x683C;&#x5F0F;&#x72EC;&#x7ACB;&#x4E8E;&#x5E94;&#x7528;&#x5E73;&#x53F0;&#xFF0C;&#x4F7F;&#x5F97;&#x4E0D;&#x540C;&#x7684;&#x5E73;&#x53F0;&#x80FD;&#x591F;&#x5171;&#x4EAB;&#x7D22;&#x5F15;&#x6587;&#x4EF6;&#xFF1B;&#x9ED8;&#x8BA4;&#x5B9E;&#x73B0;&#x4E86;&#x4E00;&#x5957;&#x5F3A;&#x5927;&#x7684;&#x67E5;&#x8BE2;&#x5F15;&#x64CE;&#xFF0C;&#x5305;&#x62EC;&#x6A21;&#x7CCA;&#x67E5;&#x8BE2;&#x3001;&#x5206;&#x7EC4;&#x67E5;&#x8BE2;&#x7B49;&#xFF0C;&#x4F7F;&#x5F97;&#x5E94;&#x7528;&#x6BD4;&#x8F83;&#x65B9;&#x4FBF;&#x3002;</p>
+<p><strong>&#x65E2;&#x7136;Lucene&#x8FD9;&#x4E48;&#x725B;&#x53C9;&#xFF0C;Lucene&#x4E3B;&#x8981;&#x7528;&#x4E8E;&#x54EA;&#x4E9B;&#x65B9;&#x9762;&#x5462;&#xFF1F;</strong></p>
 <blockquote>
 <ul>
-<li>首先是文本的检索，这一用途是最基础和最简单的了。</li>
-<li>其次是网站信息的检索，用Lucene可以将站内新闻或网站信息做成资料库。</li>
-<li>最后是数据库的搜索，如果数据量少，那么只需要简单的SQL语句就能够查询到想要的结果，但是数据量很大的时候，比如上百万条数据查询，采用lucene可以为数据库的某些字段建立索引。然后写个我们所需要的搜索条件。</li>
+<li>&#x9996;&#x5148;&#x662F;&#x6587;&#x672C;&#x7684;&#x68C0;&#x7D22;&#xFF0C;&#x8FD9;&#x4E00;&#x7528;&#x9014;&#x662F;&#x6700;&#x57FA;&#x7840;&#x548C;&#x6700;&#x7B80;&#x5355;&#x7684;&#x4E86;&#x3002;</li>
+<li>&#x5176;&#x6B21;&#x662F;&#x7F51;&#x7AD9;&#x4FE1;&#x606F;&#x7684;&#x68C0;&#x7D22;&#xFF0C;&#x7528;Lucene&#x53EF;&#x4EE5;&#x5C06;&#x7AD9;&#x5185;&#x65B0;&#x95FB;&#x6216;&#x7F51;&#x7AD9;&#x4FE1;&#x606F;&#x505A;&#x6210;&#x8D44;&#x6599;&#x5E93;&#x3002;</li>
+<li>&#x6700;&#x540E;&#x662F;&#x6570;&#x636E;&#x5E93;&#x7684;&#x641C;&#x7D22;&#xFF0C;&#x5982;&#x679C;&#x6570;&#x636E;&#x91CF;&#x5C11;&#xFF0C;&#x90A3;&#x4E48;&#x53EA;&#x9700;&#x8981;&#x7B80;&#x5355;&#x7684;SQL&#x8BED;&#x53E5;&#x5C31;&#x80FD;&#x591F;&#x67E5;&#x8BE2;&#x5230;&#x60F3;&#x8981;&#x7684;&#x7ED3;&#x679C;&#xFF0C;&#x4F46;&#x662F;&#x6570;&#x636E;&#x91CF;&#x5F88;&#x5927;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x6BD4;&#x5982;&#x4E0A;&#x767E;&#x4E07;&#x6761;&#x6570;&#x636E;&#x67E5;&#x8BE2;&#xFF0C;&#x91C7;&#x7528;lucene&#x53EF;&#x4EE5;&#x4E3A;&#x6570;&#x636E;&#x5E93;&#x7684;&#x67D0;&#x4E9B;&#x5B57;&#x6BB5;&#x5EFA;&#x7ACB;&#x7D22;&#x5F15;&#x3002;&#x7136;&#x540E;&#x5199;&#x4E2A;&#x6211;&#x4EEC;&#x6240;&#x9700;&#x8981;&#x7684;&#x641C;&#x7D22;&#x6761;&#x4EF6;&#x3002;</li>
 </ul>
 </blockquote>
-<p><strong>搜索引擎的索引和数据库的索引</strong></p>
-<p>&gt;<br>数据库的存储底层采用的是B树结构来维护索引的，索引的更新会导致大量的IO操作，而Lucene是怎样做的呢？lucene不是仅仅维护一个索引文件，而是在扩展索引的时候不断创建新的索引文件，然后定期的把这些新的小的索引文件合并到原先的大索引中（当然，针对不同的更新策略，批次的大小可以调整），这样的好处是在不影响检索的效率的前提下，提高了索引的效率。</p>
+<p><strong>&#x641C;&#x7D22;&#x5F15;&#x64CE;&#x7684;&#x7D22;&#x5F15;&#x548C;&#x6570;&#x636E;&#x5E93;&#x7684;&#x7D22;&#x5F15;</strong></p>
+<blockquote>
+<p>&#x6570;&#x636E;&#x5E93;&#x7684;&#x5B58;&#x50A8;&#x5E95;&#x5C42;&#x91C7;&#x7528;&#x7684;&#x662F;B&#x6811;&#x7ED3;&#x6784;&#x6765;&#x7EF4;&#x62A4;&#x7D22;&#x5F15;&#x7684;&#xFF0C;&#x7D22;&#x5F15;&#x7684;&#x66F4;&#x65B0;&#x4F1A;&#x5BFC;&#x81F4;&#x5927;&#x91CF;&#x7684;IO&#x64CD;&#x4F5C;&#xFF0C;&#x800C;Lucene&#x662F;&#x600E;&#x6837;&#x505A;&#x7684;&#x5462;&#xFF1F;lucene&#x4E0D;&#x662F;&#x4EC5;&#x4EC5;&#x7EF4;&#x62A4;&#x4E00;&#x4E2A;&#x7D22;&#x5F15;&#x6587;&#x4EF6;&#xFF0C;&#x800C;&#x662F;&#x5728;&#x6269;&#x5C55;&#x7D22;&#x5F15;&#x7684;&#x65F6;&#x5019;&#x4E0D;&#x65AD;&#x521B;&#x5EFA;&#x65B0;&#x7684;&#x7D22;&#x5F15;&#x6587;&#x4EF6;&#xFF0C;&#x7136;&#x540E;&#x5B9A;&#x671F;&#x7684;&#x628A;&#x8FD9;&#x4E9B;&#x65B0;&#x7684;&#x5C0F;&#x7684;&#x7D22;&#x5F15;&#x6587;&#x4EF6;&#x5408;&#x5E76;&#x5230;&#x539F;&#x5148;&#x7684;&#x5927;&#x7D22;&#x5F15;&#x4E2D;&#xFF08;&#x5F53;&#x7136;&#xFF0C;&#x9488;&#x5BF9;&#x4E0D;&#x540C;&#x7684;&#x66F4;&#x65B0;&#x7B56;&#x7565;&#xFF0C;&#x6279;&#x6B21;&#x7684;&#x5927;&#x5C0F;&#x53EF;&#x4EE5;&#x8C03;&#x6574;&#xFF09;&#xFF0C;&#x8FD9;&#x6837;&#x7684;&#x597D;&#x5904;&#x662F;&#x5728;&#x4E0D;&#x5F71;&#x54CD;&#x68C0;&#x7D22;&#x7684;&#x6548;&#x7387;&#x7684;&#x524D;&#x63D0;&#x4E0B;&#xFF0C;&#x63D0;&#x9AD8;&#x4E86;&#x7D22;&#x5F15;&#x7684;&#x6548;&#x7387;&#x3002;</p>
+</blockquote>
 <hr>
-<h1 id="Lucene架构和组件">Lucene架构和组件</h1><p>Lucene的API接口设计的比较通用，输入、输出结构都很非常像数据库的 表==&gt;记录==&gt;字段，所以很多语料、数据库等都可以比较方便的映射到Lucene的存储结构/接口中。</p>
-<p> Document对象表示被索引的文档，IndexWriter会通过函数AddDocument将文档添加到索引中，从而实现创建索引的过程。又因为Lucene的Index是应用反向索引，当用户发出请求时，Query代表着用户的查询语句，IndexSearcher通过函数Search搜索Lucene的Index，同时计算term weight和score。并将结果及时返回给用户，TOPDocsCllector则实现对返回给用户的文档集合展示。这样整个一套流程，整个Lucene组件就紧密地联系在一起。</p>
-<p>了解了Lucene架构的组件后，实际开发中如何应用这些组件实现索引和搜索功能呢？</p>
-<p>创建索引时，必须先创建一个IndexWriter来写入索引文件，它包含了两个常用的参数，一个是INDEX_DIR，用来指出索引文件存放的位置；另一个是Analyzer，用来处理文档词法分析和语言，其中还包括了多种不同的分析方法。</p>
-<p>接下来创建我们需要进行索引的文档，此时会用到Document doc = new Document()。然后将不同的Field加入文档中，一般文档包含多种信息和字段。不同的信息需要用不同的Field来区分。</p>
-<p>最后通过IndexWriter调用函数AddDocument就可以实现将索引写到索引文件中去。创建索引的过程就完成了。</p>
-<p>接下来，便是搜索索引的过程了，IndexReader会将磁盘上的所有信息读到内存中，并存放到创建索引过程的INDEX_DIR中，接着就可以创建IndexSearchear对其进行搜索了，借助Analyzer处理查询语句中的词法和语言。最后IndexSearcher调用Search方法对查询语法树进行搜索。就得到了结果TOPScoreDocCollector。</p>
+<h1 id="Lucene&#x67B6;&#x6784;&#x548C;&#x7EC4;&#x4EF6;">Lucene&#x67B6;&#x6784;&#x548C;&#x7EC4;&#x4EF6;</h1><p>Lucene&#x7684;API&#x63A5;&#x53E3;&#x8BBE;&#x8BA1;&#x7684;&#x6BD4;&#x8F83;&#x901A;&#x7528;&#xFF0C;&#x8F93;&#x5165;&#x3001;&#x8F93;&#x51FA;&#x7ED3;&#x6784;&#x90FD;&#x5F88;&#x975E;&#x5E38;&#x50CF;&#x6570;&#x636E;&#x5E93;&#x7684; &#x8868;==&gt;&#x8BB0;&#x5F55;==&gt;&#x5B57;&#x6BB5;&#xFF0C;&#x6240;&#x4EE5;&#x5F88;&#x591A;&#x8BED;&#x6599;&#x3001;&#x6570;&#x636E;&#x5E93;&#x7B49;&#x90FD;&#x53EF;&#x4EE5;&#x6BD4;&#x8F83;&#x65B9;&#x4FBF;&#x7684;&#x6620;&#x5C04;&#x5230;Lucene&#x7684;&#x5B58;&#x50A8;&#x7ED3;&#x6784;/&#x63A5;&#x53E3;&#x4E2D;&#x3002;</p>
+<p><img src="/2016/04/15/Lucene&#x603B;&#x7ED3;/images/image.jpg" alt=""></p>
+<p> Document&#x5BF9;&#x8C61;&#x8868;&#x793A;&#x88AB;&#x7D22;&#x5F15;&#x7684;&#x6587;&#x6863;&#xFF0C;IndexWriter&#x4F1A;&#x901A;&#x8FC7;&#x51FD;&#x6570;AddDocument&#x5C06;&#x6587;&#x6863;&#x6DFB;&#x52A0;&#x5230;&#x7D22;&#x5F15;&#x4E2D;&#xFF0C;&#x4ECE;&#x800C;&#x5B9E;&#x73B0;&#x521B;&#x5EFA;&#x7D22;&#x5F15;&#x7684;&#x8FC7;&#x7A0B;&#x3002;&#x53C8;&#x56E0;&#x4E3A;Lucene&#x7684;Index&#x662F;&#x5E94;&#x7528;&#x53CD;&#x5411;&#x7D22;&#x5F15;&#xFF0C;&#x5F53;&#x7528;&#x6237;&#x53D1;&#x51FA;&#x8BF7;&#x6C42;&#x65F6;&#xFF0C;Query&#x4EE3;&#x8868;&#x7740;&#x7528;&#x6237;&#x7684;&#x67E5;&#x8BE2;&#x8BED;&#x53E5;&#xFF0C;IndexSearcher&#x901A;&#x8FC7;&#x51FD;&#x6570;Search&#x641C;&#x7D22;Lucene&#x7684;Index&#xFF0C;&#x540C;&#x65F6;&#x8BA1;&#x7B97;term weight&#x548C;score&#x3002;&#x5E76;&#x5C06;&#x7ED3;&#x679C;&#x53CA;&#x65F6;&#x8FD4;&#x56DE;&#x7ED9;&#x7528;&#x6237;&#xFF0C;TOPDocsCllector&#x5219;&#x5B9E;&#x73B0;&#x5BF9;&#x8FD4;&#x56DE;&#x7ED9;&#x7528;&#x6237;&#x7684;&#x6587;&#x6863;&#x96C6;&#x5408;&#x5C55;&#x793A;&#x3002;&#x8FD9;&#x6837;&#x6574;&#x4E2A;&#x4E00;&#x5957;&#x6D41;&#x7A0B;&#xFF0C;&#x6574;&#x4E2A;Lucene&#x7EC4;&#x4EF6;&#x5C31;&#x7D27;&#x5BC6;&#x5730;&#x8054;&#x7CFB;&#x5728;&#x4E00;&#x8D77;&#x3002;</p>
+<p>&#x4E86;&#x89E3;&#x4E86;Lucene&#x67B6;&#x6784;&#x7684;&#x7EC4;&#x4EF6;&#x540E;&#xFF0C;&#x5B9E;&#x9645;&#x5F00;&#x53D1;&#x4E2D;&#x5982;&#x4F55;&#x5E94;&#x7528;&#x8FD9;&#x4E9B;&#x7EC4;&#x4EF6;&#x5B9E;&#x73B0;&#x7D22;&#x5F15;&#x548C;&#x641C;&#x7D22;&#x529F;&#x80FD;&#x5462;&#xFF1F;</p>
+<p>&#x521B;&#x5EFA;&#x7D22;&#x5F15;&#x65F6;&#xFF0C;&#x5FC5;&#x987B;&#x5148;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;IndexWriter&#x6765;&#x5199;&#x5165;&#x7D22;&#x5F15;&#x6587;&#x4EF6;&#xFF0C;&#x5B83;&#x5305;&#x542B;&#x4E86;&#x4E24;&#x4E2A;&#x5E38;&#x7528;&#x7684;&#x53C2;&#x6570;&#xFF0C;&#x4E00;&#x4E2A;&#x662F;INDEX_DIR&#xFF0C;&#x7528;&#x6765;&#x6307;&#x51FA;&#x7D22;&#x5F15;&#x6587;&#x4EF6;&#x5B58;&#x653E;&#x7684;&#x4F4D;&#x7F6E;&#xFF1B;&#x53E6;&#x4E00;&#x4E2A;&#x662F;Analyzer&#xFF0C;&#x7528;&#x6765;&#x5904;&#x7406;&#x6587;&#x6863;&#x8BCD;&#x6CD5;&#x5206;&#x6790;&#x548C;&#x8BED;&#x8A00;&#xFF0C;&#x5176;&#x4E2D;&#x8FD8;&#x5305;&#x62EC;&#x4E86;&#x591A;&#x79CD;&#x4E0D;&#x540C;&#x7684;&#x5206;&#x6790;&#x65B9;&#x6CD5;&#x3002;</p>
+<p>&#x63A5;&#x4E0B;&#x6765;&#x521B;&#x5EFA;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x8FDB;&#x884C;&#x7D22;&#x5F15;&#x7684;&#x6587;&#x6863;&#xFF0C;&#x6B64;&#x65F6;&#x4F1A;&#x7528;&#x5230;Document doc = new Document()&#x3002;&#x7136;&#x540E;&#x5C06;&#x4E0D;&#x540C;&#x7684;Field&#x52A0;&#x5165;&#x6587;&#x6863;&#x4E2D;&#xFF0C;&#x4E00;&#x822C;&#x6587;&#x6863;&#x5305;&#x542B;&#x591A;&#x79CD;&#x4FE1;&#x606F;&#x548C;&#x5B57;&#x6BB5;&#x3002;&#x4E0D;&#x540C;&#x7684;&#x4FE1;&#x606F;&#x9700;&#x8981;&#x7528;&#x4E0D;&#x540C;&#x7684;Field&#x6765;&#x533A;&#x5206;&#x3002;</p>
+<p>&#x6700;&#x540E;&#x901A;&#x8FC7;IndexWriter&#x8C03;&#x7528;&#x51FD;&#x6570;AddDocument&#x5C31;&#x53EF;&#x4EE5;&#x5B9E;&#x73B0;&#x5C06;&#x7D22;&#x5F15;&#x5199;&#x5230;&#x7D22;&#x5F15;&#x6587;&#x4EF6;&#x4E2D;&#x53BB;&#x3002;&#x521B;&#x5EFA;&#x7D22;&#x5F15;&#x7684;&#x8FC7;&#x7A0B;&#x5C31;&#x5B8C;&#x6210;&#x4E86;&#x3002;</p>
+<p>&#x63A5;&#x4E0B;&#x6765;&#xFF0C;&#x4FBF;&#x662F;&#x641C;&#x7D22;&#x7D22;&#x5F15;&#x7684;&#x8FC7;&#x7A0B;&#x4E86;&#xFF0C;IndexReader&#x4F1A;&#x5C06;&#x78C1;&#x76D8;&#x4E0A;&#x7684;&#x6240;&#x6709;&#x4FE1;&#x606F;&#x8BFB;&#x5230;&#x5185;&#x5B58;&#x4E2D;&#xFF0C;&#x5E76;&#x5B58;&#x653E;&#x5230;&#x521B;&#x5EFA;&#x7D22;&#x5F15;&#x8FC7;&#x7A0B;&#x7684;INDEX_DIR&#x4E2D;&#xFF0C;&#x63A5;&#x7740;&#x5C31;&#x53EF;&#x4EE5;&#x521B;&#x5EFA;IndexSearchear&#x5BF9;&#x5176;&#x8FDB;&#x884C;&#x641C;&#x7D22;&#x4E86;&#xFF0C;&#x501F;&#x52A9;Analyzer&#x5904;&#x7406;&#x67E5;&#x8BE2;&#x8BED;&#x53E5;&#x4E2D;&#x7684;&#x8BCD;&#x6CD5;&#x548C;&#x8BED;&#x8A00;&#x3002;&#x6700;&#x540E;IndexSearcher&#x8C03;&#x7528;Search&#x65B9;&#x6CD5;&#x5BF9;&#x67E5;&#x8BE2;&#x8BED;&#x6CD5;&#x6811;&#x8FDB;&#x884C;&#x641C;&#x7D22;&#x3002;&#x5C31;&#x5F97;&#x5230;&#x4E86;&#x7ED3;&#x679C;TOPScoreDocCollector&#x3002;</p>
 <hr>
-<h1 id="倒排索引">倒排索引</h1><p>建立一个高效检索系统的关键是建立一个倒排索引机制，将数据源存储的同时，建立一个关键字到文档的倒排索引映射关系。利用这样的映射关系，可以很快速的检索到数据。</p>
-<p>Lucene最核心的特征是通过特殊的索引结构实现了传统数据库不擅长的全文检索机制，并且提供了扩展接口，以方便针对不同的应用的定制。lucene的索引与有什么优点呢</p>
+<h1 id="&#x5012;&#x6392;&#x7D22;&#x5F15;">&#x5012;&#x6392;&#x7D22;&#x5F15;</h1><p>&#x5EFA;&#x7ACB;&#x4E00;&#x4E2A;&#x9AD8;&#x6548;&#x68C0;&#x7D22;&#x7CFB;&#x7EDF;&#x7684;&#x5173;&#x952E;&#x662F;&#x5EFA;&#x7ACB;&#x4E00;&#x4E2A;&#x5012;&#x6392;&#x7D22;&#x5F15;&#x673A;&#x5236;&#xFF0C;&#x5C06;&#x6570;&#x636E;&#x6E90;&#x5B58;&#x50A8;&#x7684;&#x540C;&#x65F6;&#xFF0C;&#x5EFA;&#x7ACB;&#x4E00;&#x4E2A;&#x5173;&#x952E;&#x5B57;&#x5230;&#x6587;&#x6863;&#x7684;&#x5012;&#x6392;&#x7D22;&#x5F15;&#x6620;&#x5C04;&#x5173;&#x7CFB;&#x3002;&#x5229;&#x7528;&#x8FD9;&#x6837;&#x7684;&#x6620;&#x5C04;&#x5173;&#x7CFB;&#xFF0C;&#x53EF;&#x4EE5;&#x5F88;&#x5FEB;&#x901F;&#x7684;&#x68C0;&#x7D22;&#x5230;&#x6570;&#x636E;&#x3002;</p>
+<p>Lucene&#x6700;&#x6838;&#x5FC3;&#x7684;&#x7279;&#x5F81;&#x662F;&#x901A;&#x8FC7;&#x7279;&#x6B8A;&#x7684;&#x7D22;&#x5F15;&#x7ED3;&#x6784;&#x5B9E;&#x73B0;&#x4E86;&#x4F20;&#x7EDF;&#x6570;&#x636E;&#x5E93;&#x4E0D;&#x64C5;&#x957F;&#x7684;&#x5168;&#x6587;&#x68C0;&#x7D22;&#x673A;&#x5236;&#xFF0C;&#x5E76;&#x4E14;&#x63D0;&#x4F9B;&#x4E86;&#x6269;&#x5C55;&#x63A5;&#x53E3;&#xFF0C;&#x4EE5;&#x65B9;&#x4FBF;&#x9488;&#x5BF9;&#x4E0D;&#x540C;&#x7684;&#x5E94;&#x7528;&#x7684;&#x5B9A;&#x5236;&#x3002;lucene&#x7684;&#x7D22;&#x5F15;&#x4E0E;&#x6709;&#x4EC0;&#x4E48;&#x4F18;&#x70B9;&#x5462;</p>
 <hr>
-<h1 id="索引中存放些什么">索引中存放些什么</h1><p>要想搞清楚索引中存放哪些内容，需要熟悉Lucene中基本的概念：</p>
-<pre><code>一条索引（index）包含（<span class="operator">contains</span>）了一连串（<span class="operator">a</span> sequence <span class="operator">of</span>）文档（documents）
-一个文档（document）是由一连串fields组成。
-一个field是由一连串命名了（<span class="operator">a</span> named sequence <span class="operator">of</span>）的terms组成。
-一个term是一个<span class="keyword">string</span>（字符串）。
-</code></pre><p>索引（index）存储terms的统计数据，为了使得基于term的检索效率更高，Lucene的索引分成被广为熟悉的倒排索引。</p>
+<h1 id="&#x7D22;&#x5F15;&#x4E2D;&#x5B58;&#x653E;&#x4E9B;&#x4EC0;&#x4E48;">&#x7D22;&#x5F15;&#x4E2D;&#x5B58;&#x653E;&#x4E9B;&#x4EC0;&#x4E48;</h1><p>&#x8981;&#x60F3;&#x641E;&#x6E05;&#x695A;&#x7D22;&#x5F15;&#x4E2D;&#x5B58;&#x653E;&#x54EA;&#x4E9B;&#x5185;&#x5BB9;&#xFF0C;&#x9700;&#x8981;&#x719F;&#x6089;Lucene&#x4E2D;&#x57FA;&#x672C;&#x7684;&#x6982;&#x5FF5;&#xFF1A;</p>
+<pre><code>&#x4E00;&#x6761;&#x7D22;&#x5F15;&#xFF08;index&#xFF09;&#x5305;&#x542B;&#xFF08;<span class="operator">contains</span>&#xFF09;&#x4E86;&#x4E00;&#x8FDE;&#x4E32;&#xFF08;<span class="operator">a</span> sequence <span class="operator">of</span>&#xFF09;&#x6587;&#x6863;&#xFF08;documents&#xFF09;
+&#x4E00;&#x4E2A;&#x6587;&#x6863;&#xFF08;document&#xFF09;&#x662F;&#x7531;&#x4E00;&#x8FDE;&#x4E32;fields&#x7EC4;&#x6210;&#x3002;
+&#x4E00;&#x4E2A;field&#x662F;&#x7531;&#x4E00;&#x8FDE;&#x4E32;&#x547D;&#x540D;&#x4E86;&#xFF08;<span class="operator">a</span> named sequence <span class="operator">of</span>&#xFF09;&#x7684;terms&#x7EC4;&#x6210;&#x3002;
+&#x4E00;&#x4E2A;term&#x662F;&#x4E00;&#x4E2A;<span class="keyword">string</span>&#xFF08;&#x5B57;&#x7B26;&#x4E32;&#xFF09;&#x3002;
+</code></pre><p>&#x7D22;&#x5F15;&#xFF08;index&#xFF09;&#x5B58;&#x50A8;terms&#x7684;&#x7EDF;&#x8BA1;&#x6570;&#x636E;&#xFF0C;&#x4E3A;&#x4E86;&#x4F7F;&#x5F97;&#x57FA;&#x4E8E;term&#x7684;&#x68C0;&#x7D22;&#x6548;&#x7387;&#x66F4;&#x9AD8;&#xFF0C;Lucene&#x7684;&#x7D22;&#x5F15;&#x5206;&#x6210;&#x88AB;&#x5E7F;&#x4E3A;&#x719F;&#x6089;&#x7684;&#x5012;&#x6392;&#x7D22;&#x5F15;&#x3002;</p>
 <hr>
-<h1 id="如何创建索引">如何创建索引</h1><p>全文检索的索引创建过程一般包括如下几步：</p>
+<h1 id="&#x5982;&#x4F55;&#x521B;&#x5EFA;&#x7D22;&#x5F15;">&#x5982;&#x4F55;&#x521B;&#x5EFA;&#x7D22;&#x5F15;</h1><p>&#x5168;&#x6587;&#x68C0;&#x7D22;&#x7684;&#x7D22;&#x5F15;&#x521B;&#x5EFA;&#x8FC7;&#x7A0B;&#x4E00;&#x822C;&#x5305;&#x62EC;&#x5982;&#x4E0B;&#x51E0;&#x6B65;&#xFF1A;</p>
 <ul>
-<li>第一步：准备原始文档（Document）</li>
-<li>第二步：将原始文档传递给分词组件(Tokenizer)</li>
-<li>第三步：将得到的词元(Token)传给语言处理组件(Linguistic Processor)</li>
-<li>第四步：将得到的词(Term)传给索引组件(Indexer)</li>
+<li>&#x7B2C;&#x4E00;&#x6B65;&#xFF1A;&#x51C6;&#x5907;&#x539F;&#x59CB;&#x6587;&#x6863;&#xFF08;Document&#xFF09;</li>
+<li>&#x7B2C;&#x4E8C;&#x6B65;&#xFF1A;&#x5C06;&#x539F;&#x59CB;&#x6587;&#x6863;&#x4F20;&#x9012;&#x7ED9;&#x5206;&#x8BCD;&#x7EC4;&#x4EF6;(Tokenizer)</li>
+<li>&#x7B2C;&#x4E09;&#x6B65;&#xFF1A;&#x5C06;&#x5F97;&#x5230;&#x7684;&#x8BCD;&#x5143;(Token)&#x4F20;&#x7ED9;&#x8BED;&#x8A00;&#x5904;&#x7406;&#x7EC4;&#x4EF6;(Linguistic Processor)</li>
+<li>&#x7B2C;&#x56DB;&#x6B65;&#xFF1A;&#x5C06;&#x5F97;&#x5230;&#x7684;&#x8BCD;(Term)&#x4F20;&#x7ED9;&#x7D22;&#x5F15;&#x7EC4;&#x4EF6;(Indexer)</li>
 </ul>
 <hr>
-<h1 id="如何对索引进行搜索">如何对索引进行搜索</h1><p>在有索引文件的前提下，如何对索引进行搜索呢？</p>
-<p>第一步：用户输入查询语句</p>
-<pre><code>查询语句同我们普通语言一样，包含用户所关心的需求，查询语句的语法根据全文检索系统的实现不同，最基本的有：<span class="literal">AND</span>，<span class="literal">OR</span>，<span class="literal">NOT</span>等。
-</code></pre><p>第二步：对查询语句进行语法分析，词法分析，及语言处理</p>
-<pre><code>对查询词进行语法分析主要是为了识别单词和关键字；语法分析主要是根据查询语句的语法规则来生成一颗语法树；语言处理与索引语料过程中的语言处理几乎相同
-</code></pre><p>第三步：搜索索引，得到符合语法树的文档。</p>
-<pre><code>首先，在倒排索引表中，分别找出包含关键字key1,key2,key3等的文档链表。其次，对包含关键字的链表进行合并操作。然后，有些时候需要对链表进行差操作。
-</code></pre><p>第四步：根据得到的文档和查询语句的相关性，对结果进行排序。</p>
-<p>对用户输入查询词的理解是一个重要的话题，如Query理解，Query纠错。</p>
+<h1 id="&#x5982;&#x4F55;&#x5BF9;&#x7D22;&#x5F15;&#x8FDB;&#x884C;&#x641C;&#x7D22;">&#x5982;&#x4F55;&#x5BF9;&#x7D22;&#x5F15;&#x8FDB;&#x884C;&#x641C;&#x7D22;</h1><p>&#x5728;&#x6709;&#x7D22;&#x5F15;&#x6587;&#x4EF6;&#x7684;&#x524D;&#x63D0;&#x4E0B;&#xFF0C;&#x5982;&#x4F55;&#x5BF9;&#x7D22;&#x5F15;&#x8FDB;&#x884C;&#x641C;&#x7D22;&#x5462;&#xFF1F;</p>
+<p>&#x7B2C;&#x4E00;&#x6B65;&#xFF1A;&#x7528;&#x6237;&#x8F93;&#x5165;&#x67E5;&#x8BE2;&#x8BED;&#x53E5;</p>
+<pre><code>&#x67E5;&#x8BE2;&#x8BED;&#x53E5;&#x540C;&#x6211;&#x4EEC;&#x666E;&#x901A;&#x8BED;&#x8A00;&#x4E00;&#x6837;&#xFF0C;&#x5305;&#x542B;&#x7528;&#x6237;&#x6240;&#x5173;&#x5FC3;&#x7684;&#x9700;&#x6C42;&#xFF0C;&#x67E5;&#x8BE2;&#x8BED;&#x53E5;&#x7684;&#x8BED;&#x6CD5;&#x6839;&#x636E;&#x5168;&#x6587;&#x68C0;&#x7D22;&#x7CFB;&#x7EDF;&#x7684;&#x5B9E;&#x73B0;&#x4E0D;&#x540C;&#xFF0C;&#x6700;&#x57FA;&#x672C;&#x7684;&#x6709;&#xFF1A;<span class="literal">AND</span>&#xFF0C;<span class="literal">OR</span>&#xFF0C;<span class="literal">NOT</span>&#x7B49;&#x3002;
+</code></pre><p>&#x7B2C;&#x4E8C;&#x6B65;&#xFF1A;&#x5BF9;&#x67E5;&#x8BE2;&#x8BED;&#x53E5;&#x8FDB;&#x884C;&#x8BED;&#x6CD5;&#x5206;&#x6790;&#xFF0C;&#x8BCD;&#x6CD5;&#x5206;&#x6790;&#xFF0C;&#x53CA;&#x8BED;&#x8A00;&#x5904;&#x7406;</p>
+<pre><code>&#x5BF9;&#x67E5;&#x8BE2;&#x8BCD;&#x8FDB;&#x884C;&#x8BED;&#x6CD5;&#x5206;&#x6790;&#x4E3B;&#x8981;&#x662F;&#x4E3A;&#x4E86;&#x8BC6;&#x522B;&#x5355;&#x8BCD;&#x548C;&#x5173;&#x952E;&#x5B57;&#xFF1B;&#x8BED;&#x6CD5;&#x5206;&#x6790;&#x4E3B;&#x8981;&#x662F;&#x6839;&#x636E;&#x67E5;&#x8BE2;&#x8BED;&#x53E5;&#x7684;&#x8BED;&#x6CD5;&#x89C4;&#x5219;&#x6765;&#x751F;&#x6210;&#x4E00;&#x9897;&#x8BED;&#x6CD5;&#x6811;&#xFF1B;&#x8BED;&#x8A00;&#x5904;&#x7406;&#x4E0E;&#x7D22;&#x5F15;&#x8BED;&#x6599;&#x8FC7;&#x7A0B;&#x4E2D;&#x7684;&#x8BED;&#x8A00;&#x5904;&#x7406;&#x51E0;&#x4E4E;&#x76F8;&#x540C;
+</code></pre><p>&#x7B2C;&#x4E09;&#x6B65;&#xFF1A;&#x641C;&#x7D22;&#x7D22;&#x5F15;&#xFF0C;&#x5F97;&#x5230;&#x7B26;&#x5408;&#x8BED;&#x6CD5;&#x6811;&#x7684;&#x6587;&#x6863;&#x3002;</p>
+<pre><code>&#x9996;&#x5148;&#xFF0C;&#x5728;&#x5012;&#x6392;&#x7D22;&#x5F15;&#x8868;&#x4E2D;&#xFF0C;&#x5206;&#x522B;&#x627E;&#x51FA;&#x5305;&#x542B;&#x5173;&#x952E;&#x5B57;key1,key2,key3&#x7B49;&#x7684;&#x6587;&#x6863;&#x94FE;&#x8868;&#x3002;&#x5176;&#x6B21;&#xFF0C;&#x5BF9;&#x5305;&#x542B;&#x5173;&#x952E;&#x5B57;&#x7684;&#x94FE;&#x8868;&#x8FDB;&#x884C;&#x5408;&#x5E76;&#x64CD;&#x4F5C;&#x3002;&#x7136;&#x540E;&#xFF0C;&#x6709;&#x4E9B;&#x65F6;&#x5019;&#x9700;&#x8981;&#x5BF9;&#x94FE;&#x8868;&#x8FDB;&#x884C;&#x5DEE;&#x64CD;&#x4F5C;&#x3002;
+</code></pre><p>&#x7B2C;&#x56DB;&#x6B65;&#xFF1A;&#x6839;&#x636E;&#x5F97;&#x5230;&#x7684;&#x6587;&#x6863;&#x548C;&#x67E5;&#x8BE2;&#x8BED;&#x53E5;&#x7684;&#x76F8;&#x5173;&#x6027;&#xFF0C;&#x5BF9;&#x7ED3;&#x679C;&#x8FDB;&#x884C;&#x6392;&#x5E8F;&#x3002;</p>
+<p>&#x5BF9;&#x7528;&#x6237;&#x8F93;&#x5165;&#x67E5;&#x8BE2;&#x8BCD;&#x7684;&#x7406;&#x89E3;&#x662F;&#x4E00;&#x4E2A;&#x91CD;&#x8981;&#x7684;&#x8BDD;&#x9898;&#xFF0C;&#x5982;Query&#x7406;&#x89E3;&#xFF0C;Query&#x7EA0;&#x9519;&#x3002;</p>
 
       
     </div>
