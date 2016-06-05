@@ -273,6 +273,142 @@
             
               
                 
+                <a class="post-title-link" href="/2016/04/15/Lucene总结/" itemprop="url">
+                  Lucene总结
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-15T09:10:57+08:00" content="2016-04-15">
+              2016-04-15
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/搜索引擎-Lucene/" itemprop="url" rel="index">
+                    <span itemprop="name">搜索引擎&&Lucene</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/15/Lucene总结/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/15/Lucene总结/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          Lucene介绍需要明确的，Lucene不是一个完整的全文索引应用，而是是一个Java写的用于全文索引和搜索工具包，它可以方便的嵌入到各种应用中实现针对应用的全文索引/检索功能。
+Lucene突出的优点：索引文件格式独立于应用平台，使得不同的平台能够共享索引文件；默认实现了一套强大的查询引擎，包括模糊查询、分组查询等，使得应用比较方便。
+既然Lucene这么牛叉，Lucene主要用于哪些方面呢？
+
+
+首先是文本的检索，这一用途是最基础和最简单的了。
+其次是网站信息的检索，用Lucene可以将站内新闻或网站信息做成资料库。
+最后是数据库的搜索，如果数据量少，那么只需要简单的SQL语句就能够查询到想要的结果，但是数据量很大的时候，比如上百万条数据查询，采用lucene可以为数据库的某些字段建立索引。然后写个我们所需要的搜索条件。
+
+
+搜索引擎的索引和数据库的索引
+&gt;数据库的存储底层采用的是B树结构来维护索引的，索引的更新会导致大量的IO操作，而Lucene是怎样做的呢？lucene不是仅仅维护一个索引文件，而是在扩展索引的时候不断创建新的索引文件，然后定期的把这些新的小的索引文件合并
+          ...
+
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/04/15/Lucene总结/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/04/12/spark计算模型之一/" itemprop="url">
                   spark计算模型之一
                 </a>
@@ -1070,7 +1206,7 @@ Reduce side join 是一种简单的join方式，其主要思想如下：
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-count">7</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1078,7 +1214,7 @@ Reduce side join 是一种简单的join方式，其主要思想如下：
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
