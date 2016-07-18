@@ -1,0 +1,738 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="分布式计算,大数据," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="&amp;#x804A;&amp;#x4E86;&amp;#x4E86;RDD&amp;#x8FD0;&amp;#x884C;&amp;#x6A21;&amp;#x578B;&amp;#x4EE5;&amp;#x53CA;RDD&amp;#x7684;&amp;#x8BB8;&amp;#x591A;&amp;#x5E38;&amp;#x89C1;&amp;#x64CD;&amp;#x4F5C;&amp;#x3002;&amp;#x5728;&amp;#x6570;&amp;#x636E;&amp;#x5206;&amp;#x6790;&amp;#x9886;&amp;#x57DF;&amp;#">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spark计算模型之三">
+<meta property="og:url" content="http://yoursite.com/2016/04/24/Spark计算模型之三/index.html">
+<meta property="og:site_name" content="Backyard of XiaoQiangXu">
+<meta property="og:description" content="&amp;#x804A;&amp;#x4E86;&amp;#x4E86;RDD&amp;#x8FD0;&amp;#x884C;&amp;#x6A21;&amp;#x578B;&amp;#x4EE5;&amp;#x53CA;RDD&amp;#x7684;&amp;#x8BB8;&amp;#x591A;&amp;#x5E38;&amp;#x89C1;&amp;#x64CD;&amp;#x4F5C;&amp;#x3002;&amp;#x5728;&amp;#x6570;&amp;#x636E;&amp;#x5206;&amp;#x6790;&amp;#x9886;&amp;#x57DF;&amp;#">
+<meta property="og:updated_time" content="2016-07-18T08:00:14.508Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spark计算模型之三">
+<meta name="twitter:description" content="&amp;#x804A;&amp;#x4E86;&amp;#x4E86;RDD&amp;#x8FD0;&amp;#x884C;&amp;#x6A21;&amp;#x578B;&amp;#x4EE5;&amp;#x53CA;RDD&amp;#x7684;&amp;#x8BB8;&amp;#x591A;&amp;#x5E38;&amp;#x89C1;&amp;#x64CD;&amp;#x4F5C;&amp;#x3002;&amp;#x5728;&amp;#x6570;&amp;#x636E;&amp;#x5206;&amp;#x6790;&amp;#x9886;&amp;#x57DF;&amp;#">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Spark计算模型之三 | Backyard of XiaoQiangXu </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?15961b4c2abc52c07b678d5f349777de";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Backyard of XiaoQiangXu</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Walk steps step by step</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Spark计算模型之三
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-24T13:24:30+08:00" content="2016-04-24">
+              2016-04-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spark/" itemprop="url" rel="index">
+                    <span itemprop="name">Spark</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/24/Spark计算模型之三/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/24/Spark计算模型之三/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>&#x804A;&#x4E86;&#x4E86;RDD&#x8FD0;&#x884C;&#x6A21;&#x578B;&#x4EE5;&#x53CA;RDD&#x7684;&#x8BB8;&#x591A;&#x5E38;&#x89C1;&#x64CD;&#x4F5C;&#x3002;&#x5728;&#x6570;&#x636E;&#x5206;&#x6790;&#x9886;&#x57DF;&#x4E2D;&#x8FDB;&#x884C;&#x5E76;&#x884C;&#x805A;&#x5408;&#x3001;&#x5206;&#x7EC4;&#x7B49;&#x64CD;&#x4F5C;&#x65F6;&#xFF0C;&#x5E38;&#x5E38;&#x9700;&#x8981;&#x5229;&#x7528;&#x952E;&#x503C;&#x5BF9;&#x5F62;&#x5F0F;&#x7684;spark&#x3002;&#x952E;&#x503C;&#x5BF9;RDD&#x65F6;Spark&#x4E2D;&#x8BB8;&#x591A;&#x64CD;&#x4F5C;&#x6240;&#x9700;&#x8981;&#x7684;&#x5E38;&#x89C1;&#x6570;&#x636E;&#x7C7B;&#x578B;&#x3002;</p>
+<a id="more"></a>
+<h1 id="1&#x3001;&#x952E;&#x503C;&#x5BF9;RDD&#x7684;&#x76EE;&#x7684;">1&#x3001;&#x952E;&#x503C;&#x5BF9;RDD&#x7684;&#x76EE;&#x7684;</h1><p>&#x952E;&#x503C;&#x5BF9;RDD&#x662F;Spark&#x4E2D;&#x8BB8;&#x591A;&#x64CD;&#x4F5C;&#x6240;&#x9700;&#x8981;&#x7684;&#x5E38;&#x89C1;&#x6570;&#x636E;&#x7C7B;&#x578B;&#xFF0C;&#x719F;&#x7EC3;&#x64CD;&#x4F5C;&#x952E;&#x503C;&#x5BF9;RDD&#x80FD;&#x5FEB;&#x901F;&#x5730;&#x8FDB;&#x884C;&#x6570;&#x636E;&#x5904;&#x7406;&#x3002;&#x6211;&#x4EEC;&#x4E00;&#x822C;&#x8981;&#x5148;&#x901A;&#x8FC7;&#x4E00;&#x4E9B;&#x521D;&#x59CB;ETL&#xFF08;&#x62BD;&#x53D6;&#x3001;&#x8F6C;&#x5316;&#x3001;&#x88C5;&#x8F7D;&#xFF09;&#x64CD;&#x4F5C;&#x6765;&#x5C06;&#x6570;&#x636E;&#x8F6C;&#x6362;&#x4E3A;&#x952E;&#x503C;&#x5BF9;&#x5F62;&#x5F0F;&#x3002;</p>
+<p>Spark&#x4E3A;&#x5305;&#x542B;&#x952E;&#x503C;&#x5BF9;&#x7C7B;&#x578B;&#x7684;RDD&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E9B;&#x4E13;&#x6709;&#x7684;&#x64CD;&#x4F5C;&#xFF0C;&#x8FD9;&#x4E9B;RDD&#x88AB;&#x79F0;&#x4E3A;Pair RDD&#x3002;Pair RDD&#x662F;&#x8BB8;&#x591A;&#x6570;&#x636E;&#x5904;&#x7406;&#x7684;&#x4E3B;&#x8981;&#x6784;&#x6210;&#x90E8;&#x5206;&#xFF0C;<strong>&#x56E0;&#x4E3A;&#x4ED6;&#x4EEC;&#x63D0;&#x4F9B;&#x4E86;&#x5E76;&#x884C;&#x64CD;&#x4F5C;&#x5404;&#x4E2A;&#x952E;&#x6216;&#x8DE8;&#x8282;&#x70B9;&#x91CD;&#x65B0;&#x8FDB;&#x884C;&#x6570;&#x636E;&#x5206;&#x7EC4;&#x7684;&#x64CD;&#x4F5C;&#x63A5;&#x53E3;&#x3002;</strong></p>
+<p>&#x4F8B;&#x5982;Pair RDD&#x63D0;&#x4F9B;&#x4E86;reduceByKey()&#x65B9;&#x6CD5;&#xFF0C;&#x53EF;&#x4EE5;&#x5206;&#x522B;&#x89C4;&#x7EA6;&#x6BCF;&#x4E2A;&#x952E;&#x5BF9;&#x5E94;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x8FD8;&#x6709;join&#x65B9;&#x6CD5;&#xFF0C;&#x53EF;&#x4EE5;&#x628A;&#x4E24;&#x4E2A;RDD&#x4E2D;&#x952E;&#x76F8;&#x540C;&#x7684;&#x5143;&#x7D20;&#x7EC4;&#x5408;&#x5230;&#x4E00;&#x8D77;&#xFF0C;&#x5408;&#x5E76;&#x4E3A;&#x4E00;&#x4E2A;RDD&#x3002;&#x53E6;&#x5916;&#xFF0C;&#x6211;&#x4EEC;&#x901A;&#x5E38;&#x4ECE;&#x4E00;&#x4E2A;RDD&#x4E2D;&#x63D0;&#x53D6;&#x67D0;&#x4E9B;&#x5B57;&#x6BB5;&#xFF0C;&#x6BD4;&#x5982;&#x4EE3;&#x8868;&#x4E8B;&#x4EF6;&#x7684;&#x65F6;&#x95F4;&#x3001;&#x7528;&#x6237;ID&#x3001;&#x6216;&#x8005;&#x5176;&#x4ED6;&#x6807;&#x793A;&#x7B26;&#x7684;&#x5B57;&#x6BB5;&#x3001;&#x5E76;&#x4F7F;&#x7528;&#x8FD9;&#x4E9B;&#x5B57;&#x6BB5;&#x4F5C;&#x4E3A;Pair RDD&#x64CD;&#x4F5C;&#x4E2D;&#x7684;&#x952E;&#x3002;</p>
+<h1 id="2&#x3001;&#x521B;&#x5EFA;Pair_RDD">2&#x3001;&#x521B;&#x5EFA;Pair RDD</h1><p>&#x5F88;&#x591A;&#x5B58;&#x50A8;&#x4E3A;&#x952E;&#x503C;&#x5BF9;&#x7684;&#x6570;&#x636E;&#x683C;&#x5F0F;&#x4F1A;&#x5728;&#x8BFB;&#x53D6;&#x65F6;&#x76F4;&#x63A5;&#x8FD4;&#x56DE;&#x7531;&#x5176;&#x952E;&#x503C;&#x5BF9;&#x6570;&#x636E;&#x7EC4;&#x6210;&#x7684;Pair RDD&#x3002;&#x6B64;&#x5916;&#xFF0C;&#x5982;&#x679C;&#x6211;&#x4EEC;&#x60F3;&#x628A;&#x4E00;&#x4E2A;&#x666E;&#x901A;&#x7684;RDD&#x8F6C;&#x6362;&#x4E3A;Pair RDD&#x65F6;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x8C03;&#x7528;map&#xFF08;&#xFF09;&#x51FD;&#x6570;&#x6765;&#x5B9E;&#x73B0;&#x3002;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#x4F20;&#x9012;&#x7684;&#x51FD;&#x6570;&#x9700;&#x8981;&#x8FD4;&#x56DE;&#x952E;&#x503C;&#x5BF9;&#x3002;</p>
+<pre><code>&#x5982;&#x4E0B;&#x4ECB;&#x7ECD;&#xFF1A;&#x5BF9;&#x4E8E;&#x4E00;&#x4E2A;&#x6587;&#x672C;&#x6587;&#x4EF6;&#xFF0C;&#x4EE5;&#x6BCF;&#x884C;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x5355;&#x8BCD;&#x4F5C;&#x4E3A;&#x952E;&#x6765;&#x521B;&#x5EFA;&#x51FA;&#x4E00;&#x4E2A;Pair RDD.
+&#x7528;Python&#x6765;&#x5B9E;&#x73B0;
+pairs = lines.<span class="built_in">map</span>(lambda x : (s.<span class="built_in">split</span>(<span class="string">&quot; &quot;</span>)[<span class="number">0</span>], x))
+
+&#x5728;Scala&#x4E2D;&#xFF0C;&#x4E3A;&#x4E86;&#x8BA9;&#x63D0;&#x53D6;&#x952E;&#x4E4B;&#x540E;&#x7684;&#x6570;&#x636E;&#x80FD;&#x591F;&#x5728;&#x51FD;&#x6570;&#x4E2D;&#x4F7F;&#x7528;&#xFF0C;&#x540C;&#x6837;&#x9700;&#x8981;&#x8FD4;&#x56DE;&#x4E8C;&#x5143;&#x7EC4;&#xFF0C;&#x9690;&#x5F0F;&#x8F6C;&#x5316;&#x53EF;&#x4EE5;&#x8BA9;&#x4E8C;&#x5143;&#x7EC4;RDD&#x652F;&#x6301;&#x9644;&#x52A0;&#x7684;&#x952E;&#x503C;&#x5BF9;&#x51FD;&#x6570;&#x3002;
+var pairs = lines.<span class="built_in">map</span>(x =&gt; (s.<span class="built_in">split</span>(<span class="string">&quot; &quot;</span>)(<span class="number">0</span>), x))
+
+&#x5728;Java&#x4E2D;&#x6CA1;&#x6709;&#x81EA;&#x5E26;&#x7684;&#x4E8C;&#x5143;&#x7EC4;&#x7C7B;&#x578B;&#xFF0C;&#x56E0;&#x6B64;Spark&#x7684;Java API&#x8BA9;&#x7528;&#x6237;&#x4F7F;&#x7528;scala.Tuple2&#x6765;&#x521B;&#x5EFA;&#x4E8C;&#x5143;&#x7EC4;&#x3002;
+java&#x7528;&#x6237;&#x8FD8;&#x9700;&#x8981;&#x8C03;&#x7528;&#x4E13;&#x95E8;&#x7684;Spark&#x51FD;&#x6570;&#x6765;&#x521B;&#x5EFA;pair RDD.&#x4F8B;&#x5982;&#xFF0C;&#x4F7F;&#x7528;mapToPair()&#x51FD;&#x6570;&#x6765;&#x4EE3;&#x66FF;&#x57FA;&#x7840;&#x7248;&#x7684;<span class="built_in">map</span>()&#x51FD;&#x6570;&#x3002;
+
+PairFuncton&lt;<span class="keyword">String</span>, <span class="keyword">String</span>, <span class="keyword">String</span>&gt; keyData = 
+<span class="keyword">new</span> PairFunction&lt;<span class="keyword">String</span>, <span class="keyword">String</span>, <span class="keyword">String</span>&gt;() {
+    <span class="keyword">public</span> Tuple2&lt;<span class="keyword">String</span>, <span class="keyword">String</span>&gt; call(<span class="keyword">String</span> x){
+        <span class="keyword">return</span> <span class="keyword">new</span> Tuple2(s.<span class="built_in">split</span>(<span class="string">&quot; &quot;</span>)[<span class="number">0</span>], x));
+    }    
+};
+JavaPairRDD&lt;<span class="keyword">String</span>, <span class="keyword">String</span>&gt; paris = lines.mapToPair(keyData);
+</code></pre><h1 id="3&#x3001;Pair_RDD&#x7684;&#x8F6C;&#x6362;&#x64CD;&#x4F5C;">3&#x3001;Pair RDD&#x7684;&#x8F6C;&#x6362;&#x64CD;&#x4F5C;</h1><p>Pair RDD&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x6240;&#x6709;&#x6807;&#x51C6;RDD&#x4E0A;&#x7684;&#x53EF;&#x7528;&#x7684;&#x8F6C;&#x6362;&#x64CD;&#x4F5C;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x8BF4;&#x666E;&#x901A;RDD&#x4E0A;&#x7684;&#x6240;&#x6709;&#x8F6C;&#x6362;&#x64CD;&#x4F5C;&#xFF0C;Pair RDD&#x90FD;&#x652F;&#x6301;&#xFF0C;<strong>&#x53E6;&#x5916;&#xFF0C;&#x7531;&#x4E8E;Pair RDD&#x4E2D;&#x5305;&#x542B;&#x4E8C;&#x5143;&#x7EC4;&#xFF0C;&#x6240;&#x4EE5;&#x9700;&#x8981;&#x4F20;&#x9012;&#x7684;&#x51FD;&#x6570;&#x5E94;&#x5F53;&#x64CD;&#x4F5C;&#x4E8C;&#x5143;&#x7EC4;&#x800C;&#x4E0D;&#x662F;&#x72EC;&#x7ACB;&#x7684;&#x5143;&#x7D20;</strong>&#x3002;</p>
+<p><strong>&#x9488;&#x5BF9;&#x5355;&#x4E2A;Pair RDD&#x7684;&#x8F6C;&#x6362;&#x64CD;&#x4F5C;&#x6D89;&#x53CA;&#x5230;&#x7684;API:</strong></p>
+<ul>
+<li>reduceByKey(func)&#xFF1A; &#x5408;&#x5E76;&#x5177;&#x6709;&#x76F8;&#x540C;&#x952E;&#x7684;&#x503C;</li>
+<li>groupByKey()&#xFF1A;&#x5BF9;&#x5177;&#x6709;&#x76F8;&#x540C;&#x952E;&#x7684;&#x503C;&#x8FDB;&#x884C;&#x5206;&#x7EC4;</li>
+<li>combineByKey(createCombiner,mergeValue,mergeCombiners,partition)&#xFF1A;&#x5408;&#x5E76;&#x5177;&#x6709;&#x76F8;&#x540C;&#x7684;&#x952E;</li>
+<li>mapValues(func)&#xFF1A;&#x5BF9;Pair RDD&#x4E2D;&#x7684;&#x6BCF;&#x4E2A;&#x503C;&#x5E94;&#x7528;&#x51FD;&#x6570;func&#x800C;&#x4E0D;&#x6539;&#x53D8;&#x952E;</li>
+<li>faltMapValues(func)&#xFF1A;&#x5BF9;pair RDD&#x4E2D;&#x6BCF;&#x4E2A;&#x503C;&#x5E94;&#x7528;&#x4E00;&#x4E2A;&#x8FD4;&#x56DE;&#x8FED;&#x4EE3;&#x5668;&#x7684;&#x51FD;&#x6570;&#xFF0C;&#x7136;&#x540E;&#x5BF9;&#x8FD4;&#x56DE;&#x7684;&#x6BCF;&#x4E2A;&#x5143;&#x7D20;&#x90FD;&#x751F;&#x6210;&#x4E00;&#x4E2A;&#x5BF9;&#x5E94;&#x539F;&#x952E;&#x7684;&#x952E;&#x503C;&#x5BF9;&#x8BB0;&#x5F55;&#x3002;&#x901A;&#x5E38;&#x7528;&#x4E8E;&#x7B26;&#x53F7;&#x5316;</li>
+<li>keys()&#xFF1A;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x4EC5;&#x5305;&#x542B;&#x952E;&#x7684;RDD</li>
+<li>values():&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x4EC5;&#x5305;&#x542B;&#x503C;&#x7684;RDD</li>
+<li>sortByKey():&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x6309;&#x952E;&#x6392;&#x5E8F;&#x7684;RDD</li>
+</ul>
+<p><strong>&#x9488;&#x5BF9;&#x4E24;&#x4E2A;pair RDD&#x7684;&#x8F6C;&#x6362;&#x64CD;&#x4F5C;&#xFF1A;</strong></p>
+<ul>
+<li>substractByKey: &#x5220;&#x6389;RDD&#x4E2D;&#x952E;&#x4E0E;other RDD&#x4E2D;&#x952E;&#x76F8;&#x7B49;&#x7684;&#x5143;&#x7D20;</li>
+<li>join: &#x5BF9;&#x4E24;&#x4E2A;RDD&#x8FDB;&#x884C;&#x5185;&#x8FDE;&#x63A5;</li>
+<li>rightOuterJoin: &#x53F3;&#x5916;&#x8FDE;&#x63A5;</li>
+<li>leftOuterJoin: &#x5DE6;&#x5916;&#x8FDE;&#x63A5;</li>
+<li>cogroup: &#x5C06;&#x4E24;&#x4E2A;RDD&#x4E2D;&#x62E5;&#x6709;&#x76F8;&#x540C;&#x952E;&#x7684;&#x6570;&#x636E;&#x5206;&#x7EC4;&#x5230;&#x4E00;&#x8D77;</li>
+</ul>
+<h2 id="3-1_&#x805A;&#x5408;&#x64CD;&#x4F5C;">3.1 &#x805A;&#x5408;&#x64CD;&#x4F5C;</h2><p>&#x5F53;&#x6570;&#x636E;&#x96C6;&#x4EE5;&#x952E;&#x503C;&#x5BF9;&#x5F62;&#x5F0F;&#x7EC4;&#x7EC7;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x805A;&#x5408;&#x5177;&#x6709;&#x76F8;&#x540C;&#x952E;&#x7684;&#x5143;&#x7D20;&#x8FDB;&#x884C;&#x4E00;&#x4E9B;&#x7EDF;&#x8BA1;&#x662F;&#x5F88;&#x5E38;&#x89C1;&#x7684;&#x64CD;&#x4F5C;&#xFF0C;&#x4E4B;&#x524D;&#x5B66;&#x4E60;&#x4E86;&#x5728;&#x975E;Pair RDD&#x57FA;&#x7840;&#x4E0A;&#x7684;fold(),combine(),reduce()&#x7B49;&#x884C;&#x52A8;&#x64CD;&#x4F5C;&#xFF0C;pair RDD &#x4E0A;&#x5219;&#x6709;&#x76F8;&#x5E94;&#x7684;&#x9488;&#x5BF9;&#x952E;&#x7684;&#x8F6C;&#x6362;&#x64CD;&#x4F5C;&#xFF0C;Spark&#x6709;&#x4E00;&#x7EC4;&#x7C7B;&#x4F3C;&#x7684;&#x64CD;&#x4F5C;&#xFF0C;&#x53EF;&#x4EE5;&#x7EC4;&#x5408;&#x5177;&#x6709;&#x76F8;&#x540C;&#x952E;&#x7684;&#x503C;&#xFF0C;&#x8FD9;&#x4E9B;&#x64CD;&#x4F5C;&#x8FD4;&#x56DE;RDD&#x3002;</p>
+<p>reuceByKey()&#x4E0E;reduce&#x76F8;&#x5F53;&#x76F8;&#x4F3C;&#xFF0C;&#x53EA;&#x662F;&#x524D;&#x8005;&#x662F;pair RDD&#x7684;&#x8F6C;&#x6362;&#x64CD;&#x4F5C;&#xFF0C;&#x540E;&#x7F00;&#x662F;&#x975E;pair RDD&#x7684;action&#x64CD;&#x4F5C;&#x3002;&#x5171;&#x540C;&#x4E4B;&#x5904;&#x662F;&#x4ED6;&#x4EEC;&#x90FD;&#x63A5;&#x6536;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#xFF0C;&#x5E76;&#x4F7F;&#x7528;&#x51FD;&#x6570;&#x5BF9;&#x503C;&#x8FDB;&#x884C;&#x5408;&#x5E76;&#x3002;reduceByKey()&#x4F1A;&#x4E3A;&#x6570;&#x636E;&#x96C6;&#x4E2D;&#x7684;&#x6BCF;&#x4E2A;&#x952E;&#x8FDB;&#x884C;&#x5408;&#x5E76;&#x7684;&#x89C4;&#x7EA6;&#x64CD;&#x4F5C;&#xFF0C;&#x6BCF;&#x4E2A;&#x89C4;&#x7EA6;&#x64CD;&#x4F5C;&#x4F1A;&#x5C06;&#x952E;&#x76F8;&#x540C;&#x7684;&#x503C;&#x5408;&#x5E76;&#x8D77;&#x6765;&#x3002;</p>
+<h2 id="3-2_&#x6570;&#x636E;&#x5206;&#x7EC4;">3.2 &#x6570;&#x636E;&#x5206;&#x7EC4;</h2><p>&#x5BF9;&#x4E8E;&#x6709;&#x952E;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x4E00;&#x4E2A;&#x5E38;&#x89C1;&#x7684;&#x529F;&#x80FD;&#x5C31;&#x662F;&#x5C06;&#x6570;&#x636E;&#x6839;&#x636E;&#x952E;&#x8FDB;&#x884C;&#x5206;&#x7EC4;&#xFF0C;&#x5982;&#x679C;&#x6570;&#x636E;&#x5DF2;&#x7ECF;&#x4EE5;&#x9884;&#x671F;&#x7684;&#x65B9;&#x5F0F;&#x63D0;&#x53D6;&#x9664;&#x4E86;&#x952E;&#xFF0C;groupByKey()&#x5C31;&#x4F1A;&#x4F7F;&#x7528;RDD&#x4E2D;&#x7684;&#x952E;&#x6765;&#x5BF9;&#x6570;&#x636E;&#x8FDB;&#x884C;&#x5206;&#x7EC4;&#x3002;&#x6BD4;&#x5982;&#x5BF9;&#x4E8E;&#x4E00;&#x4E2A;&#x6709;&#x7C7B;&#x578B;K&#x7684;&#x952E;&#x548C;&#x7C7B;&#x578B;V&#x7684;&#x503C;&#x7EC4;&#x6210;&#x7684;RDD&#xFF0C;&#x6240;&#x5F97;&#x7ED3;&#x679C;RDD&#x7C7B;&#x578B;&#x4F1A;&#x662F;</p>
+<p> [K,Iterable[v]]</p>
+<p>&#x9664;&#x4E86;&#x5BF9;&#x5355;&#x4E2A;RDD&#x7684;&#x6570;&#x636E;&#x8FDB;&#x884C;&#x5206;&#x7EC4;&#xFF0C;&#x8FD8;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x4E00;&#x4E2A;&#x53EB;&#x505A;cogroup()&#x7684;&#x51FD;&#x6570;&#x5BF9;&#x591A;&#x4E2A;&#x5171;&#x4EAB;&#x540C;&#x4E00;&#x4E2A;&#x952E;&#x7684;RDD&#x8FDB;&#x884C;&#x5206;&#x7EC4;&#xFF0C;&#x5BF9;&#x4E24;&#x4E2A;&#x952E;&#x7684;&#x7C7B;&#x578B;&#x5747;&#x4E3A;K&#x800C;&#x503C;&#x7684;&#x7C7B;&#x578B;&#x5206;&#x522B;&#x4E3A;V&#x548C;W&#x7684;RDD&#x8FDB;&#x884C;cogroup&#x65F6;&#xFF0C;&#x5F97;&#x5230;&#x7684;&#x7ED3;&#x679C;RDD&#x7C7B;&#x578B;&#x4E3A;&#xFF1A;</p>
+<p>[(K, (Iterable(V),Iterable(W)))]</p>
+<p>cogroup()&#x4E0D;&#x4EC5;&#x53EF;&#x4EE5;&#x7528;&#x4E8E;&#x5B9E;&#x73B0;&#x8FDE;&#x63A5;&#x64CD;&#x4F5C;&#xFF0C;&#x8FD8;&#x53EF;&#x4EE5;&#x7528;&#x6765;&#x6C42;&#x952E;&#x7684;&#x4EA4;&#x96C6;&#xFF0C;&#x800C;&#x4E14; cogroup&#x8FD8;&#x80FD;&#x540C;&#x65F6;&#x5E94;&#x7528;&#x4E8E;&#x4E09;&#x4E2A;&#x53CA;&#x5176;&#x4EE5;&#x4E0A;&#x7684;RDD&#x3002;</p>
+<h2 id="3-3_&#x8FDE;&#x63A5;">3.3 &#x8FDE;&#x63A5;</h2><p>&#x5C06;&#x6709;&#x952E;&#x7684;&#x6570;&#x636E;&#x4E0E;&#x53E6;&#x4E00;&#x7EC4;&#x6709;&#x952E;&#x7684;&#x6570;&#x636E;&#x4E00;&#x8D77;&#x4F7F;&#x7528;&#x662F;&#x5BF9;&#x952E;&#x503C;&#x5BF9;&#x6570;&#x636E;&#x6267;&#x884C;&#x7684;&#x6700;&#x6709;&#x7528;&#x7684;&#x64CD;&#x4F5C;&#x4E4B;&#x4E00;&#x3002;&#x8FDE;&#x63A5;&#x64CD;&#x4F5C;&#x662F;Pair RDD&#x6700;&#x5E38;&#x7528;&#x7684;&#x64CD;&#x4F5C;&#x4E4B;&#x4E00;&#x3002;&#x8FDE;&#x63A5;&#x65B9;&#x5F0F;&#x591A;&#x79CD;&#x591A;&#x6837;&#xFF1A;&#x53F3;&#x5916;&#x8FDE;&#x63A5;&#x3001;&#x5DE6;&#x5916;&#x8FDE;&#x63A5;&#x3001;&#x4EA4;&#x53C9;&#x8FDE;&#x63A5;&#x3001;&#x4EE5;&#x53CA;&#x5185;&#x8FDE;&#x63A5;&#x3002;&#x53EF;&#x4EE5;&#x7C7B;&#x6BD4;&#x6570;&#x636E;&#x5E93;&#x4E2D;&#x7684;&#x8868;&#x7684;&#x201C;&#x8FDE;&#x63A5;&#x201D;&#x2014;&#x8868;&#x793A;&#x5C06;&#x4E24;&#x5F20;&#x8868;&#x6839;&#x636E;&#x76F8;&#x540C;&#x7684;&#x503C;&#x6765;&#x7EC4;&#x5408;&#x5B57;&#x6BB5;&#x3002;</p>
+<p>&#x666E;&#x901A;&#x7684;join&#x64CD;&#x4F5C;&#x7B26;&#x8868;&#x793A;&#x5185;&#x8FDE;&#x63A5;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x8BF4;&#x5728;&#x4E24;&#x4E2A;Pair RDD&#x4E2D;&#x90FD;&#x5B58;&#x5728;&#x7684;&#x952E;&#x624D;&#x8F93;&#x51FA;&#x3002;</p>
+<p>&#x6BD4;&#x5982;&#x6709;&#x4E00;&#x4E2A;StoreAddress&#x7684;RDD&#xFF0C;&#x548C;StoreRating&#x7684;RDD&#xFF0C;&#x5219;&#x4E8C;&#x8005;&#x7684;&#x5185;&#x8FDE;&#x63A5;&#xFF1A;</p>
+<p>StoreAddress.join(StoreRating);</p>
+<p>&#x6709;&#x65F6;&#x6211;&#x4EEC;&#xFF0C;&#x4E0D;&#x5E0C;&#x671B;&#x7ED3;&#x679C;&#x4E2D;&#x7684;&#x952E;&#x5FC5;&#x987B;&#x5728;&#x4E24;&#x4E2A;RDD&#x4E2D;&#x90FD;&#x5B58;&#x5728;&#xFF0C;&#x8FD9;&#x65F6;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;rightOuterJoin()&#x548C;leftOuterJoin()</p>
+<h2 id="3-4_&#x6570;&#x636E;&#x6392;&#x5E8F;">3.4 &#x6570;&#x636E;&#x6392;&#x5E8F;</h2><p>&#x5F88;&#x591A;&#x65F6;&#x5019;&#x8BA9;&#x6570;&#x636E;&#x6392;&#x597D;&#x5E8F;&#x662F;&#x5341;&#x5206;&#x6709;&#x7528;&#x7684;&#xFF0C;&#x5F53;&#x628A;&#x6570;&#x636E;&#x6392;&#x597D;&#x5E8F;&#x540E;&#xFF0C;&#x540E;&#x7EED;&#x53EF;&#x4EE5;&#x5BF9;&#x6570;&#x636E;&#x8FDB;&#x884C;collect()&#x6216;save()&#x7B49;&#x64CD;&#x4F5C;&#x90FD;&#x4F1A;&#x5F97;&#x5230;&#x6709;&#x5E8F;&#x6570;&#x636E;&#x3002;&#x5982;&#x679C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x5C06;RDD&#x6392;&#x5E8F;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;sortByKey()&#x8FDB;&#x884C;&#x64CD;&#x4F5C;&#x3002;</p>
+<h1 id="4-Pair_RDD&#x7684;action&#x64CD;&#x4F5C;">4.Pair RDD&#x7684;action&#x64CD;&#x4F5C;</h1><p>&#x9700;&#x8981;&#x8BF4;&#x660E;&#x7684;&#x4E00;&#x70B9;&#x6240;&#x6709;&#x57FA;&#x7840;RDD&#x652F;&#x6301;&#x7684;&#x4F20;&#x7EDF;action&#x64CD;&#x4F5C;&#xFF0C;&#x4E5F;&#x90FD;&#x5728;pair RDD&#x4E0A;&#x53EF;&#x7528;&#xFF0C;&#x4F46;&#x662F;PairRDD&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E9B;&#x989D;&#x5916;&#x7684;action&#x64CD;&#x4F5C;&#xFF0C;&#x53EF;&#x4EE5;&#x9488;&#x5BF9;&#x952E;&#x503C;&#x5BF9;&#x7684;&#x6570;&#x636E;&#x573A;&#x666F;&#x7075;&#x6D3B;&#x8FD0;&#x7528;&#x3002;</p>
+<p>Pair RDD&#x7684;&#x989D;&#x5916;&#x7684;&#x884C;&#x52A8;&#x64CD;&#x4F5C;&#xFF1A;</p>
+<ul>
+<li>countByKey()   &#xFF1A;  &#x5BF9;&#x6BCF;&#x4E2A;&#x952E;&#x5BF9;&#x5E94;&#x7684;&#x5143;&#x7D20;&#x5206;&#x522B;&#x8BA1;&#x6570;</li>
+<li>collectAsMap() &#xFF1A;  &#x5C06;&#x7ED3;&#x679C;&#x4EE5;&#x6A31;&#x8272;&#x8868;&#x7684;&#x5F62;&#x5F0F;&#x8FD4;&#x56DE;&#xFF0C;&#x4EE5;&#x4FBF;&#x67E5;&#x8BE2;</li>
+<li>lookup(Key) &#xFF1A;&#x3000;&#x3000;&#x8FD4;&#x56DE;&#x7ED9;&#x5B9A;&#x952E;&#x5BF9;&#x5E94;&#x7684;&#x6240;&#x6709;&#x503C;</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/分布式计算/" rel="tag">#分布式计算</a>
+          
+            <a href="/tags/大数据/" rel="tag">#大数据</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/23/java集合框架概述/" rel="next" title="java集合框架概述">
+                <i class="fa fa-chevron-left"></i> java集合框架概述
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/27/java序列容器之ArrayList、LinkedList、vector/" rel="prev" title="java序列容器之ArrayList、LinkedList、vector">
+                java序列容器之ArrayList、LinkedList、vector <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/04/24/Spark计算模型之三/"
+           data-title="Spark计算模型之三" data-url="http://yoursite.com/2016/04/24/Spark计算模型之三/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="xxqcheers" />
+          <p class="site-author-name" itemprop="name">xxqcheers</p>
+          <p class="site-description motion-element" itemprop="description">Walk steps step by step. 知道，理解，用得好。说出来，写出来，让别人懂。是不同的层次！</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1、键值对RDD的目的"><span class="nav-number">1.</span> <span class="nav-text">1、键值对RDD的目的</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2、创建Pair_RDD"><span class="nav-number">2.</span> <span class="nav-text">2、创建Pair RDD</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3、Pair_RDD的转换操作"><span class="nav-number">3.</span> <span class="nav-text">3、Pair RDD的转换操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1_聚合操作"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 聚合操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2_数据分组"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 数据分组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3_连接"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4_数据排序"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 数据排序</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Pair_RDD的action操作"><span class="nav-number">4.</span> <span class="nav-text">4.Pair RDD的action操作</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xxqcheers</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"xxqcheers"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+
+</body>
+</html>
