@@ -1,0 +1,736 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="主题模型，自然语言处理，语义分析," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="&amp;#x4E3B;&amp;#x9898;&amp;#x6A21;&amp;#x578B;&amp;#x662F;NLP&amp;#x4E2D;&amp;#x975E;&amp;#x5E38;&amp;#x5177;&amp;#x6709;&amp;#x5F71;&amp;#x54CD;&amp;#x529B;&amp;#x7684;&amp;#x6A21;&amp;#x578B;&amp;#x4E4B;&amp;#x4E00;&amp;#xFF0C;&amp;#x5B83;&amp;#x7684;&amp;#x521D;&amp;#x8877;&amp;#x5C31;&amp;#x66">
+<meta property="og:type" content="article">
+<meta property="og:title" content="中文分词小结">
+<meta property="og:url" content="http://yoursite.com/2016/04/19/文本主题挖掘/index.html">
+<meta property="og:site_name" content="Backyard of XiaoQiangXu">
+<meta property="og:description" content="&amp;#x4E3B;&amp;#x9898;&amp;#x6A21;&amp;#x578B;&amp;#x662F;NLP&amp;#x4E2D;&amp;#x975E;&amp;#x5E38;&amp;#x5177;&amp;#x6709;&amp;#x5F71;&amp;#x54CD;&amp;#x529B;&amp;#x7684;&amp;#x6A21;&amp;#x578B;&amp;#x4E4B;&amp;#x4E00;&amp;#xFF0C;&amp;#x5B83;&amp;#x7684;&amp;#x521D;&amp;#x8877;&amp;#x5C31;&amp;#x66">
+<meta property="og:image" content="http://yoursite.com/2016/04/19/文本主题挖掘/../../../../images/topic-image1.png">
+<meta property="og:image" content="http://yoursite.com/2016/04/19/文本主题挖掘/../../../../images/topic-image2.png">
+<meta property="og:image" content="http://yoursite.com/2016/04/19/文本主题挖掘/../../../../images/topic-image3.png">
+<meta property="og:image" content="http://yoursite.com/2016/04/19/文本主题挖掘/../../../../images/topic-image4.png">
+<meta property="og:image" content="http://yoursite.com/2016/04/19/文本主题挖掘/../../../../images/topic-image5.png">
+<meta property="og:image" content="http://yoursite.com/2016/04/19/文本主题挖掘/../../../../images/topic-image6.png">
+<meta property="og:image" content="http://yoursite.com/2016/04/19/文本主题挖掘/../../../../images/topic-image7.png">
+<meta property="og:updated_time" content="2016-07-21T02:03:44.454Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="中文分词小结">
+<meta name="twitter:description" content="&amp;#x4E3B;&amp;#x9898;&amp;#x6A21;&amp;#x578B;&amp;#x662F;NLP&amp;#x4E2D;&amp;#x975E;&amp;#x5E38;&amp;#x5177;&amp;#x6709;&amp;#x5F71;&amp;#x54CD;&amp;#x529B;&amp;#x7684;&amp;#x6A21;&amp;#x578B;&amp;#x4E4B;&amp;#x4E00;&amp;#xFF0C;&amp;#x5B83;&amp;#x7684;&amp;#x521D;&amp;#x8877;&amp;#x5C31;&amp;#x66">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 中文分词小结 | Backyard of XiaoQiangXu </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?15961b4c2abc52c07b678d5f349777de";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Backyard of XiaoQiangXu</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Walk steps step by step</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                中文分词小结
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-19T21:34:37+08:00" content="2016-04-19">
+              2016-04-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/文本挖掘/" itemprop="url" rel="index">
+                    <span itemprop="name">文本挖掘</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/19/文本主题挖掘/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/19/文本主题挖掘/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>&#x4E3B;&#x9898;&#x6A21;&#x578B;&#x662F;NLP&#x4E2D;&#x975E;&#x5E38;&#x5177;&#x6709;&#x5F71;&#x54CD;&#x529B;&#x7684;&#x6A21;&#x578B;&#x4E4B;&#x4E00;&#xFF0C;&#x5B83;&#x7684;&#x521D;&#x8877;&#x5C31;&#x662F;&#x89E3;&#x51B3;NLP&#x4E2D;&#x7684;&#x8BED;&#x4E49;&#x95EE;&#x9898;&#x5C3D;&#x7BA1;&#x79BB;&#x771F;&#x6B63;&#x610F;&#x4E49;&#x4E0A;&#x7684;&#x8BED;&#x4E49;&#x6709;&#x4E00;&#x5B9A;&#x8DDD;&#x79BB;&#x3002;&#x90A3;&#x4E48;&#x5982;&#x4F55;&#x7528;&#x8BA1;&#x7B97;&#x673A;&#x8868;&#x793A;&#x4E00;&#x4E9B;&#x4E00;&#x4E9B;&#x8BED;&#x6599;&#x7684;&#x4E3B;&#x9898;&#x5462;&#xFF1F;&#x90A3;&#x5C31;&#x662F;&#x7528;&#x4E00;&#x4E9B;&#x6700;&#x80FD;&#x53CD;&#x6620;&#x4E2D;&#x5FC3;&#x601D;&#x60F3;&#x7684;&#x8BCD;&#x6765;&#x8868;&#x793A;&#x3002;</p>
+<a id="more"></a>
+<h1 id="1&#x3001;&#x5F15;&#x5B50;">1&#x3001;&#x5F15;&#x5B50;</h1><p><strong>&#x4E3E;&#x4E00;&#x4E2A;&#x6817;&#x5B50;</strong></p>
+<blockquote>
+<p>&#x7AD9;&#x5728;&#x4E92;&#x8054;&#x7F51;&#x6574;&#x4E2A;&#x884C;&#x4E1A;&#x7684;&#x89D2;&#x5EA6;&#xFF0C;&#x6211;&#x8BA4;&#x4E3A;&#x5FAE;&#x4FE1;&#x662F;&#x4E00;&#x4E2A;&#x6781;&#x5177;&#x751F;&#x547D;&#x529B;&#x548C;&#x60F3;&#x8C61;&#x7A7A;&#x95F4;&#x7684;&#x79FB;&#x52A8;&#x4EA7;&#x54C1;&#xFF0C;&#x5B83;&#x7684;&#x5E03;&#x5C40;&#x548C;&#x8BBE;&#x8BA1;&#x90FD;&#x6709;&#x53EF;&#x80FD;&#x98A0;&#x8986;&#x79FB;&#x52A8;&#x4E92;&#x8054;&#x7F51;&#x7684;&#x660E;&#x5929;<br>&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#xFF0C;&#x5B83;&#x7684;&#x4E3B;&#x9898;&#x5E94;&#x8BE5;&#x5C31;&#x662F;&#x201C;&#x5FAE;&#x4FE1;&#x201D;&#x3001;&#x201C;&#x79FB;&#x52A8;&#x4E92;&#x8054;&#x7F51;&#x201D;&#x7B49;</p>
+</blockquote>
+<p>&#x6240;&#x4EE5;&#xFF0C;&#x5BF9;&#x4E8E;&#x4E00;&#x7BC7;&#x6587;&#x6863;&#xFF0C;&#x6211;&#x4EEC;&#x5E0C;&#x671B;&#x80FD;&#x5F97;&#x5230;&#x5B83;&#x7684;&#x4E3B;&#x9898;&#xFF08;&#x4E00;&#x4E9B;&#x8BCD;&#xFF09;&#xFF0C;&#x4EE5;&#x53CA;&#x8FD9;&#x4E9B;&#x8BCD;&#x5C5E;&#x4E8E;&#x54EA;&#x4E9B;&#x4E3B;&#x9898;&#x7684;&#x6982;&#x7387;&#xFF0C;&#x5F97;&#x5230;&#x8FD9;&#x4E2A;&#x7ED3;&#x679C;&#x540E;&#x6211;&#x4EEC;&#x5C31;&#x53EF;&#x4EE5;&#x8FDB;&#x4E00;&#x6B65;&#x5206;&#x6790;&#x6587;&#x6863;&#x5566;&#x3002;</p>
+<p>&#x4E3B;&#x9898;&#x6A21;&#x578B;&#x4E24;&#x4E2A;&#x7ECF;&#x5178;&#x7B97;&#x6CD5;&#xFF1A;pLSA(Probabilistic Latent Semantic Analysis)&#x548C;LDA(Latent Dirichlet Allocation)&#x3002;</p>
+<h1 id="1_pLSA&#x6A21;&#x578B;">1 pLSA&#x6A21;&#x578B;</h1><p>&#x6982;&#x7387;&#x6F5C;&#x5728;&#x8BED;&#x4E49;&#x5206;&#x6790;&#x5E94;&#x7528;&#x4E8E;&#x4FE1;&#x606F;&#x68C0;&#x7D22;&#xFF0C;&#x8FC7;&#x6EE4;&#xFF0C;&#x81EA;&#x7136;&#x8BED;&#x8A00;&#x5904;&#x7406;&#xFF0C;&#x6587;&#x672C;&#x7684;&#x673A;&#x5668;&#x5B66;&#x4E60;&#x6216;&#x8005;&#x5176;&#x4ED6;&#x76F8;&#x5173;&#x9886;&#x57DF;&#x3002;&#x6982;&#x7387;&#x6F5C;&#x5728;&#x8BED;&#x4E49;&#x5206;&#x6790;&#x4E0E;&#x6807;&#x51C6;&#x6F5C;&#x5728;&#x8BED;&#x4E49;&#x5206;&#x6790;&#x7684;&#x4E0D;&#x540C;&#x662F;&#xFF0C;&#x6807;&#x51C6;&#x6F5C;&#x5728;&#x8BED;&#x4E49;&#x5206;&#x6790;&#x662F;&#x4EE5;&#x5171;&#x73B0;&#x8868;&#xFF08;&#x5C31;&#x662F;&#x5171;&#x73B0;&#x7684;&#x77E9;&#x9635;&#xFF09;&#x7684;&#x5947;&#x5F02;&#x503C;&#x5206;&#x89E3;&#x7684;&#x5F62;&#x5F0F;&#x8868;&#x73B0;&#x7684;&#xFF0C;&#x800C;&#x6982;&#x7387;&#x6F5C;&#x5728;&#x8BED;&#x4E49;&#x5206;&#x6790;&#x5374;&#x662F;&#x57FA;&#x4E8E;&#x6D3E;&#x751F;&#x81EA;LCM&#x7684;&#x6DF7;&#x5408;&#x77E9;&#x9635;&#x5206;&#x89E3;&#x3002;&#x8003;&#x8651;&#x5230;word&#x548C;doc&#x5171;&#x73B0;&#x5F62;&#x5F0F;&#xFF0C;&#x6982;&#x7387;&#x6F5C;&#x5728;&#x8BED;&#x4E49;&#x5206;&#x6790;&#x57FA;&#x4E8E;&#x591A;&#x9879;&#x5F0F;&#x5206;&#x5E03;&#x548C;&#x6761;&#x4EF6;&#x5206;&#x5E03;&#x7684;&#x6DF7;&#x5408;&#x6765;&#x5EFA;&#x6A21;&#x5171;&#x73B0;&#x7684;&#x6982;&#x7387;&#x3002;&#x6240;&#x8C13;&#x5171;&#x73B0;&#x5176;&#x5B9E;&#x5C31;&#x662F;W&#x548C;D&#x7684;&#x4E00;&#x4E2A;&#x77E9;&#x9635;&#xFF0C;&#x6240;&#x8C13;&#x53CC;&#x6A21;&#x5F0F;&#x5C31;&#x662F;&#x5728;W&#x548C;D&#x4E0A;&#x540C;&#x65F6;&#x8FDB;&#x884C;&#x8003;&#x8651;&#x3002;</p>
+<p>d&#x2208;D&#x8868;&#x793A;&#x6587;&#x6863;&#xFF0C;w&#x2208;V&#x8868;&#x793A;&#x8BCD;&#x8BED;&#xFF0C;z&#x8868;&#x793A;&#x9690;&#x542B;&#x7684;&#x4E3B;&#x9898;&#x3002;P(di)&#x8868;&#x793A;&#x5355;&#x8BCD;&#x5728;&#x6587;&#x6863;di&#x4E2D;&#x51FA;&#x73B0;&#x7684;&#x6982;&#x7387;&#xFF0C;P(zk|di)&#x8868;&#x793A;&#x4E3B;&#x9898;zk&#x5728;&#x7ED9;&#x5B9A;&#x6587;&#x6863;di&#x4E0B;&#x51FA;&#x73B0;&#x7684;&#x6982;&#x7387;&#xFF0C;P(wj|zk)&#x8868;&#x793A;&#x5355;&#x8BCD;wj&#x5728;&#x7ED9;&#x5B9A;&#x4E3B;&#x9898;zk&#x4E0B;&#x51FA;&#x73B0;&#x7684;&#x6982;&#x7387;&#xFF0C;PLSA&#x662F;&#x4E2A;&#x5178;&#x578B;&#x7684;&#x751F;&#x6210;&#x6A21;&#x578B;&#x3002;</p>
+<p>&#x53EF;&#x4EE5;&#x5F97;&#x51FA;&#x6587;&#x6863;&#x4E2D;&#x6BCF;&#x4E2A;&#x8BCD;&#x7684;&#x751F;&#x6210;&#x6982;&#x7387;&#xFF1A;</p>
+<p><img src="/2016/04/19/&#x6587;&#x672C;&#x4E3B;&#x9898;&#x6316;&#x6398;/../../../../images/topic-image1.png" alt="&#x4F7F;&#x7528;&#x672C;&#x5730;&#x56FE;&#x7247;"></p>
+<p>&#x7531;&#x4E8E;&#x8BCD;&#x548C;&#x8BCD;&#x4E4B;&#x95F4;&#x662F;&#x4E92;&#x76F8;&#x72EC;&#x7ACB;&#x7684;&#xFF0C;&#x6587;&#x6863;&#x548C;&#x6587;&#x6863;&#x95F4;&#x4E5F;&#x662F;&#x76F8;&#x4E92;&#x72EC;&#x7ACB;&#x7684;&#xFF0C;&#x90A3;&#x4E48;&#x6574;&#x4E2A;&#x6837;&#x672C;&#x96C6;&#x7684;&#x5206;&#x5E03;&#x4E3A;&#xFF1A;</p>
+<p><img src="/2016/04/19/&#x6587;&#x672C;&#x4E3B;&#x9898;&#x6316;&#x6398;/../../../../images/topic-image2.png" alt="&#x4F7F;&#x7528;&#x672C;&#x5730;&#x56FE;&#x7247;"></p>
+<p>&#x9996;&#x5148;&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x660E;&#x786E;&#x7684;&#x662F;pLSA&#x6A21;&#x578B;&#x5F85;&#x4F30;&#x8BA1;&#x7684;&#x53C2;&#x6570;&#x662F;&#x4EC0;&#x4E48;&#xFF1F; &#x5176;&#x5B9E;&#x5C31;&#x662F;&#x6BCF;&#x4E2A;&#x6587;&#x6863;&#x4E0B;&#x5404;&#x4E2A;&#x4E3B;&#x9898;&#x7684;&#x5206;&#x5E03;&#x548C;&#x6BCF;&#x4E2A;&#x4E3B;&#x9898;&#x4E0B;&#x5404;&#x4E2A;&#x8BCD;&#x7684;&#x5206;&#x5E03;&#x3002;</p>
+<p><img src="/2016/04/19/&#x6587;&#x672C;&#x4E3B;&#x9898;&#x6316;&#x6398;/../../../../images/topic-image3.png" alt="&#x4F7F;&#x7528;&#x672C;&#x5730;&#x56FE;&#x7247;"></p>
+<p>&#x6837;&#x672C;&#x96C6;&#x7684;log&#x4F3C;&#x7136;&#x51FD;&#x6570;&#x53D8;&#x4E3A;&#xFF1A;</p>
+<p><img src="/2016/04/19/&#x6587;&#x672C;&#x4E3B;&#x9898;&#x6316;&#x6398;/../../../../images/topic-image4.png" alt="&#x4F7F;&#x7528;&#x672C;&#x5730;&#x56FE;&#x7247;"></p>
+<p>&#x5176;&#x4E2D;&#xFF0C;n(w,d)&#x8868;&#x793A;&#x5355;&#x8BCD;w&#x5728;&#x6587;&#x6863;d&#x4E2D;&#x51FA;&#x73B0;&#x7684;&#x6B21;&#x6570;&#xFF0C;n(d)&#x8868;&#x793A;&#x6587;&#x6863;d&#x4E2D;&#x8BCD;&#x7684;&#x4E2A;&#x6570;&#x3002;</p>
+<p>&#x7531;&#x4E8E;&#x8BE5;&#x6A21;&#x578B;&#x4E2D;&#x542B;&#x6709;&#x9690;&#x53D8;&#x91CF;&#xFF1A;&#x4E3B;&#x9898;&#x8FD9;&#x4E2A;&#x53D8;&#x91CF;&#xFF0C;&#x53EF;&#x4EE5;&#x91C7;&#x7528;EM&#x7B97;&#x6CD5;&#x6C42;&#x89E3;&#x5305;&#x542B;&#x9690;&#x53D8;&#x91CF;&#x7684;&#x4F18;&#x5316;&#x95EE;&#x9898;&#x3002;<br>EM&#x7B97;&#x6CD5;&#x5C31;&#x662F;&#x6839;&#x636E;&#x5DF2;&#x7ECF;&#x89C2;&#x5BDF;&#x5230;&#x7684;&#x53D8;&#x91CF;&#x5BF9;&#x9690;&#x85CF;&#x53D8;&#x91CF;&#x8FDB;&#x884C;&#x5B66;&#x4E60;&#x7684;&#x65B9;&#x6CD5;&#x3002;&#x65E2;&#x7136;&#x6CA1;&#x529E;&#x6CD5;&#x6700;&#x5927;&#x5316;L(&#x3B8;)&#xFF0C;&#x90A3;&#x4E48;L(&#x3B8;)&#x603B;&#x8BE5;&#x6709;&#x4E2A;&#x4E0B;&#x9650;&#x5427;&#xFF0C;&#x6211;&#x4EEC;&#x5C31;&#x4F18;&#x5316;&#x8FD9;&#x4E2A;&#x4E0B;&#x9650;&#xFF0C;&#x4E0D;&#x65AD;&#x8FED;&#x4EE3;&#x63D0;&#x9AD8;&#x8FD9;&#x4E2A;&#x4E0B;&#x9650;&#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x53EF;&#x4EE5;&#x5F97;&#x5230;&#x8FD1;&#x4F3C;&#x6700;&#x5927;&#x89E3;&#x4E86;&#xFF0C;&#x8FD9;&#x4E2A;&#x4E0B;&#x9650;&#x5176;&#x5B9E;&#x5C31;&#x662F;&#x4F3C;&#x7136;&#x51FD;&#x6570;&#x7684;&#x671F;&#x671B;&#x3002;&#x901A;&#x5E38;&#xFF0C;EM&#x7B97;&#x6CD5;&#x5F97;&#x5230;&#x7684;&#x662F;&#x5C40;&#x90E8;&#x8FD1;&#x4F3C;&#x89E3;&#x3002;</p>
+<p>&#x4E3A;&#x4E86;&#x66F4;&#x597D;&#x7684;&#x4FBF;&#x4E8E;&#x7406;&#x89E3;pLSA&#x53C2;&#x6570;&#x5B66;&#x4E60;&#x7684;&#x8FC7;&#x7A0B;&#xFF0C;&#x5728;&#x6B64;&#x5F15;&#x7528;&#x4E00;&#x4E2A;&#x8BBA;&#x6587;&#x4E2D;&#x6C42;&#x89E3;pLSA&#x6A21;&#x578B;&#x53C2;&#x6570;&#x7684;&#x8FC7;&#x7A0B;</p>
+<p><img src="/2016/04/19/&#x6587;&#x672C;&#x4E3B;&#x9898;&#x6316;&#x6398;/../../../../images/topic-image5.png" alt="&#x4F7F;&#x7528;&#x672C;&#x5730;&#x56FE;&#x7247;"></p>
+<p><img src="/2016/04/19/&#x6587;&#x672C;&#x4E3B;&#x9898;&#x6316;&#x6398;/../../../../images/topic-image6.png" alt="&#x4F7F;&#x7528;&#x672C;&#x5730;&#x56FE;&#x7247;"></p>
+<p>&#x603B;&#x4E4B;&#xFF1A;PLSA&#x7B97;&#x6CD5;&#x548C;&#x5176;&#x4ED6;&#x7B97;&#x6CD5;&#x7684;&#x6C42;&#x89E3;&#x8FC7;&#x7A0B;&#x5176;&#x5B9E;&#x6CA1;&#x591A;&#x5927;&#x533A;&#x522B;&#xFF0C;&#x552F;&#x4E00;&#x7684;&#x662F;&#x591A;&#x4E86;&#x9690;&#x85CF;&#x53D8;&#x91CF;&#xFF0C;&#x7136;&#x540E;&#x4F7F;&#x7528;EM&#x7B97;&#x6CD5;&#x6C42;&#x89E3;&#x3002;</p>
+<h1 id="2_LDA&#x4E3B;&#x9898;&#x6A21;&#x578B;">2 LDA&#x4E3B;&#x9898;&#x6A21;&#x578B;</h1><p>&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5229;&#x7528;&#x8D1D;&#x53F6;&#x65AF;&#x65B9;&#x6CD5;&#x5E94;&#x7528;&#x4E8E;pLSA&#x6A21;&#x578B;&#xFF0C;&#x8FD9;&#x6837;&#x505A;&#x7684;&#x76EE;&#x7684;&#x662F;&#x5728;&#x6587;&#x6863;&#x4FE1;&#x606F;&#x4E0D;&#x8DB3;&#x6216;&#x8005;&#x566A;&#x58F0;&#x8F83;&#x5927;&#x65F6;&#x80FD;&#x591F;&#x5229;&#x7528;&#x8D1D;&#x53F6;&#x65AF;&#x7684;&#x6846;&#x67B6;&#x5BF9;&#x7ED3;&#x679C;&#x8FDB;&#x884C;&#x6709;&#x6548;&#x7684;&#x5E73;&#x6ED1;&#x3002;&#x8FD9;&#x4E00;&#x601D;&#x8DEF;&#x4E5F;&#x5C31;&#x4EA7;&#x751F;&#x4E86;&#x6F5C;&#x5728;&#x72C4;&#x5229;&#x514B;&#x96F7;&#x5206;&#x914D;&#xFF08;Latent Dirichlet Allocation LDA&#xFF09;&#x65B9;&#x6CD5;&#x3002;</p>
+<p>PLSA&#x6C42;&#x51FA;&#x4E86;&#x6240;&#x6709;P(zk|di)&#x548C;P(wj|zk)&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x6587;&#x6863;di&#x5C5E;&#x4E8E;&#x4E3B;&#x9898;zk&#x7684;&#x6982;&#x7387;&#x548C;&#x4E3B;&#x9898;zk&#x4E0B;&#x5404;&#x4E2A;&#x5355;&#x8BCD;wj&#x7684;&#x6982;&#x7387;&#xFF0C;&#x4F46;&#x662F;PLSA&#x5E76;&#x6CA1;&#x6709;&#x8003;&#x8651;&#x53C2;&#x6570;&#x7684;&#x5148;&#x9A8C;&#x77E5;&#x8BC6;&#xFF0C;&#x8FD9;&#x65F6;&#x5019;&#x51FA;&#x73B0;&#x4E86;&#x53E6;&#x4E00;&#x4E2A;&#x6539;&#x8FDB;&#x7684;&#x7B97;&#x6CD5;&#xFF1A;LDA&#xFF0C;&#x5B83;&#x5BF9;&#x53C2;&#x6570;&#x589E;&#x52A0;&#x4E86;&#x5148;&#x9A8C;&#x5206;&#x5E03;&#xFF08;&#x6240;&#x4EE5;&#x7406;&#x8BBA;&#x4E0A;LDA&#x6BD4;PLSA&#x4E0D;&#x5BB9;&#x6613;&#x8FC7;&#x62DF;&#x5408;&#xFF09;&#x3002;</p>
+<p>LDA&#x7684;&#x56FE;&#x6A21;&#x578B;&#xFF1A;</p>
+<p><img src="/2016/04/19/&#x6587;&#x672C;&#x4E3B;&#x9898;&#x6316;&#x6398;/../../../../images/topic-image7.png" alt="&#x4F7F;&#x7528;&#x672C;&#x5730;&#x56FE;&#x7247;"></p>
+<p>&#x4E0A;&#x56FE;&#x4E2D;&#xFF0C;w[m,n]&#x662F;&#x89C2;&#x5BDF;&#x5230;&#x7684;&#x53D8;&#x91CF;&#xFF08;&#x6587;&#x6863;m&#x4E2D;&#x7B2C;n&#x4E2A;&#x8BCD;&#xFF09;&#xFF0C;&#x5176;&#x4ED6;&#x90FD;&#x662F;&#x53C2;&#x6570;&#x6216;&#x8005;&#x9690;&#x85CF;&#x53D8;&#x91CF;&#xFF0C;&#x3B1; &#xFF0C;&#x3B2; &#x5C31;&#x662F;&#x8D85;&#x53C2;&#x6570;&#x3002;&#x3D5;={&#x3C6;k }&#x8868;&#x793A;&#x4E3B;&#x9898;&#x548C;&#x8BCD;&#x4E4B;&#x95F4;&#x7684;&#x5206;&#x5E03;,&#x662F;&#x4E00;&#x4E2A;M&#xD7;K&#x7684;&#x77E9;&#x9635;&#xFF0C;&#x398;={&#x3D1;m}&#x8868;&#x793A;&#x6587;&#x6863;&#x548C;&#x4E3B;&#x9898;&#x4E4B;&#x95F4;&#x7684;&#x5206;&#x5E03;&#xFF0C;&#x662F;&#x4E00;&#x4E2A;K&#xD7;V&#x7684;&#x77E9;&#x9635;&#x3002;M&#x6587;&#x6863;&#x6570;&#xFF0C;K&#x4E3B;&#x9898;&#x6570;&#xFF0C;V&#x8BCD;&#x6570;&#xFF0C;Nm&#x6587;&#x6863;m&#x7684;&#x957F;&#x5EA6;&#x3002;</p>
+<p>LDA&#x6709;&#x4E2A;&#x5047;&#x8BBE;&#xFF1A;&#x3B1; -&gt;&#x3D1;m &#x670D;&#x4ECE;Dirichlet&#x5206;&#x5E03;&#xFF0C;&#x3D1;m&#x20D7; -&gt;z[m,n]&#x670D;&#x4ECE;Multinomial&#x5206;&#x5E03;&#xFF0C;&#x3B2;-&gt;&#x3C6;k &#x670D;&#x4ECE;Dirichlet&#x5206;&#x5E03;&#xFF0C;&#x3C6;k -&gt;w[m,n]&#x670D;&#x4ECE;Multinomial&#x5206;&#x5E03;.</p>
+<p><strong>&#x90A3;&#x4E48;&#x4E3A;&#x4EC0;&#x4E48;LDA&#x8981;&#x5047;&#x8BBE;&#x5171;&#x8F6D;&#x5206;&#x5E03;&#x5462;&#xFF1F;</strong></p>
+<p>&#x5F53;&#x67D0;&#x4E2A;&#x4F3C;&#x7136;&#x6982;&#x7387;&#x5F02;&#x5E38;&#x590D;&#x6742;&#x65F6;&#xFF0C;&#x540E;&#x9A8C;&#x6982;&#x7387;&#x8BA1;&#x7B97;&#x4F1A;&#x53EB;&#x4EBA;&#x975E;&#x5E38;&#x5934;&#x5927;&#xFF0C;&#x4F7F;&#x7528;&#x5171;&#x8F6D;&#x5148;&#x9A8C;&#x53EF;&#x4EE5;&#x7B80;&#x5316;&#x95EE;&#x9898;&#xFF01;&#x800C;&#x4E14;Dirichlet&#x5206;&#x5E03;&#x548C;Multinomial&#x5206;&#x5E03;&#x6570;&#x5B66;&#x5BB6;&#x90FD;&#x7814;&#x7A76;&#x900F;&#x4E86;&#xFF0C;&#x5B83;&#x4EEC;&#x7684;&#x6982;&#x7387;&#x5206;&#x5E03;&#x554A;&#xFF0C;&#x671F;&#x671B;&#x554A;&#x7B49;&#x90FD;&#x662F;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x6C42;&#x89E3;&#x51FA;&#x6765;&#x7684;&#xFF0C;&#x5728;&#x63A8;&#x5BFC;&#x6700;&#x7EC8;&#x53C2;&#x6570;&#x65F6;&#x5C31;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x4F7F;&#x7528;&#x4E86;&#x3002;</p>
+<p>&#x5047;&#x8BBE;&#x67D0;&#x4E2A;&#x5206;&#x5E03;&#xFF08;&#x89C2;&#x5BDF;&#x53D8;&#x91CF;&#x4E3A;X&#xFF09;&#xFF0C;&#x8981;&#x4F30;&#x8BA1;&#x5176;&#x4E2D;&#x7684;&#x53C2;&#x6570;&#x3B8;&#x3002;&#x53C2;&#x6570;&#x3B8;&#x6709;&#x4E2A;&#x5148;&#x9A8C;&#x5206;&#x5E03;p(&#x3B8;)&#xFF0C;&#x8D1D;&#x53F6;&#x65AF;&#x6CD5;&#x5219;&#x544A;&#x8BC9;&#x6211;&#x4EEC;p(&#x3B8;|X)&#x221D;p(X|&#x3B8;)p(&#x3B8;),&#x53EF;&#x4EE5;&#x77E5;&#x9053;&#xFF0C;&#x82E5;p(&#x3B8;)&#x4E0E;p(X|&#x3B8;)&#x6709;&#x76F8;&#x540C;&#x7684;&#x51FD;&#x6570;&#x5F62;&#x5F0F;&#xFF0C;&#x90A3;&#x4E48;&#x540E;&#x9A8C;&#x6982;&#x7387;p(&#x3B8;|X)&#x548C;&#x5B83;&#x4EEC;(p(&#x3B8;)&#x4E0E;p(X|&#x3B8;))&#x4E5F;&#x6709;&#x76F8;&#x540C;&#x7684;&#x51FD;&#x6570;&#x5F62;&#x5F0F;&#xFF0C;&#x8FD9;&#x6837;&#x4F7F;&#x5F97;&#x3B8;&#x7684;&#x540E;&#x9A8C;&#x6982;&#x7387;&#x4E0E;&#x5148;&#x9A8C;&#x6982;&#x7387;&#x5177;&#x6709;&#x76F8;&#x540C;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#xFF0C;&#x53EA;&#x662F;&#x53C2;&#x6570;&#x4E0D;&#x540C;&#x800C;&#x5DF2;&#xFF01;&#x6240;&#x4EE5;&#x9009;&#x62E9;&#x4E0E;&#x4F3C;&#x7136;&#x51FD;&#x6570;&#x5171;&#x8F6D;&#x7684;&#x5148;&#x9A8C;&#xFF0C;&#x5F97;&#x5230;&#x7684;&#x540E;&#x9A8C;&#x51FD;&#x6570;&#x53EA;&#x662F;&#x53C2;&#x6570;&#x8C03;&#x6574;&#x540E;&#x7684;&#x5148;&#x9A8C;&#x51FD;&#x6570;&#x3002;</p>
+<p>&#x540C;&#x6837;&#xFF0C;&#x53EF;&#x4EE5;&#x5199;&#x51FA;LDA&#x7684;&#x4F3C;&#x7136;&#x51FD;&#x6570;&#xFF0C;&#x7136;&#x540E;&#x4F7F;&#x7528;&#x6700;&#x5927;&#x4F3C;&#x7136;&#x4F30;&#x8BA1;&#x6C42;&#x89E3;&#x53C2;&#x6570;&#xFF0C;&#x4F46;&#x662F;&#x4F3C;&#x7136;&#x51FD;&#x6570;&#x53C2;&#x6570;&#x8026;&#x5408;&#x592A;&#x5927;&#xFF0C;&#x65E0;&#x6CD5;&#x6C42;&#x89E3;&#x51FA;&#x6765;&#xFF0C;&#x800C;&#x4E14;&#x5305;&#x62EC;&#x9690;&#x85CF;&#x53D8;&#x91CF;&#xFF0C;&#x6240;&#x4EE5;&#x5C31;&#x50CF;PLSA&#x4E00;&#x6837;&#xFF0C;&#x60F3;&#x5230;&#x4E86;EM&#x7B97;&#x6CD5;&#xFF0C;&#x4F46;&#x662F;LDA&#x76F8;&#x6BD4;PLSA&#x8FD8;&#x6709;&#x4E00;&#x4E2A;&#x56F0;&#x96BE;&#xFF1A;&#x540E;&#x9A8C;&#x6982;&#x7387;&#x65E0;&#x6CD5;&#x6C42;&#x89E3;&#x51FA;&#x6765;&#xFF08;EM&#x7B97;&#x6CD5;&#x4E2D;E-step&#x8981;&#x6C42;&#x89E3;&#x540E;&#x9A8C;&#x6982;&#x7387;&#xFF09;&#xFF0C;&#x90A3;&#x4E48;&#x8FD9;&#x65F6;&#x5C31;&#x53C8;&#x8981;&#x8FD1;&#x4F3C;&#x8BA1;&#x7B97;&#x4E86;&#xFF1A;&#x53D8;&#x5206;-EM&#x7B97;&#x6CD5;&#x3002;</p>
+<p><strong>&#x6240;&#x8C13;&#x53D8;&#x5206;&#x63A8;&#x7406;</strong>&#xFF1A;&#x53D8;&#x5206;&#x63A8;&#x7406;&#x662F;&#x4E00;&#x79CD;&#x8FD1;&#x4F3C;&#x8BA1;&#x7B97;&#x540E;&#x9A8C;&#x6982;&#x7387;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x9996;&#x5148;&#x5BFB;&#x627E;&#x4E00;&#x4E2A;&#x548C;&#x539F;&#x6765;&#x4E0D;&#x80FD;&#x76F4;&#x63A5;&#x6C42;&#x89E3;&#x7684;&#x540E;&#x9A8C;&#x6982;&#x7387;&#x7B49;&#x4EF7;&#x6216;&#x8005;&#x8FD1;&#x4F3C;&#x7684;&#x51FD;&#x6570;Q&#xFF0C;&#x7136;&#x540E;&#x5C31;&#x901A;&#x8FC7;&#x6C42;&#x89E3;&#x6700;&#x4F18;&#x8FD1;&#x4F3C;&#x51FD;&#x6570;Q&#x7684;&#x53C2;&#x6570;&#x6765;&#x8FD1;&#x4F3C;&#x5F97;&#x5230;&#x539F;&#x540E;&#x9A8C;&#x6982;&#x7387;&#x7684;&#x53C2;&#x6570;&#x3002;</p>
+<h2 id="&#x6C42;&#x89E3;LDA&#x7684;&#x53C2;&#x6570;&#x7684;Gibbs_Sampling&#x65B9;&#x6CD5;">&#x6C42;&#x89E3;LDA&#x7684;&#x53C2;&#x6570;&#x7684;Gibbs Sampling&#x65B9;&#x6CD5;</h2><p>Gibbs Sampling&#x7B97;&#x6CD5;&#x662F;MCMC&#x7684;&#x4E00;&#x4E2A;&#x7279;&#x4F8B;&#xFF0C;&#x5982;&#x679C;&#x67D0;&#x4E2A;&#x6982;&#x7387;P(X)&#x4E0D;&#x6613;&#x6C42;&#x5F97;&#xFF0C;&#x90A3;&#x4E48;&#x53EF;&#x4EE5;&#x4EA4;&#x66FF;&#x7684;&#x56FA;&#x5B9A;&#x67D0;&#x4E00;&#x7EF4;&#x5EA6;xi&#xFF0C;&#x7136;&#x540E;&#x901A;&#x8FC7;&#x5176;&#x4ED6;&#x7EF4;&#x5EA6;x&#xAC;i&#xFF08;&#x53BB;&#x9664;xi&#x7684;&#x5176;&#x4ED6;&#x6240;&#x6709;&#x503C;&#xFF09;&#x7684;&#x503C;&#x6765;&#x62BD;&#x6837;&#x8FD1;&#x4F3C;&#x6C42;&#x89E3;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x8BF4;&#xFF0C;Gibbs&#x91C7;&#x6837;&#x5C31;&#x662F;&#x7528;&#x6761;&#x4EF6;&#x5206;&#x5E03;&#x7684;&#x91C7;&#x6837;&#x6765;&#x66FF;&#x4EE3;&#x5168;&#x6982;&#x7387;&#x5206;&#x5E03;&#x7684;&#x91C7;&#x6837;&#x3002;</p>
+<p>&#x6574;&#x4E2A;&#x57FA;&#x4E8E;Gibbs Sampling&#x7684;LDA&#x7B97;&#x6CD5;&#x6D41;&#x7A0B;&#x4E3A;&#xFF1A;</p>
+<pre><code>&#xFF08;1&#xFF09;&#x521D;&#x59CB;&#x5316;&#x53C2;&#x6570;&#x3002;
+&#xFF08;2&#xFF09;&#x5BF9;&#x6240;&#x6709;&#x6587;&#x6863;<span class="keyword">m</span>=1..<span class="literal">M</span>
+    &#x5BF9;&#x6587;&#x6863;<span class="keyword">m</span>&#x4E2D;&#x6240;&#x6709;&#x7684;&#x5355;&#x8BCD;<span class="keyword">n</span>=1..Nm
+        -&#x91C7;&#x6837;&#x6BCF;&#x4E2A;&#x5355;&#x8BCD;wm,<span class="keyword">n</span>&#x5BF9;&#x5E94;&#x7684;&#x4E3B;&#x9898;zm,<span class="keyword">n</span>=k&#xFF1B;
+        -&#x5BF9;&#x5355;&#x8BCD;wm,<span class="keyword">n</span>&#x7684;&#x4E3B;&#x9898;k&#x589E;&#x52A0;&#x8BA1;&#x6570;&#xFF08;&#x201C;&#x6587;&#x6863;-&#x4E3B;&#x9898;&#x201D;&#x8BA1;&#x6570;&#xFF0C;&#x201C;&#x6587;&#x6863;-&#x4E3B;&#x9898;&#x201D;&#x603B;&#x6570;&#xFF0C;&#x201C;&#x4E3B;&#x9898;-&#x5355;&#x8BCD;&#x201D;&#x8BA1;&#x6570;&#xFF0C;&#x201C;&#x4E3B;&#x9898;-&#x5355;&#x8BCD;&#x201D;&#x603B;&#x6570;&#xFF09;&#xFF1B;
+&#xFF08;3&#xFF09;&#x8FED;&#x4EE3;&#x6B65;&#x9AA4;&#xFF1A;
+    &#x5BF9;&#x6240;&#x6709;&#x6587;&#x6863;<span class="keyword">m</span>=1..<span class="literal">M</span>
+    &#x5BF9;&#x6587;&#x6863;<span class="keyword">m</span>&#x4E2D;&#x6240;&#x6709;&#x7684;&#x5355;&#x8BCD;<span class="keyword">n</span>=1..Nm
+        -&#x5BF9;&#x5355;&#x8BCD;wm,<span class="keyword">n</span>&#x7684;&#x4E3B;&#x9898;k&#x51CF;&#x5C11;&#x8BA1;&#x6570;&#xFF1B;
+        -&#x6839;&#x636E;P(zm,<span class="keyword">n</span>=k&#x303;|w&#x20D7;&#x20D7;&#x20D7; ,z&#xAC;(<span class="keyword">m</span>,<span class="keyword">n</span>),&#x3B1;&#x20D7;&#x20D7; ,&#x3B2;&#x20D7; )&#x91C7;&#x6837;&#x65B0;&#x4E3B;&#x9898;&#xFF1B;
+        -&#x5BF9;&#x5355;&#x8BCD;wm,<span class="keyword">n</span>&#x7684;&#x65B0;&#x4E3B;&#x9898;k&#x303;&#x589E;&#x52A0;&#x8BA1;&#x6570;&#xFF1B;
+&#x6536;&#x655B;&#x540E;&#xFF0C;&#x5229;&#x7528;&#x516C;&#x5F0F;&#x8BA1;&#x7B97;&#x6240;&#x6709;&#x3C6;k &#x548C;&#x3D1;<span class="keyword">m</span> &#xFF1B;
+</code></pre><p><strong>&#x53C2;&#x8003;&#xFF1A;</strong></p>
+<p><a href="http://blog.csdn.net/yangliuy/article/details/8330640" target="_blank" rel="external">http://blog.csdn.net/yangliuy/article/details/8330640</a></p>
+<p><a href="http://www.flickering.cn/nlp/" target="_blank" rel="external">http://www.flickering.cn/nlp/</a></p>
+<p>LDA&#x6570;&#x5B66;&#x516B;&#x5366;</p>
+<p>Christopher M. Bishop. Pattern Recognition and Machine Learning (Information Science and Statistics). Springer-Verlag New York, Inc., Secaucus, NJ, USA, 2006.</p>
+<p>Gregor Heinrich. Parameter estimation for text analysis. Technical report, 2004.</p>
+<p>Wayne Xin Zhao, Note for pLSA and LDA, Technical report, 2011.</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/主题模型，自然语言处理，语义分析/" rel="tag">#主题模型，自然语言处理，语义分析</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/15/中文分词小结/" rel="next" title="中文分词小结">
+                <i class="fa fa-chevron-left"></i> 中文分词小结
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/20/Java中HashMap源码学习/" rel="prev" title="Java中HashMap源码学习">
+                Java中HashMap源码学习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/04/19/文本主题挖掘/"
+           data-title="中文分词小结" data-url="http://yoursite.com/2016/04/19/文本主题挖掘/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="xxqcheers" />
+          <p class="site-author-name" itemprop="name">xxqcheers</p>
+          <p class="site-description motion-element" itemprop="description">Walk steps step by step. 知道，理解，用得好。说出来，写出来，让别人懂。是不同的层次！</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1、引子"><span class="nav-number">1.</span> <span class="nav-text">1、引子</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1_pLSA模型"><span class="nav-number">2.</span> <span class="nav-text">1 pLSA模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2_LDA主题模型"><span class="nav-number">3.</span> <span class="nav-text">2 LDA主题模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#求解LDA的参数的Gibbs_Sampling方法"><span class="nav-number">3.1.</span> <span class="nav-text">求解LDA的参数的Gibbs Sampling方法</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xxqcheers</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"xxqcheers"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+
+</body>
+</html>
